@@ -11,11 +11,7 @@ public class Encomenda
 
     private ArrayList<Artigo> artigos;
 
-    private enum Embalagem {
-        grande, media, pequena;
-    }
+    private String embalagem; // grande, media, pequena
 
-    private enum Estado {
-        pendente, finalizada, expedida;
-}
+    private String estado; // pendente, finalizada, expedida
 }
