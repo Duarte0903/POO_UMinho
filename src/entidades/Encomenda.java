@@ -1,5 +1,7 @@
 package entidades;
 
+import entidades.artigo.Artigo;
+
 import java.util.Date;
 import java.util.ArrayList;
 
