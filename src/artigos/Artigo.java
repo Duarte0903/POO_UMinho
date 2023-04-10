@@ -2,6 +2,9 @@ package artigos;
 
 public class Artigo{
 
+    public static String USADO = "usado";
+    public static String NOVO = "novo";
+
     private String nome;
     private String codigo;
     private String marca;
@@ -15,17 +18,6 @@ public class Artigo{
     private int n_donos;
 
     // Construtores
-
-    public Artigo(){
-        this.nome = "";
-        this.codigo = "";
-        this.preco = 0.0;
-        this.desconto = 0.0;
-        this.marca = "";
-        this.estado = "";
-        this.avaliacao = 0;
-        this.n_donos = 0;        
-    }
 
     public Artigo(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos){
         this.nome = nome;

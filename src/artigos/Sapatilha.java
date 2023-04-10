@@ -12,19 +12,8 @@ public class Sapatilha extends Artigo{
 
     // Construtores
 
-    public Sapatilha(){
-        super();
-
-        this.cor = "";
-        this.tamanho = 0;
-        this.atacadores = false;
-        this.colecao = LocalDate.now();
-
-    }
-
     public Sapatilha(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, String cor, int tamanho, boolean atacadores, LocalDate colecao){
         super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos);
-
         this.cor = cor;
         this.tamanho = tamanho;
         this.atacadores = atacadores;
@@ -33,7 +22,6 @@ public class Sapatilha extends Artigo{
 
     public Sapatilha(Sapatilha sapatilha){
         super(sapatilha);
-
         this.cor = sapatilha.getCor();
         this.tamanho = sapatilha.getTamanho();
         this.atacadores = sapatilha.getAtacadores();
@@ -66,22 +54,36 @@ public class Sapatilha extends Artigo{
 
     // Metodos
 
-/*    public double calculaPreco(){
+    public double calculaPreco(){
 
-        return this
+        double preco = super.getPreco();
+
+        if (super.getEstado().equals(Artigo.USADO)){
+
+            preco -= preco/(super.getNDonos()*super.getAvaliacao()); 
+        }
+
+        if (super.getEstado().equals(Artigo.USADO)
+            || Calendario.getIntervaloAnos(this.colecao,Calendario.getData()) > 0
+            || this.tamanho > 45){
+
+                preco -= super.getDesconto()*preco;
+            }
+
+        return preco;
     }
-*/
+
 
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(super.toString());
-        buffer.append("\nCor: ").append(this.cor);
-        buffer.append("\nTamanho: ").append(this.tamanho);
-        buffer.append("\nAtacadores: ").append(this.atacadores);
-        buffer.append("\nColecao: ").append(this.colecao);
+        buffer.append("\tCor: ").append(this.cor);
+        buffer.append("\tTamanho: ").append(this.tamanho);
+        buffer.append("\tAtacadores: ").append(this.atacadores);
+        buffer.append("\tColecao: ").append(this.colecao);
 
-        return this.toString();
+        return buffer.toString();
     }
 }
