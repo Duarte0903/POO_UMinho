@@ -6,8 +6,8 @@ public class Mala extends Artigo{
 
     // Construtores
 
-    public Mala(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int tamanho){
-        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos);
+    public Mala(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora, int tamanho){
+        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos,vendedor,transportadora);
         this.tamanho = tamanho;
     }
 

@@ -12,8 +12,8 @@ public class Sapatilha extends Artigo{
 
     // Construtores
 
-    public Sapatilha(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, String cor, int tamanho, boolean atacadores, LocalDate colecao){
-        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos);
+    public Sapatilha(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora, String cor, int tamanho, boolean atacadores, LocalDate colecao){
+        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos,vendedor,transportadora);
         this.cor = cor;
         this.tamanho = tamanho;
         this.atacadores = atacadores;

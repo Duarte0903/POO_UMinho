@@ -17,9 +17,14 @@ public class Artigo{
     private int avaliacao; /* de 1 a 5 */
     private int n_donos;
 
+    /* outra informacoes */
+
+    private int vendedor;
+    private String transportadora;
+
     // Construtores
 
-    public Artigo(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos){
+    public Artigo(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora){
         this.nome = nome;
         this.codigo = codigo;
         this.marca = marca;
@@ -28,6 +33,8 @@ public class Artigo{
         this.estado = estado;
         this.avaliacao = avaliacao;
         this.n_donos = n_donos;
+        this.vendedor = vendedor;
+        this.transportadora = transportadora;
     }
 
     public Artigo(Artigo artigo){
@@ -38,7 +45,9 @@ public class Artigo{
             artigo.getDesconto(),
             artigo.getEstado(),
             artigo.getAvaliacao(),
-            artigo.getNDonos());
+            artigo.getNDonos(),
+            artigo.getVendedor(),
+            artigo.getTransportadora());
     }
 
     // Clone
@@ -81,6 +90,14 @@ public class Artigo{
         return this.n_donos;
     }
 
+    public int getVendedor(){
+        return this.vendedor;
+    }
+
+    public String getTransportadora(){
+        return this.transportadora;
+    }
+
     // Metodos
 
     public String toString(){
@@ -95,6 +112,8 @@ public class Artigo{
         buffer.append("\tEstado: ").append(this.estado);
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
+        buffer.append("\tVendedor: ").append(this.vendedor);
+        buffer.append("\tTranspostadora: ").append(this.transportadora);
 
         return buffer.toString();
     }

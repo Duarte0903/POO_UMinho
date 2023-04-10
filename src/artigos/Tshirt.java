@@ -9,8 +9,8 @@ public class Tshirt extends Artigo{
 
     // Construtor
 
-    public Tshirt(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, String tamanho, String padrao){
-        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos);
+    public Tshirt(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora, String tamanho, String padrao){
+        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos,vendedor,transportadora);
         this.tamanho = tamanho;
         this.padrao = padrao;
     }
