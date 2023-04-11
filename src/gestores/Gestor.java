@@ -1,9 +1,7 @@
-package gestor;
+package gestores;
 
-import utilizadores.Utilizador;
-import transportadoras.Transportadora;
-import utilizadores.GestorUtilizadores;
-import transportadoras.GestorTransportadoras;
+import utilizadores.*;
+import transportadoras.*;
 
 public class Gestor{
 

@@ -1,10 +1,8 @@
 package parsing;
 
-import utilizadores.Utilizador;
-import utilizadores.GestorUtilizadores;
-import transportadoras.Transportadora;
-import transportadoras.GestorTransportadoras;
-import gestor.Gestor;
+import utilizadores.*;
+import transportadoras.*;
+import gestores.*;
 
 
 import java.util.List;
@@ -49,6 +47,11 @@ public class Collector{
                         Double.valueOf(tokens.get(3)),
                         Double.valueOf(tokens.get(4))));
 
+                break;
+
+            default:
+
+                System.out.println("Não foi possivel fazer o registo de:" + tokens.get(0));
                 break;
         }
 

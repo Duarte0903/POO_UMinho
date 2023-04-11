@@ -1,5 +1,6 @@
-package transportadoras;
+package gestores;
 
+import transportadoras.Transportadora;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;

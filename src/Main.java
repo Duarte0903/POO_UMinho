@@ -1,18 +1,12 @@
-import artigos.Artigo;
-import artigos.Mala;
-import artigos.Tshirt;
-import artigos.Sapatilha;
-import utilizadores.Utilizador;
-import utilizadores.GestorUtilizadores;
+import gestores.*;
+import parsing.*;
+import artigos.*;
 import encomendas.Encomenda;
 import calendario.Calendario;
-import parsing.Parser;
-import parsing.Collector;
-import transportadoras.Transportadora;
-import transportadoras.GestorTransportadoras;
-import gestor.Gestor;
+import utilizadores.*;
+import transportadoras.*;
+import transportadoras.*;
 
-import java.time.LocalDate;
 
 public class Main{
 

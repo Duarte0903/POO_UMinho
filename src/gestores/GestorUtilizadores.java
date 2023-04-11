@@ -1,4 +1,6 @@
-package utilizadores;
+package gestores;
+
+import utilizadores.Utilizador;
 
 import java.util.*;
 
