@@ -1,7 +1,9 @@
 package transportadoras;
 
 import artigos.Artigo;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.*;
 
 public class Transportadora{
 
@@ -10,7 +12,7 @@ public class Transportadora{
     private double base_enc_media;
     private double base_enc_grande;
     private double mult_imposto;
-    private ArrayList<Artigo> artigos_expedidos;
+    private List<Artigo> artigos_expedidos;
 
     // Construtor;
 
@@ -23,10 +25,52 @@ public class Transportadora{
         this.artigos_expedidos = new ArrayList<Artigo>();
     }
 
+    // Clone
+
+    public Transportadora clone(){
+
+        Transportadora result = new Transportadora("n/a",0.0,0.0,0.0,0.0);
+
+        result.setNome(this.nome);
+        result.setBaseEncPequena(this.base_enc_pequena);
+        result.setBaseEncMedia(this.base_enc_media);
+        result.setBaseEncGrande(this.base_enc_grande);
+        result.setMultImposto(this.mult_imposto);
+
+        result.artigos_expedidos = this.artigos_expedidos
+                                        .stream()
+                                        .map((x) -> x.clone())
+                                        .collect(Collectors.toList());
+
+        return result;
+    }
+
     // Getters
 
     public String getNome(){
         return this.nome;
+    }
+
+    // Setter
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public void setBaseEncPequena(double base_enc_pequena){
+        this.base_enc_pequena = base_enc_pequena;
+    }
+
+    public void setBaseEncMedia(double base_enc_media){
+        this.base_enc_media = base_enc_media;
+    }
+
+    public void setBaseEncGrande(double base_enc_grande){
+        this.base_enc_grande = base_enc_grande;
+    }
+
+    public void setMultImposto(double mult_imposto){
+        this.mult_imposto = mult_imposto;
     }
 
     // Metodos

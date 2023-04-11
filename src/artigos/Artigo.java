@@ -17,7 +17,7 @@ public class Artigo{
     private int avaliacao; /* de 1 a 5 */
     private int n_donos;
 
-    /* outra informacoes */
+    /* Informações extra */
 
     private int vendedor;
     private String transportadora;
@@ -104,7 +104,9 @@ public class Artigo{
 
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("\nNome: ").append(this.nome);
+        buffer.append("\nVendedor: ").append(this.vendedor);
+        buffer.append("\tTranspostadora: ").append(this.transportadora);
+        buffer.append("\tNome: ").append(this.nome);
         buffer.append("\tCodigo: ").append(this.codigo);
         buffer.append("\tMarca: ").append(this.marca);
         buffer.append("\tPreco: ").append(this.preco);
@@ -112,8 +114,6 @@ public class Artigo{
         buffer.append("\tEstado: ").append(this.estado);
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
-        buffer.append("\tVendedor: ").append(this.vendedor);
-        buffer.append("\tTranspostadora: ").append(this.transportadora);
 
         return buffer.toString();
     }

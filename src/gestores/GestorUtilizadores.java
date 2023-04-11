@@ -13,7 +13,11 @@ public class GestorUtilizadores{
     }
 
     public void addUtilizador(Utilizador utilizador){
-        this.catalogo_utilizadores.add(utilizador);
+        this.catalogo_utilizadores.add(utilizador.clone());
+    }
+
+    public int getSize(){
+        return this.catalogo_utilizadores.size();
     }
 
     public String toString(){
@@ -21,6 +25,6 @@ public class GestorUtilizadores{
         return this.catalogo_utilizadores
                     .stream()
                     .map((x) -> x.toString())
-                    .reduce("Catalogo Utilizadores:", (a,b) -> a + "\n" + b);
+                    .reduce("Catalogos Utilizadores:", (a,b) -> a + "\n" + b);
     }
 }

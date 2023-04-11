@@ -3,6 +3,7 @@ package utilizadores;
 import artigos.Artigo;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.*;
 
 public class Utilizador{
 
@@ -29,6 +30,26 @@ public class Utilizador{
         this.artigos_adquiridos = new ArrayList<Artigo>();
     }
 
+    // Clone
+
+    public Utilizador clone(){
+        
+        Utilizador.AUTO_INCREMENT--;
+
+        Utilizador utilizador = new Utilizador("n/a","n/a",0);
+
+        utilizador.setCodigo(this.codigo);
+        utilizador.setEmail(this.email);
+        utilizador.setNome(this.nome);
+        utilizador.setNif(this.nif);
+
+        utilizador.artigos_a_venda = Utilizador.cloneArtigos(this.artigos_a_venda);
+        utilizador.artigos_vendidos =Utilizador.cloneArtigos(this.artigos_vendidos);
+        utilizador.artigos_adquiridos = Utilizador.cloneArtigos(this.artigos_adquiridos);
+
+        return utilizador;
+    }
+
     // Getters
 
     public int getCodigo(){
@@ -47,6 +68,28 @@ public class Utilizador{
         return this.nif;
     }
 
+    // Setters
+
+    private void setCodigo(int codigo){
+        this.codigo = codigo;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public void setNif(int nif){
+        this.nif = nif;
+    }
+
+    private static List<Artigo> cloneArtigos(List<Artigo> lista){
+        return lista.stream().map((x) -> x.clone()).collect(Collectors.toList());
+    }
+
     // Metodos
 
     public String toString(){
@@ -54,9 +97,9 @@ public class Utilizador{
         StringBuffer buffer = new StringBuffer();
 
         buffer.append("\nCodigo: ").append(this.codigo);
-        buffer.append("\nEmail: ").append(this.email);
-        buffer.append("\nNome: ").append(this.nome);
-        buffer.append("\nNif: ").append(this.nif);
+        buffer.append("\tEmail: ").append(this.email);
+        buffer.append("\tNome: ").append(this.nome);
+        buffer.append("\tNif: ").append(this.nif);
         buffer.append("\nArtigos à venda: ").append(this.artigos_a_venda.toString());
         buffer.append("\nArtigos vendidos: ").append(this.artigos_vendidos.toString());
         buffer.append("\nArtigos adquiridos: ").append(this.artigos_adquiridos.toString());

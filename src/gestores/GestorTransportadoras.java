@@ -16,7 +16,11 @@ public class GestorTransportadoras{
     }
 
     public void addTransportadora(Transportadora transportadora){
-        this.catalogo_transportadoras.put(transportadora.hashCode(),transportadora);
+        this.catalogo_transportadoras.put(transportadora.hashCode(),transportadora.clone());
+    }
+
+    public boolean lookUp(String transportadora){
+        return this.catalogo_transportadoras.containsKey(transportadora.hashCode());
     }
 
     public String toString(){
