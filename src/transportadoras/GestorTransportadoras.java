@@ -8,22 +8,22 @@ import java.util.stream.*;
 
 public class GestorTransportadoras{
 
-    private static Map<Integer,Transportadora> catalogo_transportadoras = new HashMap<Integer,Transportadora>();
+    private Map<Integer,Transportadora> catalogo_transportadoras;
 
-    public static void addTransportadora(Transportadora transportadora){
-        GestorTransportadoras.catalogo_transportadoras.put(transportadora.hashCode(),transportadora);
+    public GestorTransportadoras(){
+        this.catalogo_transportadoras = new HashMap<Integer,Transportadora>();
     }
 
-    public static String getString(){
-
-        return GestorTransportadoras.catalogo_transportadoras
-                                    .entrySet()
-                                    .stream()
-                                    .map((x) -> x.getValue().toString())
-                                    .reduce("Catalogo Transportadoras:", (a,b) -> a + "\n" + b);
+    public void addTransportadora(Transportadora transportadora){
+        this.catalogo_transportadoras.put(transportadora.hashCode(),transportadora);
     }
 
+    public String toString(){
 
-
-
+        return this.catalogo_transportadoras
+                    .entrySet()
+                    .stream()
+                    .map((x) -> x.getValue().toString())
+                    .reduce("Catalogo Transportadoras:", (a,b) -> a + "\n" + b);
+    }
 }

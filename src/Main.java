@@ -10,6 +10,7 @@ import parsing.Parser;
 import parsing.Collector;
 import transportadoras.Transportadora;
 import transportadoras.GestorTransportadoras;
+import gestor.Gestor;
 
 import java.time.LocalDate;
 
@@ -17,10 +18,10 @@ public class Main{
 
     public static void main(String[] args){
 
-        Collector.collectDadosFile("teste.txt");
+        Gestor gestor = new Gestor();
 
-        System.out.println(GestorUtilizadores.getString());
-        System.out.println("\n-------------------");
-        System.out.println(GestorTransportadoras.getString());
+        Collector.collectDadosFile("teste.txt",gestor);
+
+        System.out.println(gestor.toString());
     }
 }

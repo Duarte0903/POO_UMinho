@@ -4,15 +4,19 @@ import java.util.*;
 
 public class GestorUtilizadores{
 
-    private static List<Utilizador> catalogo_utilizadores = new ArrayList<Utilizador>();
+    private List<Utilizador> catalogo_utilizadores;
 
-    public static void addUtilizador(Utilizador utilizador){
-        GestorUtilizadores.catalogo_utilizadores.add(utilizador);
+    public GestorUtilizadores(){
+        this.catalogo_utilizadores = new ArrayList<Utilizador>();
     }
 
-    public static String getString(){
+    public void addUtilizador(Utilizador utilizador){
+        this.catalogo_utilizadores.add(utilizador);
+    }
 
-        return GestorUtilizadores.catalogo_utilizadores
+    public String toString(){
+
+        return this.catalogo_utilizadores
                     .stream()
                     .map((x) -> x.toString())
                     .reduce("Catalogo Utilizadores:", (a,b) -> a + "\n" + b);

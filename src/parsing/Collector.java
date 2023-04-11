@@ -4,6 +4,7 @@ import utilizadores.Utilizador;
 import utilizadores.GestorUtilizadores;
 import transportadoras.Transportadora;
 import transportadoras.GestorTransportadoras;
+import gestor.Gestor;
 
 
 import java.util.List;
@@ -18,8 +19,7 @@ public class Collector{
     private static final int UTILIZADOR_SIZE = 3;
     private static final int TRANSPORTADORA_SIZE = 5;
 
-
-    public static void collectDadosLine(String path){
+    public static void collectDadosLine(String path, Gestor gestor){
 
         ArrayList<String> tokens;
         Parser parser = new Parser();
@@ -31,7 +31,7 @@ public class Collector{
 
             case Collector.UTILIZADOR_SIZE:
 
-                GestorUtilizadores.addUtilizador(
+                gestor.insertUtilizador(
                     new Utilizador(
                         tokens.get(0),
                         tokens.get(1),
@@ -41,7 +41,7 @@ public class Collector{
 
             case Collector.TRANSPORTADORA_SIZE:
 
-                GestorTransportadoras.addTransportadora(
+                gestor.insertTransportadora(
                     new Transportadora(
                         tokens.get(0),
                         Double.valueOf(tokens.get(1)),
@@ -55,14 +55,14 @@ public class Collector{
         parser.cleanParser();
     }
 
-    public static void collectDadosFile(String path){
+    public static void collectDadosFile(String path, Gestor gestor){
 
         try{
             Scanner input = new Scanner(new File(path));
 
             while (input.hasNextLine()){
                 
-                Collector.collectDadosLine(input.nextLine());
+                Collector.collectDadosLine(input.nextLine(),gestor);
             }
         }
 
