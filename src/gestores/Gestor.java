@@ -5,6 +5,9 @@ import utilizadores.*;
 import transportadoras.*;
 import encomendas.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Gestor{
 
     public GestorArtigos gestor_artigos;
@@ -34,7 +37,7 @@ public class Gestor{
             if (gestor_transportadoras.lookUp(artigo.getTransportadora())){
 
                 this.gestor_artigos.addArtigo(artigo);
-                this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo.getVendedor(),artigo);
+                this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
                 return;
             }
         }
@@ -73,12 +76,36 @@ public class Gestor{
         }
     }
 
+    public void removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
+
+        try{
+
+            if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
+
+                Artigo result = this.gestor_encomendas.removeArtigoEncomenda(codigo_encomenda,codigo_artigo);
+                this.insertArtigo(result);
+            }
+
+            else System.out.println("Não foi possivel remover o artigo " + codigo_artigo + ", a encomenda está no estado: "
+                                    + this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda));
+        }
+
+        catch (Exception e){
+            System.out.println("Não foi possivel remove o artigo " + codigo_artigo
+                                + " da encomenda " + codigo_encomenda);
+        }
+    }
+
     public void finalizarEncomenda(int codigo_encomenda){
 
         try {
             
             if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
+                
                 this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
+                List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
+
+                artigos_encomenda.forEach((x) -> this.gestor_utilizadores.addUtilizadorArtigoVendido(x));
             }
 
             else System.out.println("Não foi possivel finalizar a encomenda, estado atual: "

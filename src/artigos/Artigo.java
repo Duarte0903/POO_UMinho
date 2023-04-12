@@ -23,7 +23,7 @@ public abstract class Artigo{
 
     private int vendedor;
     private String transportadora;
-    private LocalDate data_expedicao;
+    private LocalDate data_venda;
 
     // Construtores
 
@@ -38,7 +38,7 @@ public abstract class Artigo{
         this.n_donos = n_donos;
         this.vendedor = vendedor;
         this.transportadora = transportadora;
-        this.data_expedicao = null;
+        this.data_venda = null;
     }
 
     public Artigo(Artigo artigo){
@@ -52,6 +52,8 @@ public abstract class Artigo{
             artigo.getNDonos(),
             artigo.getVendedor(),
             artigo.getTransportadora());
+
+        this.data_venda = artigo.getDataVenda();
     }
 
     // Clone
@@ -100,8 +102,14 @@ public abstract class Artigo{
         return this.transportadora;
     }
 
-    public LocalDate getDataExpedicao(){
-        return this.data_expedicao;
+    public LocalDate getDataVenda(){
+        return this.data_venda;
+    }
+
+    // Setter
+
+    public void setDataVenda(LocalDate data){
+        this.data_venda = data;
     }
 
     // Metodos
@@ -122,7 +130,7 @@ public abstract class Artigo{
         buffer.append("\tEstado: ").append(this.estado);
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
-        buffer.append("\tData Expedição: ").append(this.data_expedicao);
+        buffer.append("\tData Venda: ").append(this.data_venda);
 
         return buffer.toString();
     }

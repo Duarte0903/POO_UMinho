@@ -4,6 +4,7 @@ import artigos.*;
 import encomendas.*;
 import java.util.Set;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.util.stream.*;
 
@@ -24,8 +25,16 @@ public class GestorEncomendas{
         this.catalogo_encomendas.get(codigo_encomenda).addArtigo(artigo);
     }
 
+    public Artigo removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
+        return this.catalogo_encomendas.get(codigo_encomenda).removeArtigo(codigo_artigo);
+    }
+
     public void finalizarEncomenda(int codigo_encomenda){
         this.catalogo_encomendas.get(codigo_encomenda).finalizarEncomenda();
+    }
+
+    public List<Artigo> getArtigosEncomenda(int codigo_encomenda){
+        return this.catalogo_encomendas.get(codigo_encomenda).getArtigos();
     }
 
     public String getEstadoEncomenda(int codigo_encomenda){

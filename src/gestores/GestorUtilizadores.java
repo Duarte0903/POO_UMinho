@@ -17,12 +17,16 @@ public class GestorUtilizadores{
         this.catalogo_utilizadores.add(utilizador.clone());
     }
 
-    public void addUtilizadorArtigoAVenda(int codigo, Artigo artigo){
-        this.catalogo_utilizadores.get(codigo).addArtigoAVenda(artigo);
+    public void addUtilizadorArtigoAVenda(Artigo artigo){
+        this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoAVenda(artigo);
     }
 
     public void removeUtilizadorArtigoAVenda(int utilizador, String codigo_artigo){
         this.catalogo_utilizadores.get(utilizador).removeArtigoAVenda(codigo_artigo);
+    }
+
+    public void addUtilizadorArtigoVendido(Artigo artigo){
+        this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoVendido(artigo);
     }
 
     public int getSize(){

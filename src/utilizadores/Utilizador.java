@@ -100,6 +100,10 @@ public class Utilizador{
         this.artigos_a_venda.removeIf((x) -> x.getCodigo().equals(codigo_artigo));
     }
 
+    public void addArtigoVendido(Artigo artigo){
+        this.artigos_vendidos.add(artigo.clone());
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();

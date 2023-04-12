@@ -19,6 +19,7 @@ import java.time.LocalDate;
 
 public class Coletor{
 
+    private static final int SHOW_DADOS = 0;
     private static final int INSERT_UTILIZADOR = 1;
     private static final int INSERT_TRANPORTADORA = 2;
     private static final int INSERT_ARTIGO_MALA = 3;
@@ -27,21 +28,26 @@ public class Coletor{
     private static final int CREAT_ENCOMENDA = 6;
     private static final int CHECK_OUT_ENCOMENDA = 7;
     private static final int INSERT_ARTIGO_ENCOMENDA = 8;
-    private static final int CHANGE_DATA = 10;
+    private static final int REMOVE_ARTIGO_ENCOMENDA = 9;
+    private static final int SHOW_DATA = 10;
+    private static final int CHANGE_DATA = 11;
 
     private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
 
     public static void fillTabela(){
 
+        Coletor.tabela.put("Ver Catalogos".hashCode(),Coletor.SHOW_DADOS);
         Coletor.tabela.put("Inserir Utilizador".hashCode(),Coletor.INSERT_UTILIZADOR);
         Coletor.tabela.put("Inserir Transportadora".hashCode(),Coletor.INSERT_TRANPORTADORA);
         Coletor.tabela.put("Inserir Artigo Mala".hashCode(),Coletor.INSERT_ARTIGO_MALA);
         Coletor.tabela.put("Inserir Artigo Tshirt".hashCode(),Coletor.INSERT_ARTIGO_TSHIRT);
         Coletor.tabela.put("Inserir Artigo Sapatilha".hashCode(),Coletor.INSERT_ARTIGO_SAPATILHA);
         Coletor.tabela.put("Criar Encomenda".hashCode(),Coletor.CREAT_ENCOMENDA);
-        Coletor.tabela.put("Finalizar Encomenda".hashCode(),Coletor.CHECK_OUT_ENCOMENDA);
-        Coletor.tabela.put("Alterar Data".hashCode(),Coletor.CHANGE_DATA);
         Coletor.tabela.put("Inserir Artigo Encomenda".hashCode(),Coletor.INSERT_ARTIGO_ENCOMENDA);
+        Coletor.tabela.put("Remover Artigo Encomenda".hashCode(),Coletor.REMOVE_ARTIGO_ENCOMENDA);
+        Coletor.tabela.put("Finalizar Encomenda".hashCode(),Coletor.CHECK_OUT_ENCOMENDA);
+        Coletor.tabela.put("Ver Data".hashCode(),Coletor.SHOW_DATA);
+        Coletor.tabela.put("Alterar Data".hashCode(),Coletor.CHANGE_DATA);
     }
 
     private static int getCodigo(String identificador){
@@ -59,6 +65,11 @@ public class Coletor{
         try{
 
             switch (Coletor.getCodigo(tokens.get(0))){
+
+                case Coletor.SHOW_DADOS:
+
+                    System.out.println(gestor.toString());
+                    break;
 
                 case Coletor.INSERT_UTILIZADOR:
 
@@ -156,6 +167,14 @@ public class Coletor{
 
                     break;
 
+                case Coletor.REMOVE_ARTIGO_ENCOMENDA:
+
+                    gestor.removeArtigoEncomenda(
+                        Integer.valueOf(tokens.get(1)),
+                        tokens.get(2));
+
+                    break;
+
                 case Coletor.CHECK_OUT_ENCOMENDA:
                     
                     gestor.finalizarEncomenda(Integer.valueOf(tokens.get(1)));
@@ -165,11 +184,16 @@ public class Coletor{
 
                     Calendario.setData(LocalDate.parse(tokens.get(1)));
                     break;
+
+                case Coletor.SHOW_DATA:
+
+                    System.out.println(Calendario.getData().toString());
+                    break;
             }
         }
 
         catch (Exception e){
-            System.out.println("Não foi possivel fazer o registo: " + tokens.get(0));
+            System.out.println("Não foi possivel efetuar o registo: " + tokens.get(0));
         }
     }
 
