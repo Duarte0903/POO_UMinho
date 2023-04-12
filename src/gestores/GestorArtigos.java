@@ -19,6 +19,14 @@ public class GestorArtigos{
         this.catalogo_artigos.put(artigo.hashCode(),artigo.clone());
     }
 
+    public Artigo removeArtigo(String codigo_artigo){
+
+        Artigo result = this.catalogo_artigos.get(codigo_artigo.hashCode()).clone();
+        this.catalogo_artigos.remove(codigo_artigo.hashCode());
+
+        return result;
+    }
+
     public String toString(){
 
         return this.catalogo_artigos

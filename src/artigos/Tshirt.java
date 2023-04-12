@@ -5,11 +5,11 @@ public class Tshirt extends Artigo{
     public static String LISO = "liso";
 
     private String tamanho; /* S M L XL */
-    private String padrao; /* liso riscas palmeniras */
+    private String padrao; /* liso riscas palmeiras */
 
     // Construtor
 
-    public Tshirt(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora, String tamanho, String padrao){
+    public Tshirt(int vendedor, String transportadora, String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, String tamanho, String padrao){
         super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos,vendedor,transportadora);
         this.tamanho = tamanho;
         this.padrao = padrao;
@@ -18,7 +18,7 @@ public class Tshirt extends Artigo{
     public Tshirt(Tshirt tshirt){
         super(tshirt);
         this.tamanho = tshirt.getTamanho();
-        this.padrao = this.getPadrao();
+        this.padrao = tshirt.getPadrao();
     }
 
     // Clone
@@ -54,7 +54,7 @@ public class Tshirt extends Artigo{
 
         buffer.append(super.toString());
         buffer.append("\tTamanho: ").append(this.tamanho);
-        buffer.append("\tPadrao: ").append(this.tamanho);
+        buffer.append("\tPadrao: ").append(this.padrao);
 
         return buffer.toString();
     }

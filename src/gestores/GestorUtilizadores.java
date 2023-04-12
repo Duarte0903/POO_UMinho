@@ -21,6 +21,10 @@ public class GestorUtilizadores{
         this.catalogo_utilizadores.get(codigo).addArtigoAVenda(artigo);
     }
 
+    public void removeUtilizadorArtigoAVenda(int utilizador, String codigo_artigo){
+        this.catalogo_utilizadores.get(utilizador).removeArtigoAVenda(codigo_artigo);
+    }
+
     public int getSize(){
         return this.catalogo_utilizadores.size();
     }

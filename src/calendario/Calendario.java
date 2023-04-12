@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 public class Calendario{
 
-    private static LocalDate data;
+    private static LocalDate data = LocalDate.parse("1970-01-01");
 
     public static LocalDate getData(){
         return Calendario.data;

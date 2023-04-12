@@ -1,5 +1,6 @@
 package gestores;
 
+import artigos.*;
 import encomendas.*;
 import java.util.Set;
 import java.util.Map;
@@ -17,6 +18,18 @@ public class GestorEncomendas{
 
     public void addEncomenda(Encomenda encomenda){
         this.catalogo_encomendas.put(encomenda.hashCode(),encomenda.clone());
+    }
+
+    public void addArtigoEncomenda(int codigo_encomenda, Artigo artigo){
+        this.catalogo_encomendas.get(codigo_encomenda).addArtigo(artigo);
+    }
+
+    public void finalizarEncomenda(int codigo_encomenda){
+        this.catalogo_encomendas.get(codigo_encomenda).finalizarEncomenda();
+    }
+
+    public String getEstadoEncomenda(int codigo_encomenda){
+        return this.catalogo_encomendas.get(codigo_encomenda).getEstado();
     }
 
     public String toString(){

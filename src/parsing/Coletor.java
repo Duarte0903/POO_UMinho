@@ -1,9 +1,11 @@
 package parsing;
 
 import artigos.*;
+import encomendas.*;
 import utilizadores.*;
 import transportadoras.*;
 import gestores.*;
+import calendario.*;
 
 
 import java.util.List;
@@ -15,7 +17,6 @@ import java.util.Scanner;
 import java.time.LocalDate;
 
 
-
 public class Coletor{
 
     private static final int INSERT_UTILIZADOR = 1;
@@ -23,6 +24,10 @@ public class Coletor{
     private static final int INSERT_ARTIGO_MALA = 3;
     private static final int INSERT_ARTIGO_TSHIRT = 4;
     private static final int INSERT_ARTIGO_SAPATILHA = 5;
+    private static final int CREAT_ENCOMENDA = 6;
+    private static final int CHECK_OUT_ENCOMENDA = 7;
+    private static final int INSERT_ARTIGO_ENCOMENDA = 8;
+    private static final int CHANGE_DATA = 10;
 
     private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
 
@@ -33,6 +38,10 @@ public class Coletor{
         Coletor.tabela.put("Inserir Artigo Mala".hashCode(),Coletor.INSERT_ARTIGO_MALA);
         Coletor.tabela.put("Inserir Artigo Tshirt".hashCode(),Coletor.INSERT_ARTIGO_TSHIRT);
         Coletor.tabela.put("Inserir Artigo Sapatilha".hashCode(),Coletor.INSERT_ARTIGO_SAPATILHA);
+        Coletor.tabela.put("Criar Encomenda".hashCode(),Coletor.CREAT_ENCOMENDA);
+        Coletor.tabela.put("Finalizar Encomenda".hashCode(),Coletor.CHECK_OUT_ENCOMENDA);
+        Coletor.tabela.put("Alterar Data".hashCode(),Coletor.CHANGE_DATA);
+        Coletor.tabela.put("Inserir Artigo Encomenda".hashCode(),Coletor.INSERT_ARTIGO_ENCOMENDA);
     }
 
     private static int getCodigo(String identificador){
@@ -91,7 +100,27 @@ public class Coletor{
 
                     break;
 
+                case Coletor.INSERT_ARTIGO_TSHIRT:
+
+                    gestor.insertArtigo(
+                        new Tshirt(
+                            Integer.valueOf(tokens.get(1)),
+                            tokens.get(2),
+                            tokens.get(3),
+                            tokens.get(4),
+                            tokens.get(5),
+                            Double.valueOf(tokens.get(6)),
+                            Double.valueOf(tokens.get(7)),
+                            tokens.get(8),
+                            Integer.valueOf(tokens.get(9)),
+                            Integer.valueOf(tokens.get(10)),
+                            tokens.get(11),
+                            tokens.get(12)));
+
+                    break;
+
                 case Coletor.INSERT_ARTIGO_SAPATILHA:
+
                     gestor.insertArtigo(
                         new Sapatilha(
                             Integer.valueOf(tokens.get(1)),
@@ -108,9 +137,34 @@ public class Coletor{
                             Integer.valueOf(tokens.get(12)),
                             Boolean.parseBoolean(tokens.get(13)),
                             LocalDate.parse(tokens.get(14))));
-                    
+
                     break;
+
+                case Coletor.CREAT_ENCOMENDA:
+                    
+                    gestor.insertEncomenda(
+                        new Encomenda(
+                            Integer.valueOf(tokens.get(1))));
             
+                    break;
+
+                case Coletor.INSERT_ARTIGO_ENCOMENDA:
+
+                    gestor.insertArtigoEncomenda(
+                        Integer.valueOf(tokens.get(1)),
+                        tokens.get(2));
+
+                    break;
+
+                case Coletor.CHECK_OUT_ENCOMENDA:
+                    
+                    gestor.finalizarEncomenda(Integer.valueOf(tokens.get(1)));
+                    break;
+
+                case Coletor.CHANGE_DATA:
+
+                    Calendario.setData(LocalDate.parse(tokens.get(1)));
+                    break;
             }
         }
 

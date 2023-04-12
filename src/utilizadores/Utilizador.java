@@ -96,6 +96,10 @@ public class Utilizador{
         this.artigos_a_venda.add(artigo.clone());
     }
 
+    public void removeArtigoAVenda(String codigo_artigo){
+        this.artigos_a_venda.removeIf((x) -> x.getCodigo().equals(codigo_artigo));
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();

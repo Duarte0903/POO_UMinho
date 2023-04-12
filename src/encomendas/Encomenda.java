@@ -14,9 +14,9 @@ public class Encomenda{
 
     private static int AUTO_INCREMENT = 0; 
 
-    private static String PENDENTE = "pendente";
-    private static String FINALIZADA = "finalizada";
-    private static String EXPEDIDA = "expedida";
+    public static final String PENDENTE = "pendente";
+    public static final String FINALIZADA = "finalizada";
+    public static final String EXPEDIDA = "expedida";
 
     private static String PEQUENA = "pequena";
     private static String MEDIA = "media";
@@ -90,7 +90,7 @@ public class Encomenda{
 
     // Metodos
 
-    public void addArtigoEncomenda(Artigo artigo){
+    public void addArtigo(Artigo artigo){
 
         this.artigos.add(artigo.clone());
 
@@ -99,7 +99,7 @@ public class Encomenda{
         else if (this.artigos.size() > Encomenda.MEDIA_SIZE) this.embalagem = Encomenda.MEDIA;
     }
 
-    public Artigo removeArtigoEncomenda(String codigo){
+    public Artigo removeArtigo(String codigo){
 
         Iterator<Artigo> iterator = this.artigos.iterator();
         Artigo result = null;
