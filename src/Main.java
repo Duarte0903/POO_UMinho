@@ -14,7 +14,8 @@ public class Main{
 
         Gestor gestor = new Gestor();
 
-        Collector.collectDadosFile("teste.txt",gestor);
+        Coletor.fillTabela();
+        Coletor.collectDadosFile("teste.txt",gestor);
 
         System.out.println(gestor.toString());
     }

@@ -1,6 +1,8 @@
 package artigos;
 
-public class Artigo{
+import java.time.LocalDate;
+
+public abstract class Artigo{
 
     public static String USADO = "usado";
     public static String NOVO = "novo";
@@ -21,6 +23,7 @@ public class Artigo{
 
     private int vendedor;
     private String transportadora;
+    private LocalDate data_expedicao;
 
     // Construtores
 
@@ -35,6 +38,7 @@ public class Artigo{
         this.n_donos = n_donos;
         this.vendedor = vendedor;
         this.transportadora = transportadora;
+        this.data_expedicao = null;
     }
 
     public Artigo(Artigo artigo){
@@ -52,9 +56,7 @@ public class Artigo{
 
     // Clone
 
-    public Artigo clone(){
-        return new Artigo(this);
-    }
+    public abstract Artigo clone();
 
     // Getters
 
@@ -98,7 +100,13 @@ public class Artigo{
         return this.transportadora;
     }
 
+    public LocalDate getDataExpedicao(){
+        return this.data_expedicao;
+    }
+
     // Metodos
+
+    public abstract double calculaPreco();
 
     public String toString(){
 
@@ -114,6 +122,7 @@ public class Artigo{
         buffer.append("\tEstado: ").append(this.estado);
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
+        buffer.append("\tData Exedição: ").append(this.data_expedicao);
 
         return buffer.toString();
     }

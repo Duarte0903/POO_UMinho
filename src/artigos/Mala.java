@@ -28,6 +28,10 @@ public class Mala extends Artigo{
 
     // Metodos
 
+    public double calculaPreco(){
+        return super.getPreco() * 1/this.tamanho;
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();
