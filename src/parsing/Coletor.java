@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.io.File;
 import java.util.Scanner;
+import java.time.LocalDate;
 
 
 
@@ -89,6 +90,27 @@ public class Coletor{
                             Integer.valueOf(tokens.get(11))));
 
                     break;
+
+                case Coletor.INSERT_ARTIGO_SAPATILHA:
+                    gestor.insertArtigo(
+                        new Sapatilha(
+                            Integer.valueOf(tokens.get(1)),
+                            tokens.get(2),
+                            tokens.get(3),
+                            tokens.get(4),
+                            tokens.get(5),
+                            Double.valueOf(tokens.get(6)),
+                            Double.valueOf(tokens.get(7)),
+                            tokens.get(8),
+                            Integer.valueOf(tokens.get(9)),
+                            Integer.valueOf(tokens.get(10)),
+                            tokens.get(11),
+                            Integer.valueOf(tokens.get(12)),
+                            Boolean.parseBoolean(tokens.get(13)),
+                            LocalDate.parse(tokens.get(14))));
+                    
+                    break;
+            
             }
         }
 

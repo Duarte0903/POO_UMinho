@@ -26,10 +26,11 @@ public class Gestor{
             if (gestor_transportadoras.lookUp(artigo.getTransportadora())){
 
                 this.gestor_artigos.addArtigo(artigo);
+                this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo.getVendedor(),artigo);
                 return;
             }
         }
-        
+
         System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo());
     }
 

@@ -43,9 +43,9 @@ public class Utilizador{
         utilizador.setNome(this.nome);
         utilizador.setNif(this.nif);
 
-        utilizador.artigos_a_venda = Utilizador.cloneArtigos(this.artigos_a_venda);
-        utilizador.artigos_vendidos =Utilizador.cloneArtigos(this.artigos_vendidos);
-        utilizador.artigos_adquiridos = Utilizador.cloneArtigos(this.artigos_adquiridos);
+        utilizador.artigos_a_venda = this.cloneArtigos(this.artigos_a_venda);
+        utilizador.artigos_vendidos = this.cloneArtigos(this.artigos_vendidos);
+        utilizador.artigos_adquiridos = this.cloneArtigos(this.artigos_adquiridos);
 
         return utilizador;
     }
@@ -86,11 +86,15 @@ public class Utilizador{
         this.nif = nif;
     }
 
-    private static List<Artigo> cloneArtigos(List<Artigo> lista){
+    private List<Artigo> cloneArtigos(List<Artigo> lista){
         return lista.stream().map((x) -> x.clone()).collect(Collectors.toList());
     }
 
     // Metodos
+
+    public void addArtigoAVenda(Artigo artigo){
+        this.artigos_a_venda.add(artigo.clone());
+    }
 
     public String toString(){
 

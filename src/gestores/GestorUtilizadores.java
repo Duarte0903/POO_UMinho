@@ -1,5 +1,6 @@
 package gestores;
 
+import artigos.Artigo;
 import utilizadores.Utilizador;
 
 import java.util.*;
@@ -14,6 +15,10 @@ public class GestorUtilizadores{
 
     public void addUtilizador(Utilizador utilizador){
         this.catalogo_utilizadores.add(utilizador.clone());
+    }
+
+    public void addUtilizadorArtigoAVenda(int codigo, Artigo artigo){
+        this.catalogo_utilizadores.get(codigo).addArtigoAVenda(artigo);
     }
 
     public int getSize(){
