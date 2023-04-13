@@ -105,7 +105,13 @@ public class Gestor{
                 this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
                 List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
 
-                artigos_encomenda.forEach((x) -> this.gestor_utilizadores.addUtilizadorArtigoVendido(x));
+                artigos_encomenda.forEach(
+                    (x) -> this.gestor_utilizadores.addUtilizadorArtigoVendido(x));
+
+                artigos_encomenda.forEach(
+                    (x) -> this.gestor_utilizadores.addUtilizadorArtigoAdquirido(
+                        this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda),x));
+
             }
 
             else System.out.println("Não foi possivel finalizar a encomenda, estado atual: "

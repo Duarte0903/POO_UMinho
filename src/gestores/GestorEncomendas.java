@@ -41,6 +41,10 @@ public class GestorEncomendas{
         return this.catalogo_encomendas.get(codigo_encomenda).getEstado();
     }
 
+    public int getCompradorEncomenda(int codigo_encomenda){
+        return this.catalogo_encomendas.get(codigo_encomenda).getComprador();
+    }
+
     public String toString(){
 
         return this.catalogo_encomendas

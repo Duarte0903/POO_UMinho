@@ -104,6 +104,10 @@ public class Utilizador{
         this.artigos_vendidos.add(artigo.clone());
     }
 
+    public void addArtigoAdquirido(Artigo artigo){
+        this.artigos_adquiridos.add(artigo.clone());
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();

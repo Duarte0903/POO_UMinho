@@ -90,13 +90,26 @@ public class Encomenda{
 
     // Metodos
 
-    public void addArtigo(Artigo artigo){
+    public double calculaPreco(){
 
-        this.artigos.add(artigo.clone());
+        return this.artigos.stream()
+                        .mapToDouble((x) -> x.calculaPreco())
+                        .sum();
+    }
+
+    private void updateEmbalagem(){
 
         if (this.artigos.size() > Encomenda.GRANDE_SIZE) this.embalagem = Encomenda.GRANDE;
 
         else if (this.artigos.size() > Encomenda.MEDIA_SIZE) this.embalagem = Encomenda.MEDIA;
+
+        else this.embalagem = Encomenda.PEQUENA;
+    }
+
+    public void addArtigo(Artigo artigo){
+
+        this.artigos.add(artigo.clone());
+        this.updateEmbalagem();
     }
 
     public Artigo removeArtigo(String codigo){
@@ -114,6 +127,8 @@ public class Encomenda{
                 iterator.remove();
             }
         }
+
+        this.updateEmbalagem();
 
         return result;
     }

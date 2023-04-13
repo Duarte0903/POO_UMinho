@@ -24,9 +24,9 @@ public class Main{
         
         if (args.length != 0) Coletor.collectDadosFile(args[0],gestor);
 
-        System.out.printf(Main.GREEN + "%s", ">>> ");
+   //     System.out.printf(Main.GREEN + "%s", ">>> ");
 
-        while (input.hasNextLine()){
+  /*      while (input.hasNextLine()){
 
             String line = input.nextLine();
 
@@ -37,5 +37,8 @@ public class Main{
         }
 
         System.out.println("Bye!");
+        */
+
+        System.out.println(gestor.toString());
     }
 }

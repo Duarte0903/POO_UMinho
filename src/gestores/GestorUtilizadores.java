@@ -29,6 +29,10 @@ public class GestorUtilizadores{
         this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoVendido(artigo);
     }
 
+    public void addUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
+        this.catalogo_utilizadores.get(utilizador).addArtigoAdquirido(artigo);
+    }
+
     public int getSize(){
         return this.catalogo_utilizadores.size();
     }
