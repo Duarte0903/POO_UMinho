@@ -107,7 +107,9 @@ public class Coletor{
                             tokens.get(8),
                             Integer.valueOf(tokens.get(9)),
                             Integer.valueOf(tokens.get(10)),
-                            Integer.valueOf(tokens.get(11))));
+                            Integer.valueOf(tokens.get(11)),
+                            tokens.get(12),
+                            LocalDate.parse(tokens.get(13))));
 
                     break;
 

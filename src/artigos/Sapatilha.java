@@ -60,15 +60,13 @@ public class Sapatilha extends Artigo{
 
         if (super.getEstado().equals(Artigo.USADO)){
 
-            preco -= preco/(super.getNDonos()*super.getAvaliacao()); 
+            if (super.getNDonos() != 0 && super.getAvaliacao() != 0){
+            
+                preco -= preco/(super.getNDonos()*super.getAvaliacao());
+            }
         }
 
-        if (super.getEstado().equals(Artigo.USADO)
-            || Calendario.getIntervaloAnos(this.colecao,Calendario.getData()) > 0
-            || this.tamanho > 45){
-
-                preco -= super.getDesconto()*preco;
-            }
+        else if (this.tamanho > 45) preco -= super.getDesconto()*preco;
 
         return preco;
     }
