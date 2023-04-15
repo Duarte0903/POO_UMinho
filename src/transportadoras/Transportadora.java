@@ -107,10 +107,6 @@ public class Transportadora{
         this.encomendas_expedidas.get(codigo_encomenda).add(artigo.clone());
     }
 
-    public void removeEncomenda(int codigo_encomenda){
-        this.encomendas_expedidas.remove(codigo_encomenda);
-    }
-
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();

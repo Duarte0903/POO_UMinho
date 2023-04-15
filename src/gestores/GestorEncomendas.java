@@ -7,8 +7,9 @@ import java.util.Set;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.stream.*;
+import java.util.ArrayList;
+import java.time.LocalDate;
 
 
 public class GestorEncomendas{
@@ -39,6 +40,10 @@ public class GestorEncomendas{
         this.catalogo_encomendas.get(codigo_encomenda).expedirEncomenda();
     }
 
+    public void removeEncomenda(int codigo_encomenda){
+        this.catalogo_encomendas.remove(codigo_encomenda);
+    }
+
     // Getters
 
     public List<Artigo> getArtigosEncomenda(int codigo_encomenda){
@@ -51,6 +56,10 @@ public class GestorEncomendas{
 
     public int getCompradorEncomenda(int codigo_encomenda){
         return this.catalogo_encomendas.get(codigo_encomenda).getComprador();
+    }
+
+    public LocalDate getDataEncomenda(int codigo_encomenda){
+        return this.catalogo_encomendas.get(codigo_encomenda).getDataCriacao();
     }
 
     public List<Integer> getAllEncomendasProntas(){

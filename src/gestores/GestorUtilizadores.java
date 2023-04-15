@@ -21,16 +21,25 @@ public class GestorUtilizadores{
         this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoAVenda(artigo);
     }
 
-    public void removeUtilizadorArtigoAVenda(int utilizador, String codigo_artigo){
-        this.catalogo_utilizadores.get(utilizador).removeArtigoAVenda(codigo_artigo);
+    public void removeUtilizadorArtigoAVenda(Artigo artigo){
+        this.catalogo_utilizadores.get(artigo.getVendedor()).removeArtigoAVenda(artigo);
     }
 
     public void addUtilizadorArtigoVendido(Artigo artigo){
         this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoVendido(artigo);
     }
 
+    public void removeUtilizadorArtigoVendido(Artigo artigo){
+        this.catalogo_utilizadores.get(artigo.getVendedor()).removeArtigoVendido(artigo);
+    }
+
     public void addUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
         this.catalogo_utilizadores.get(utilizador).addArtigoAdquirido(artigo);
+    }
+
+    public void removeUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
+        this.catalogo_utilizadores.get(utilizador).removeArtigoAdquirido(artigo);
+
     }
 
     public int getSize(){

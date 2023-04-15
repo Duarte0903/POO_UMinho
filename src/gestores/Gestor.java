@@ -40,11 +40,10 @@ public class Gestor{
 
                 this.gestor_artigos.addArtigo(artigo);
                 this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
-                return;
             }
         }
 
-        System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo());
+        else {System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo());}
     }
 
     public void insertEncomenda(Encomenda encomenda){
@@ -64,7 +63,7 @@ public class Gestor{
             if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
 
                 Artigo result = this.gestor_artigos.removeArtigo(codigo_artigo);
-                this.gestor_utilizadores.removeUtilizadorArtigoAVenda(result.getVendedor(),result.getCodigo());
+                this.gestor_utilizadores.removeUtilizadorArtigoAVenda(result);
                 this.gestor_encomendas.addArtigoEncomenda(codigo_encomenda,result);
             }
 
@@ -123,7 +122,6 @@ public class Gestor{
         catch (Exception e) {System.out.println("Não foi possivel finalizar a encomenda: " + codigo_encomenda);}
     }
 
-
     public void expedirEncomenda(int codigo_encomenda){
 
         try{
@@ -133,7 +131,7 @@ public class Gestor{
 
             artigos_encomenda.forEach((x) -> {
                 
-                x.setDataVenda(x.getDataVenda().plusDays(2));
+                x.setData(x.getData().plusDays(2));
                 this.gestor_transportadoras.addArtigoTransportadora(
                                                 x.getTransportadora(),
                                                 codigo_encomenda,
@@ -143,7 +141,6 @@ public class Gestor{
 
         catch (Exception e) {System.out.println("Não foi possivel expedir a encomenda: " + codigo_encomenda);}
     }
-
 
     public void updateData(LocalDate data){
 
@@ -159,17 +156,53 @@ public class Gestor{
         }
     }
 
+    public void devolverEncomenda(int codigo_encomenda){
+
+        try{
+
+            if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.EXPEDIDA)){
+
+                long dias = Calendario.getIntervaloDias(this.gestor_encomendas.getDataEncomenda(codigo_encomenda),Calendario.getData());
+
+                if (dias > 3){
+
+                    int comprador = this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda);
+                    List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
+
+                    this.gestor_encomendas.removeEncomenda(codigo_encomenda);
+
+                    artigos_encomenda.forEach((x) -> this.gestor_utilizadores.removeUtilizadorArtigoVendido(x));
+                    artigos_encomenda.forEach((x) -> this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(comprador,x));
+                    artigos_encomenda.forEach((x) -> {
+                        x.setData(Calendario.getData());
+                        this.insertArtigo(x);
+                    });
+                }
+
+                else{
+                    System.out.println("Não foi possivel devolver a encomenda, falta(m) " + (4-dias) + " dia(s)");
+                }
+            }
+
+            else{
+                System.out.println("Não foi possivel devolver a encomenda, estado atual: "
+                                    + this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda));
+            }
+        }
+
+        catch (Exception e) {System.out.println("Não foi possivel devolver a encomenda: " + codigo_encomenda);}
+    }
 
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(this.gestor_utilizadores.toString());
-        buffer.append("\n---------------------------------\n");
+        buffer.append("\n------------------------------------\n");
         buffer.append(this.gestor_transportadoras.toString());
-        buffer.append("\n---------------------------------\n");
+        buffer.append("\n------------------------------------\n");
         buffer.append(this.gestor_artigos.toString());
-        buffer.append("\n---------------------------------\n");
+        buffer.append("\n------------------------------------\n");
         buffer.append(this.gestor_encomendas.toString());
         return buffer.toString();
     }

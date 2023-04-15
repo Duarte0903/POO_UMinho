@@ -136,7 +136,7 @@ public class Encomenda{
     public void finalizarEncomenda(){
         this.estado = Encomenda.FINALIZADA;
         this.data_criacao = Calendario.getData();
-        this.artigos.forEach((x) -> x.setDataVenda(Calendario.getData()));
+        this.artigos.forEach((x) -> x.setData(Calendario.getData()));
     }
 
     public void expedirEncomenda(){

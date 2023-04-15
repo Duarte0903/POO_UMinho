@@ -96,16 +96,24 @@ public class Utilizador{
         this.artigos_a_venda.add(artigo.clone());
     }
 
-    public void removeArtigoAVenda(String codigo_artigo){
-        this.artigos_a_venda.removeIf((x) -> x.getCodigo().equals(codigo_artigo));
+    public void removeArtigoAVenda(Artigo artigo){
+        this.artigos_a_venda.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
     public void addArtigoVendido(Artigo artigo){
         this.artigos_vendidos.add(artigo.clone());
     }
 
+    public void removeArtigoVendido(Artigo artigo){
+        this.artigos_vendidos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
+    }
+
     public void addArtigoAdquirido(Artigo artigo){
         this.artigos_adquiridos.add(artigo.clone());
+    }
+
+    public void removeArtigoAdquirido(Artigo artigo){
+        this.artigos_adquiridos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
     public String toString(){

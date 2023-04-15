@@ -1,5 +1,6 @@
 package artigos;
 
+import calendario.*;
 import java.time.LocalDate;
 
 public abstract class Artigo{
@@ -23,7 +24,7 @@ public abstract class Artigo{
 
     private int vendedor;
     private String transportadora;
-    private LocalDate data_venda;
+    private LocalDate data;
 
     // Construtores
 
@@ -38,7 +39,7 @@ public abstract class Artigo{
         this.n_donos = n_donos;
         this.vendedor = vendedor;
         this.transportadora = transportadora;
-        this.data_venda = null;
+        this.data = Calendario.getData();
     }
 
     public Artigo(Artigo artigo){
@@ -53,7 +54,7 @@ public abstract class Artigo{
             artigo.getVendedor(),
             artigo.getTransportadora());
 
-        this.data_venda = artigo.getDataVenda();
+        this.data = artigo.getData();
     }
 
     // Clone
@@ -102,14 +103,14 @@ public abstract class Artigo{
         return this.transportadora;
     }
 
-    public LocalDate getDataVenda(){
-        return this.data_venda;
+    public LocalDate getData(){
+        return this.data;
     }
 
     // Setter
 
-    public void setDataVenda(LocalDate data){
-        this.data_venda = data;
+    public void setData(LocalDate data){
+        this.data = data;
     }
 
     // Metodos
@@ -130,7 +131,7 @@ public abstract class Artigo{
         buffer.append("\tEstado: ").append(this.estado);
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
-        buffer.append("\tVenda/Expedicao: ").append(this.data_venda);
+        buffer.append("\tData insercao: ").append(this.data);
 
         return buffer.toString();
     }
