@@ -29,10 +29,11 @@ public abstract class Artigo implements Serializable{
     private int vendedor;
     private String transportadora;
     private LocalDate data;
+    private boolean premium;
 
     // Construtores
 
-    public Artigo(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora){
+    public Artigo(String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int vendedor, String transportadora, boolean premium){
         this.nome = nome;
         this.codigo = codigo;
         this.marca = marca;
@@ -44,6 +45,7 @@ public abstract class Artigo implements Serializable{
         this.vendedor = vendedor;
         this.transportadora = transportadora;
         this.data = Calendario.getData();
+        this.premium = premium;
     }
 
     public Artigo(Artigo artigo){
@@ -56,7 +58,8 @@ public abstract class Artigo implements Serializable{
             artigo.getAvaliacao(),
             artigo.getNDonos(),
             artigo.getVendedor(),
-            artigo.getTransportadora());
+            artigo.getTransportadora(),
+            artigo.getPremium());
 
         this.data = artigo.getData();
     }
@@ -111,6 +114,10 @@ public abstract class Artigo implements Serializable{
         return this.data;
     }
 
+    public boolean getPremium(){
+        return this.premium;
+    }
+
     // Setter
 
     public void setData(LocalDate data){
@@ -136,6 +143,7 @@ public abstract class Artigo implements Serializable{
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
         buffer.append("\tData insercao: ").append(this.data);
+        buffer.append("\tPremium: ").append(this.premium);
 
         return buffer.toString();
     }

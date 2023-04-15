@@ -41,9 +41,21 @@ public class Gestor implements Serializable{
 
             if (gestor_transportadoras.lookUp(artigo.getTransportadora())){
 
-                this.gestor_artigos.addArtigo(artigo);
-                this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
+                if (this.gestor_transportadoras.getPremiumTransportadora(artigo.getTransportadora())
+                    && !artigo.getPremium()){
+
+                    System.out.println("Não foi possivel inserir o artigo, transportadora premium: " +
+                    this.gestor_transportadoras.getPremiumTransportadora(artigo.getTransportadora()));
+                }
+
+                else{
+
+                    this.gestor_artigos.addArtigo(artigo);
+                    this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
+                }
             }
+
+            else System.out.println("Não foi possivel identificar a transportadora: " +artigo.getTransportadora());         
         }
 
         else {System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo());}

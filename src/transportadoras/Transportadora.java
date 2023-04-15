@@ -18,16 +18,18 @@ public class Transportadora implements Serializable{
     private double base_enc_media;
     private double base_enc_grande;
     private double mult_imposto;
+    private boolean premium;
     private Map<Integer,List<Artigo>> encomendas_expedidas;
 
     // Construtor;
 
-    public Transportadora(String nome, double base_enc_pequena, double base_enc_media, double base_enc_grande, double mult_imposto){
+    public Transportadora(String nome, double base_enc_pequena, double base_enc_media, double base_enc_grande, double mult_imposto, boolean premium){
         this.nome = nome;
         this.base_enc_pequena = base_enc_pequena;
         this.base_enc_media = base_enc_media;
         this.base_enc_grande = base_enc_grande;
         this.mult_imposto = mult_imposto;
+        this.premium = premium;
         this.encomendas_expedidas = new HashMap<Integer,List<Artigo>>();
     }
 
@@ -40,7 +42,8 @@ public class Transportadora implements Serializable{
             this.base_enc_pequena,
             this.base_enc_media,
             this.base_enc_grande,
-            this.mult_imposto);
+            this.mult_imposto,
+            this.premium);
 
         result.encomendas_expedidas = this.encomendas_expedidas
                                         .entrySet()
@@ -75,6 +78,10 @@ public class Transportadora implements Serializable{
 
     public double getMultImporto(){
         return this.mult_imposto;
+    }
+
+    public boolean getPremium(){
+        return this.premium;
     }
 
     // Setter
@@ -120,6 +127,7 @@ public class Transportadora implements Serializable{
         buffer.append("\tBase_enc_media: ").append(this.base_enc_media);
         buffer.append("\tBase_enc_grande: ").append(this.base_enc_grande);
         buffer.append("\tMult_importo: ").append(this.mult_imposto);
+        buffer.append("\tPremium: ").append(this.premium);
         buffer.append("\nEncomendas expedidas: ");
         buffer.append(this.encomendas_expedidas
                             .entrySet()

@@ -31,6 +31,10 @@ public class GestorTransportadoras implements Serializable{
         return this.catalogo_transportadoras.containsKey(transportadora.hashCode());
     }
 
+    public boolean getPremiumTransportadora(String transportadora){
+        return this.catalogo_transportadoras.get(transportadora.hashCode()).getPremium();
+    }
+
     public String toString(){
 
         return this.catalogo_transportadoras

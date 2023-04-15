@@ -87,7 +87,8 @@ public class Coletor{
                             Double.valueOf(tokens.get(2)),
                             Double.valueOf(tokens.get(3)),
                             Double.valueOf(tokens.get(4)),
-                            Double.valueOf(tokens.get(5))));
+                            Double.valueOf(tokens.get(5)),
+                            Boolean.parseBoolean(tokens.get(6))));
 
                     break;
 
@@ -105,9 +106,10 @@ public class Coletor{
                             tokens.get(8),
                             Integer.valueOf(tokens.get(9)),
                             Integer.valueOf(tokens.get(10)),
-                            Integer.valueOf(tokens.get(11)),
-                            tokens.get(12),
-                            LocalDate.parse(tokens.get(13))));
+                            Boolean.parseBoolean(tokens.get(11)),
+                            Integer.valueOf(tokens.get(12)),
+                            tokens.get(13),
+                            LocalDate.parse(tokens.get(14))));
 
                     break;
 
@@ -125,8 +127,9 @@ public class Coletor{
                             tokens.get(8),
                             Integer.valueOf(tokens.get(9)),
                             Integer.valueOf(tokens.get(10)),
-                            tokens.get(11),
-                            tokens.get(12)));
+                            Boolean.parseBoolean(tokens.get(11)),
+                            tokens.get(12),
+                            tokens.get(13)));
 
                     break;
 
@@ -144,10 +147,11 @@ public class Coletor{
                             tokens.get(8),
                             Integer.valueOf(tokens.get(9)),
                             Integer.valueOf(tokens.get(10)),
-                            tokens.get(11),
-                            Integer.valueOf(tokens.get(12)),
-                            Boolean.parseBoolean(tokens.get(13)),
-                            LocalDate.parse(tokens.get(14))));
+                            Boolean.parseBoolean(tokens.get(11)),
+                            tokens.get(12),
+                            Integer.valueOf(tokens.get(13)),
+                            Boolean.parseBoolean(tokens.get(14)),
+                            LocalDate.parse(tokens.get(15))));
 
                     break;
 

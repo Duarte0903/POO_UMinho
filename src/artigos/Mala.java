@@ -1,5 +1,6 @@
 package artigos;
 
+import calendario.Calendario;
 import java.time.LocalDate;
 import java.io.Serializable;
 
@@ -14,8 +15,8 @@ public class Mala extends Artigo{
 
     // Construtores
 
-    public Mala(int vendedor, String transportadora, String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, int tamanho, String material, LocalDate colecao){
-        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos,vendedor,transportadora);
+    public Mala(int vendedor, String transportadora, String nome, String codigo, String marca, double preco, double desconto, String estado, int avaliacao, int n_donos, boolean premium, int tamanho, String material, LocalDate colecao){
+        super(nome,codigo,marca,preco,desconto,estado,avaliacao,n_donos,vendedor,transportadora, premium);
         this.tamanho = tamanho;
         this.material = material;
         this.colecao = colecao;
@@ -49,7 +50,17 @@ public class Mala extends Artigo{
     // Metodos
 
     public double calculaPreco(){
-        return super.getPreco() - super.getPreco()/this.tamanho;
+
+        double preco = super.getPreco();
+
+        if (super.getPremium()){
+
+            preco += super.getDesconto()*Calendario.getIntervaloAnos(this.colecao,Calendario.getData());
+        }
+
+        else preco -= preco/this.tamanho;
+
+        return preco;
     }
 
     public String toString(){
