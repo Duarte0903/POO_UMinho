@@ -2,25 +2,26 @@ package encomendas;
 
 import artigos.Artigo;
 import calendario.Calendario;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.stream.*;
 import java.util.Iterator;
+import java.io.Serializable;
 
 
-public class Encomenda{
+public class Encomenda implements Serializable{
 
+    private static final long serialVersionUID = 6L;
     private static int AUTO_INCREMENT = 0; 
 
     public static final String PENDENTE = "pendente";
     public static final String FINALIZADA = "finalizada";
     public static final String EXPEDIDA = "expedida";
 
-    private static String PEQUENA = "pequena";
-    private static String MEDIA = "media";
-    private static String GRANDE = "grande";
+    private static final String PEQUENA = "pequena";
+    private static final String MEDIA = "media";
+    private static final String GRANDE = "grande";
 
     private static int MEDIA_SIZE = 1;
     private static int GRANDE_SIZE = 5;

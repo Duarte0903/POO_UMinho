@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.stream.*;
+import java.io.Serializable;
 
-public class Transportadora{
+
+public class Transportadora implements Serializable{
+
+    private static final long serialVersionUID = 7L;
 
     private String nome;
     private double base_enc_pequena;

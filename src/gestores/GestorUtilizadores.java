@@ -2,10 +2,14 @@ package gestores;
 
 import artigos.Artigo;
 import utilizadores.Utilizador;
+import java.util.List;
+import java.util.ArrayList;
+import java.io.Serializable;
 
-import java.util.*;
 
-public class GestorUtilizadores{
+public class GestorUtilizadores implements Serializable{
+
+    private static final long serialVersionUID = 9L;
 
     private List<Utilizador> catalogo_utilizadores;
 

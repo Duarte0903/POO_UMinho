@@ -2,11 +2,14 @@ package utilizadores;
 
 import artigos.Artigo;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.stream.*;
+import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Utilizador{
 
+public class Utilizador implements Serializable{
+
+    private static final long serialVersionUID = 5L;
     private static int AUTO_INCREMENT = 0;
 
     private int codigo;

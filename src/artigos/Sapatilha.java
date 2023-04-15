@@ -2,8 +2,12 @@ package artigos;
 
 import calendario.Calendario;
 import java.time.LocalDate;
+import java.io.Serializable;
+
 
 public class Sapatilha extends Artigo{
+
+    private static final long serialVersionUID = 3L;
 
     private String cor;
     private int tamanho;

@@ -1,13 +1,16 @@
 package gestores;
 
-import artigos.*;
+import artigos.Artigo;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.*;
+import java.io.Serializable;
 
 
-public class GestorArtigos{
+public class GestorArtigos implements Serializable{
+
+    private static final long serialVersionUID = 8L;
 
     private Map<Integer,Artigo> catalogo_artigos;
 

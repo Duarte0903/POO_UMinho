@@ -1,19 +1,15 @@
 package parsing;
 
 import artigos.*;
-import encomendas.*;
-import utilizadores.*;
-import transportadoras.*;
-import gestores.*;
-import calendario.*;
-
-
+import encomendas.Encomenda;
+import utilizadores.Utilizador;
+import transportadoras.Transportadora;
+import gestores.Gestor;
+import calendario.Calendario;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.io.File;
-import java.util.Scanner;
 import java.time.LocalDate;
 
 
@@ -203,22 +199,6 @@ public class Coletor{
 
         catch (Exception e){
             System.out.println("Não foi possivel efetuar o registo: " + tokens.get(0));
-        }
-    }
-
-    public static void collectDadosFile(String path, Gestor gestor){
-
-        try{
-            Scanner input = new Scanner(new File(path));
-
-            while (input.hasNextLine()){
-                
-                Coletor.collectDadosLine(input.nextLine(),gestor);
-            }
-        }
-
-        catch (Exception e){
-            System.out.println("Não foi possivel abrir o ficheiro: " + path);
         }
     }
 }

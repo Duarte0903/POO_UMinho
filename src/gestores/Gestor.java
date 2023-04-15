@@ -1,16 +1,19 @@
 package gestores;
 
-import artigos.*;
-import utilizadores.*;
-import transportadoras.*;
-import encomendas.*;
-import calendario.*;
-
+import artigos.Artigo;
+import encomendas.Encomenda;
+import calendario.Calendario;
+import utilizadores.Utilizador;
+import transportadoras.Transportadora;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Gestor{
+
+public class Gestor implements Serializable{
+
+    private static final long serialVersionUID = 12L;    
 
     public GestorArtigos gestor_artigos;
     public GestorEncomendas gestor_encomendas;

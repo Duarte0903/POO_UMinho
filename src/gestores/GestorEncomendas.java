@@ -1,8 +1,8 @@
 package gestores;
 
-import artigos.*;
-import encomendas.*;
-import calendario.*;
+import artigos.Artigo;
+import encomendas.Encomenda;
+import calendario.Calendario;
 import java.util.Set;
 import java.util.Map;
 import java.util.List;
@@ -10,9 +10,12 @@ import java.util.HashMap;
 import java.util.stream.*;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.io.Serializable;
 
 
-public class GestorEncomendas{
+public class GestorEncomendas implements Serializable{
+
+    private static final long serialVersionUID = 10L;
 
     private Map<Integer,Encomenda> catalogo_encomendas;
 

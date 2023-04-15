@@ -1,14 +1,17 @@
 package gestores;
 
-import artigos.*;
+import artigos.Artigo;
 import transportadoras.Transportadora;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.*;
+import java.io.Serializable;
 
 
-public class GestorTransportadoras{
+public class GestorTransportadoras implements Serializable{
+
+    private static final long serialVersionUID = 11L;
 
     private Map<Integer,Transportadora> catalogo_transportadoras;
 

@@ -1,8 +1,11 @@
 package artigos;
 
+
 public class Tshirt extends Artigo{
 
-    public static String LISO = "liso";
+    private static final long serialVersionUID = 4L;
+
+    private static final String LISO = "liso";
 
     private String tamanho; /* S M L XL */
     private String padrao; /* liso riscas palmeiras */

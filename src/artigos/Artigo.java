@@ -1,9 +1,13 @@
 package artigos;
 
-import calendario.*;
+import calendario.Calendario;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public abstract class Artigo{
+
+public abstract class Artigo implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     public static String USADO = "usado";
     public static String NOVO = "novo";

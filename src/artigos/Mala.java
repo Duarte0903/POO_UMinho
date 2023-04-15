@@ -1,12 +1,16 @@
 package artigos;
 
 import java.time.LocalDate;
+import java.io.Serializable;
+
 
 public class Mala extends Artigo{
 
-    int tamanho;
-    String material;
-    LocalDate colecao;
+    private static final long serialVersionUID = 2L;
+
+    private int tamanho;
+    private String material;
+    private LocalDate colecao;
 
     // Construtores
 
