@@ -2,10 +2,12 @@ package gestores;
 
 import artigos.*;
 import encomendas.*;
+import calendario.*;
 import java.util.Set;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.stream.*;
 
 
@@ -33,6 +35,12 @@ public class GestorEncomendas{
         this.catalogo_encomendas.get(codigo_encomenda).finalizarEncomenda();
     }
 
+    public void expedirEncomenda(int codigo_encomenda){
+        this.catalogo_encomendas.get(codigo_encomenda).expedirEncomenda();
+    }
+
+    // Getters
+
     public List<Artigo> getArtigosEncomenda(int codigo_encomenda){
         return this.catalogo_encomendas.get(codigo_encomenda).getArtigos();
     }
@@ -44,6 +52,24 @@ public class GestorEncomendas{
     public int getCompradorEncomenda(int codigo_encomenda){
         return this.catalogo_encomendas.get(codigo_encomenda).getComprador();
     }
+
+    public List<Integer> getAllEncomendasProntas(){
+
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        for (Map.Entry<Integer,Encomenda> aux : this.catalogo_encomendas.entrySet()){
+
+            if (aux.getValue().getEstado().equals(Encomenda.FINALIZADA)
+                && Calendario.getIntervaloDias(aux.getValue().getDataCriacao(),Calendario.getData()) > 1){
+
+                result.add(aux.getKey());
+            }
+        }
+
+        return result;
+    } 
+
+    // toString
 
     public String toString(){
 

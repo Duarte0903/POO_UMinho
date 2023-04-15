@@ -130,7 +130,7 @@ public abstract class Artigo{
         buffer.append("\tEstado: ").append(this.estado);
         buffer.append("\tAvaliacao: ").append(this.avaliacao);
         buffer.append("\tNDonos: ").append(this.n_donos);
-        buffer.append("\tData Venda: ").append(this.data_venda);
+        buffer.append("\tVenda/Expedicao: ").append(this.data_venda);
 
         return buffer.toString();
     }

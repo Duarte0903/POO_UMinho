@@ -4,9 +4,11 @@ import artigos.*;
 import utilizadores.*;
 import transportadoras.*;
 import encomendas.*;
+import calendario.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Gestor{
 
@@ -119,6 +121,42 @@ public class Gestor{
         }
 
         catch (Exception e) {System.out.println("Não foi possivel finalizar a encomenda: " + codigo_encomenda);}
+    }
+
+
+    public void expedirEncomenda(int codigo_encomenda){
+
+        try{
+
+            this.gestor_encomendas.expedirEncomenda(codigo_encomenda);
+            List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
+
+            artigos_encomenda.forEach((x) -> {
+                
+                x.setDataVenda(x.getDataVenda().plusDays(2));
+                this.gestor_transportadoras.addArtigoTransportadora(
+                                                x.getTransportadora(),
+                                                codigo_encomenda,
+                                                x);
+            });
+        }
+
+        catch (Exception e) {System.out.println("Não foi possivel expedir a encomenda: " + codigo_encomenda);}
+    }
+
+
+    public void updateData(LocalDate data){
+
+        if (Calendario.getIntervaloDias(Calendario.getData(),data) >= 0){
+
+            Calendario.setData(data);
+            List<Integer> encomendas_prontas = this.gestor_encomendas.getAllEncomendasProntas();
+            encomendas_prontas.forEach((x) -> this.expedirEncomenda(x));
+        }
+
+        else{
+            System.out.println("Não é possível retroceder no tempo");
+        }
     }
 
 

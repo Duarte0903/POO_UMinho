@@ -1,5 +1,6 @@
 package gestores;
 
+import artigos.*;
 import transportadoras.Transportadora;
 import java.util.Set;
 import java.util.Map;
@@ -17,6 +18,10 @@ public class GestorTransportadoras{
 
     public void addTransportadora(Transportadora transportadora){
         this.catalogo_transportadoras.put(transportadora.hashCode(),transportadora.clone());
+    }
+
+    public void addArtigoTransportadora(String transportadora, int codigo_encomenda, Artigo artigo){
+        this.catalogo_transportadoras.get(transportadora.hashCode()).addArtigo(codigo_encomenda,artigo);
     }
 
     public boolean lookUp(String transportadora){

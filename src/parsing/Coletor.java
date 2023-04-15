@@ -184,7 +184,7 @@ public class Coletor{
 
                 case Coletor.CHANGE_DATA:
 
-                    Calendario.setData(LocalDate.parse(tokens.get(1)));
+                    gestor.updateData(LocalDate.parse(tokens.get(1)));
                     break;
 
                 case Coletor.SHOW_DATA:

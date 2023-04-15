@@ -1,7 +1,9 @@
 package transportadoras;
 
 import artigos.Artigo;
+import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.stream.*;
 
@@ -12,7 +14,7 @@ public class Transportadora{
     private double base_enc_media;
     private double base_enc_grande;
     private double mult_imposto;
-    private List<Artigo> artigos_expedidos;
+    private Map<Integer,List<Artigo>> encomendas_expedidas;
 
     // Construtor;
 
@@ -22,25 +24,29 @@ public class Transportadora{
         this.base_enc_media = base_enc_media;
         this.base_enc_grande = base_enc_grande;
         this.mult_imposto = mult_imposto;
-        this.artigos_expedidos = new ArrayList<Artigo>();
+        this.encomendas_expedidas = new HashMap<Integer,List<Artigo>>();
     }
 
     // Clone
 
     public Transportadora clone(){
 
-        Transportadora result = new Transportadora("n/a",0.0,0.0,0.0,0.0);
+        Transportadora result = new Transportadora(
+            this.nome,
+            this.base_enc_pequena,
+            this.base_enc_media,
+            this.base_enc_grande,
+            this.mult_imposto);
 
-        result.setNome(this.nome);
-        result.setBaseEncPequena(this.base_enc_pequena);
-        result.setBaseEncMedia(this.base_enc_media);
-        result.setBaseEncGrande(this.base_enc_grande);
-        result.setMultImposto(this.mult_imposto);
-
-        result.artigos_expedidos = this.artigos_expedidos
+        result.encomendas_expedidas = this.encomendas_expedidas
+                                        .entrySet()
                                         .stream()
-                                        .map((x) -> x.clone())
-                                        .collect(Collectors.toList());
+                                        .collect(Collectors.toMap(
+                                            (x) -> x.getKey(),
+                                            (x) -> x.getValue()
+                                                    .stream()
+                                                    .map((y) -> y.clone())
+                                                    .collect(Collectors.toList())));
 
         return result;
     }
@@ -49,6 +55,22 @@ public class Transportadora{
 
     public String getNome(){
         return this.nome;
+    }
+
+    public double getBaseEncPequena(){
+        return this.base_enc_pequena;
+    }
+
+    public double getBaseEncMedia(){
+        return this.base_enc_media;
+    }
+
+    public double getBaseEncGrande(){
+        return this.base_enc_grande;
+    }
+
+    public double getMultImporto(){
+        return this.mult_imposto;
     }
 
     // Setter
@@ -75,6 +97,20 @@ public class Transportadora{
 
     // Metodos
 
+    public void addArtigo(int codigo_encomenda, Artigo artigo){
+
+        if (!this.encomendas_expedidas.containsKey(codigo_encomenda)){
+
+            this.encomendas_expedidas.put(codigo_encomenda, new ArrayList<Artigo>());
+        }
+
+        this.encomendas_expedidas.get(codigo_encomenda).add(artigo.clone());
+    }
+
+    public void removeEncomenda(int codigo_encomenda){
+        this.encomendas_expedidas.remove(codigo_encomenda);
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();
@@ -84,7 +120,12 @@ public class Transportadora{
         buffer.append("\tBase_enc_media: ").append(this.base_enc_media);
         buffer.append("\tBase_enc_grande: ").append(this.base_enc_grande);
         buffer.append("\tMult_importo: ").append(this.mult_imposto);
-        buffer.append("\nArtigos expedidos: ").append(this.artigos_expedidos.toString());
+        buffer.append("\nEncomendas expedidas: ");
+        buffer.append(this.encomendas_expedidas
+                            .entrySet()
+                            .stream()
+                            .map((x) -> x.getKey().toString() + x.getValue().toString())
+                            .reduce("", (a,b) -> a + "\n" + b));
 
         return buffer.toString();
     }

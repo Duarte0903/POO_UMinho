@@ -139,6 +139,10 @@ public class Encomenda{
         this.artigos.forEach((x) -> x.setDataVenda(Calendario.getData()));
     }
 
+    public void expedirEncomenda(){
+        this.estado = Encomenda.EXPEDIDA;
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();
