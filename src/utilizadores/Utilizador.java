@@ -16,6 +16,7 @@ public class Utilizador implements Serializable{
     private String email;
     private String nome;
     private int nif;
+    private String morada;
 
     private List<Artigo> artigos_a_venda;
     private List<Artigo> artigos_vendidos;
@@ -23,11 +24,12 @@ public class Utilizador implements Serializable{
 
     // Construtor
 
-    public Utilizador(String email, String nome, int nif){
+    public Utilizador(String email, String nome, int nif, String morada){
         this.codigo = Utilizador.AUTO_INCREMENT++;
         this.email = email;
         this.nome = nome;
         this.nif = nif;
+        this.morada = morada;
         this.artigos_a_venda = new ArrayList<Artigo>();
         this.artigos_vendidos = new ArrayList<Artigo>();
         this.artigos_adquiridos = new ArrayList<Artigo>();
@@ -39,13 +41,13 @@ public class Utilizador implements Serializable{
         
         Utilizador.AUTO_INCREMENT--;
 
-        Utilizador utilizador = new Utilizador("n/a","n/a",0);
+        Utilizador utilizador = new Utilizador(
+            this.email,
+            this.nome,
+            this.nif,
+            this.morada);
 
         utilizador.setCodigo(this.codigo);
-        utilizador.setEmail(this.email);
-        utilizador.setNome(this.nome);
-        utilizador.setNif(this.nif);
-
         utilizador.artigos_a_venda = this.cloneArtigos(this.artigos_a_venda);
         utilizador.artigos_vendidos = this.cloneArtigos(this.artigos_vendidos);
         utilizador.artigos_adquiridos = this.cloneArtigos(this.artigos_adquiridos);
@@ -71,6 +73,10 @@ public class Utilizador implements Serializable{
         return this.nif;
     }
 
+    public String getMorada(){
+        return this.morada;
+    }
+
     // Setters
 
     private void setCodigo(int codigo){
@@ -87,6 +93,10 @@ public class Utilizador implements Serializable{
 
     public void setNif(int nif){
         this.nif = nif;
+    }
+
+    public void setMorada(String morada){
+        this.morada = morada;
     }
 
     private List<Artigo> cloneArtigos(List<Artigo> lista){
@@ -127,6 +137,7 @@ public class Utilizador implements Serializable{
         buffer.append("\tEmail: ").append(this.email);
         buffer.append("\tNome: ").append(this.nome);
         buffer.append("\tNif: ").append(this.nif);
+        buffer.append("\tMorada: ").append(this.morada);
         buffer.append("\nArtigos à venda: ").append(this.artigos_a_venda.toString());
         buffer.append("\nArtigos vendidos: ").append(this.artigos_vendidos.toString());
         buffer.append("\nArtigos adquiridos: ").append(this.artigos_adquiridos.toString());

@@ -77,7 +77,8 @@ public class Coletor{
                         new Utilizador(
                             tokens.get(1),
                             tokens.get(2),
-                            Integer.valueOf(tokens.get(3))));
+                            Integer.valueOf(tokens.get(3)),
+                            tokens.get(4)));
 
                     break;
 
