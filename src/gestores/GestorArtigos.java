@@ -30,6 +30,10 @@ public class GestorArtigos implements Serializable{
         return result;
     }
 
+    public boolean lookUp(Artigo artigo){
+        return this.catalogo_artigos.containsKey(artigo.hashCode());
+    }
+
     public String toString(){
 
         return this.catalogo_artigos

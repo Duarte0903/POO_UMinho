@@ -23,4 +23,9 @@ public class Calendario{
     public static long getIntervaloAnos(LocalDate data1, LocalDate data2){
         return ChronoUnit.YEARS.between(data1,data2);
     }
+
+    public static boolean isBetween(LocalDate data1, LocalDate data2, LocalDate data3){
+
+        return (data2.isAfter(data1) && data2.isBefore(data3));
+    }
 }

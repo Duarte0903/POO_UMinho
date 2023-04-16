@@ -39,13 +39,13 @@ public class Gestor implements Serializable{
 
         if (artigo.getVendedor() >= 0 && artigo.getVendedor() < gestor_utilizadores.getSize()){
 
-            if (gestor_transportadoras.lookUp(artigo.getTransportadora())){
+            if (gestor_transportadoras.lookUp(artigo.getTransportadora())
+                && !gestor_artigos.lookUp(artigo)){
 
                 if (this.gestor_transportadoras.getPremiumTransportadora(artigo.getTransportadora())
                     && !artigo.getPremium()){
 
-                    System.out.println("Não foi possivel inserir o artigo, transportadora premium: " +
-                    this.gestor_transportadoras.getPremiumTransportadora(artigo.getTransportadora()));
+                    System.out.println("Não foi possivel inserir o artigo, Transportadora Premium");
                 }
 
                 else{
@@ -55,7 +55,7 @@ public class Gestor implements Serializable{
                 }
             }
 
-            else System.out.println("Não foi possivel identificar a transportadora: " +artigo.getTransportadora());         
+            else System.out.println("Transportadora ou Artigo: inválido");         
         }
 
         else {System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo());}
@@ -164,6 +164,7 @@ public class Gestor implements Serializable{
             Calendario.setData(data);
             List<Integer> encomendas_prontas = this.gestor_encomendas.getAllEncomendasProntas();
             encomendas_prontas.forEach((x) -> this.expedirEncomenda(x));
+            encomendas_prontas.forEach((x) -> this.gestor_transportadoras.updatePrecoEncomenda(x));
         }
 
         else{
@@ -179,7 +180,7 @@ public class Gestor implements Serializable{
 
                 long dias = Calendario.getIntervaloDias(this.gestor_encomendas.getDataEncomenda(codigo_encomenda),Calendario.getData());
 
-                if (dias > 3){
+                if (dias > 1 && dias < 4){
 
                     int comprador = this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda);
                     List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
@@ -195,7 +196,7 @@ public class Gestor implements Serializable{
                 }
 
                 else{
-                    System.out.println("Não foi possivel devolver a encomenda, falta(m) " + (4-dias) + " dia(s)");
+                    System.out.println("Não foi possivel devolver a encomenda, já passaram " + (dias-2) + " dias");
                 }
             }
 
@@ -206,6 +207,12 @@ public class Gestor implements Serializable{
         }
 
         catch (Exception e) {System.out.println("Não foi possivel devolver a encomenda: " + codigo_encomenda);}
+    }
+
+    public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto){
+        try {this.gestor_transportadoras.alterarPrecosTransportadora(transportadora,base_enc_pequena,base_enc_media,base_enc_grande,mult_imposto);}
+
+        catch (Exception e) {System.out.println("Não foi possivel identificar a transportadora: " + transportadora);}
     }
 
     public String toString(){

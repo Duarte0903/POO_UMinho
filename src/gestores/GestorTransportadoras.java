@@ -35,6 +35,22 @@ public class GestorTransportadoras implements Serializable{
         return this.catalogo_transportadoras.get(transportadora.hashCode()).getPremium();
     }
 
+    public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto){
+        this.catalogo_transportadoras.get(transportadora.hashCode()).setBaseEncPequena(base_enc_pequena);
+        this.catalogo_transportadoras.get(transportadora.hashCode()).setBaseEncMedia(base_enc_media);
+        this.catalogo_transportadoras.get(transportadora.hashCode()).setBaseEncGrande(base_enc_grande);
+        this.catalogo_transportadoras.get(transportadora.hashCode()).setMultImposto(mult_imposto);
+    }
+
+    public void updatePrecoEncomenda(int codigo_encomenda){
+        
+        this.catalogo_transportadoras
+            .entrySet()
+            .stream()
+            .filter((x) -> x.getValue().containsEncomenda(codigo_encomenda))
+            .forEach((x) -> x.getValue().updatePrecoEncomenda(codigo_encomenda));
+    }
+
     public String toString(){
 
         return this.catalogo_transportadoras

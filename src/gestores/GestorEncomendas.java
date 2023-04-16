@@ -67,18 +67,13 @@ public class GestorEncomendas implements Serializable{
 
     public List<Integer> getAllEncomendasProntas(){
 
-        ArrayList<Integer> result = new ArrayList<Integer>();
-
-        for (Map.Entry<Integer,Encomenda> aux : this.catalogo_encomendas.entrySet()){
-
-            if (aux.getValue().getEstado().equals(Encomenda.FINALIZADA)
-                && Calendario.getIntervaloDias(aux.getValue().getDataCriacao(),Calendario.getData()) > 1){
-
-                result.add(aux.getKey());
-            }
-        }
-
-        return result;
+        return this.catalogo_encomendas
+                    .entrySet()
+                    .stream()
+                    .filter((x) -> x.getValue().getEstado().equals(Encomenda.FINALIZADA)
+                                && Calendario.getIntervaloDias(x.getValue().getDataCriacao(),Calendario.getData()) > 1)
+                    .map((x) -> x.getKey())
+                    .collect(Collectors.toList());
     } 
 
     // toString

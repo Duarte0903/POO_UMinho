@@ -28,6 +28,7 @@ public class Coletor{
     private static final int REFUND_ENCOMENDA = 10;
     private static final int SHOW_DATA = 11;
     private static final int CHANGE_DATA = 12;
+    private static final int CHANGE_PRECOS_TRANSPORTADORA = 13;
 
     private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
 
@@ -46,6 +47,7 @@ public class Coletor{
         Coletor.tabela.put("Ver Data".hashCode(),Coletor.SHOW_DATA);
         Coletor.tabela.put("Alterar Data".hashCode(),Coletor.CHANGE_DATA);
         Coletor.tabela.put("Devolver Encomenda".hashCode(),Coletor.REFUND_ENCOMENDA);
+        Coletor.tabela.put("Alterar Precos Transportadora".hashCode(),Coletor.CHANGE_PRECOS_TRANSPORTADORA);
     }
 
     private static int getCodigo(String identificador){
@@ -187,6 +189,17 @@ public class Coletor{
                 case Coletor.REFUND_ENCOMENDA:
 
                     gestor.devolverEncomenda(Integer.valueOf(tokens.get(1)));
+                    break;
+
+                case Coletor.CHANGE_PRECOS_TRANSPORTADORA:
+
+                    gestor.alterarPrecosTransportadora(
+                        tokens.get(1),
+                        Double.valueOf(tokens.get(2)),
+                        Double.valueOf(tokens.get(3)),
+                        Double.valueOf(tokens.get(4)),
+                        Double.valueOf(tokens.get(5)));
+
                     break;
 
                 case Coletor.CHANGE_DATA:
