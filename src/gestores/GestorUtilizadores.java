@@ -2,6 +2,8 @@ package gestores;
 
 import artigos.Artigo;
 import utilizadores.Utilizador;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -44,6 +46,36 @@ public class GestorUtilizadores implements Serializable{
     public void removeUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
         this.catalogo_utilizadores.get(utilizador).removeArtigoAdquirido(artigo);
 
+    }
+
+    public Utilizador getUserWithHighestProfit() {
+        Utilizador highest_profit_user = null;
+        double max_profit = 0;
+
+        for (Utilizador u : this.catalogo_utilizadores) {
+            double user_profit = u.totalUserProfit();
+            if (user_profit > max_profit) {
+                max_profit = user_profit;
+                highest_profit_user = u;
+            }
+        }
+
+        return highest_profit_user;
+    }
+
+    public Utilizador getUserWithHighestProfitBetweenDates(LocalDate d1, LocalDate d2) {
+        Utilizador highest_profit_user = null;
+        double max_profit = 0;
+
+        for (Utilizador u : this.catalogo_utilizadores) {
+            double user_profit = u.userProfitBetweenDates(d1, d2);
+            if (user_profit > max_profit) {
+                max_profit = user_profit;
+                highest_profit_user = u;
+            }
+        }
+
+        return highest_profit_user;
     }
 
     public int getSize(){
