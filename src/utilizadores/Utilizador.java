@@ -133,33 +133,14 @@ public class Utilizador implements Serializable{
         this.artigos_adquiridos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
-    public double totalUserProfit() {
+    public double userProfit(LocalDate d1, LocalDate d2) {
         double user_profit = 0;
-
-        for (Artigo a : this.artigos_vendidos) {
-            double article_price = a.getPreco();
-            double article_discount = a.getDesconto();
-            double money_from_article = article_price - (article_price * article_discount);
-            user_profit += money_from_article;
-        }
-
-        return user_profit;
-    }
-
-    public double userProfitBetweenDates(LocalDate d1, LocalDate d2) {
-        double user_profit = 0;
-
-        // Tentar implementar binary search
-        // this.artigos_vendidos.sort(Comparator.comparing(Artigo::getData));
 
         for (Artigo a : this.artigos_vendidos) {
             LocalDate saleDate = a.getData();
 
-            if (saleDate.isAfter(d1) && saleDate.isBefore(d2)) {
-                double article_price = a.getPreco();
-                double article_discount = a.getDesconto();
-                double money_from_article = article_price - (article_price * article_discount);
-                user_profit += money_from_article;
+            if ((d1 == null || saleDate.isAfter(d1)) && (d2 == null || saleDate.isBefore(d2))) {
+                user_profit += a.getPreco();
             }
         }
 
