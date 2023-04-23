@@ -3,6 +3,7 @@ package artigos;
 import calendario.Calendario;
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.function.Predicate;
 
 
 public abstract class Artigo implements Serializable{

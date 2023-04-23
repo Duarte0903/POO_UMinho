@@ -49,9 +49,9 @@ public class GestorUtilizadores implements Serializable{
 
     }
 
-    public Utilizador getUserWithHighestProfit(LocalDate d1, LocalDate d2) {
+    public Utilizador getUtilizadorMaiorLucro(LocalDate d1, LocalDate d2) {
         return this.catalogo_utilizadores.stream()
-                .max(Comparator.comparingDouble(u -> u.userProfit(d1, d2)))
+                .max(Comparator.comparingDouble(u -> u.lucroUtilizador(d1, d2)))
                 .orElse(null);
     }
 

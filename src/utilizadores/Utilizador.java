@@ -4,6 +4,7 @@ import artigos.Artigo;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.*;
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -133,13 +134,16 @@ public class Utilizador implements Serializable{
         this.artigos_adquiridos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
-    public double userProfit(LocalDate d1, LocalDate d2) {
+    public double lucroUtilizador(LocalDate d1, LocalDate d2) {
         double user_profit = 0;
 
-        for (Artigo a : this.artigos_vendidos) {
+        Predicate<Artigo> datePredicate = a -> {
             LocalDate saleDate = a.getData();
+            return (d1 == null || saleDate.isAfter(d1)) && (d2 == null || saleDate.isBefore(d2));
+        };
 
-            if ((d1 == null || saleDate.isAfter(d1)) && (d2 == null || saleDate.isBefore(d2))) {
+        for (Artigo a : this.artigos_vendidos) {
+            if (datePredicate.test(a)) {
                 user_profit += a.getPreco();
             }
         }
