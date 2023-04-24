@@ -46,6 +46,10 @@ public class GestorUtilizadores implements Serializable{
 
     }
 
+    public void alterarPrecoArtigo(int utilizador, String codigo_artigo, double preco){
+        this.catalogo_utilizadores.get(utilizador).alterarPreco(codigo_artigo,preco);
+    }
+
     public int getSize(){
         return this.catalogo_utilizadores.size();
     }

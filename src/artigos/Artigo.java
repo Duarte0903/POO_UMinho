@@ -120,6 +120,10 @@ public abstract class Artigo implements Serializable{
 
     // Setter
 
+    public void setPreco(double preco){
+        this.preco = preco;
+    }
+
     public void setData(LocalDate data){
         this.data = data;
     }

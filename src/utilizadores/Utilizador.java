@@ -129,6 +129,12 @@ public class Utilizador implements Serializable{
         this.artigos_adquiridos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
+    public void alterarPreco(String codigo_artigo, double preco){
+        this.artigos_a_venda.forEach((x) -> {
+            if (x.getCodigo().equals(codigo_artigo)) x.setPreco(preco);
+        });
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();

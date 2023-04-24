@@ -30,8 +30,16 @@ public class GestorArtigos implements Serializable{
         return result;
     }
 
+    public Artigo getArtigo(String codigo_artigo){
+        return this.catalogo_artigos.get(codigo_artigo.hashCode()).clone();
+    }
+
     public boolean lookUp(Artigo artigo){
         return this.catalogo_artigos.containsKey(artigo.hashCode());
+    }
+
+    public void alterarPrecoArtigo(String codigo_artigo, double preco){
+        this.catalogo_artigos.get(codigo_artigo.hashCode()).setPreco(preco);
     }
 
     public String toString(){

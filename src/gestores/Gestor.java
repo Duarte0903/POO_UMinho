@@ -43,9 +43,10 @@ public class Gestor implements Serializable{
                 && !gestor_artigos.lookUp(artigo)){
 
                 if (this.gestor_transportadoras.getPremiumTransportadora(artigo.getTransportadora())
-                    && !artigo.getPremium()){
+                    != artigo.getPremium()){
 
-                    System.out.println("Não foi possivel inserir o artigo, Transportadora Premium");
+                    System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo() 
+                                        + " , Transportadora incompativel");
                 }
 
                 else{
@@ -207,6 +208,20 @@ public class Gestor implements Serializable{
         }
 
         catch (Exception e) {System.out.println("Não foi possivel devolver a encomenda: " + codigo_encomenda);}
+    }
+
+    public void alterarPrecoArtigo(String codigo_artigo, double preco){
+
+        try{
+            Artigo artigo = this.gestor_artigos.getArtigo(codigo_artigo);
+
+            this.gestor_artigos.alterarPrecoArtigo(artigo.getCodigo(),preco);
+            this.gestor_utilizadores.alterarPrecoArtigo(artigo.getVendedor(),artigo.getCodigo(),preco);
+        }
+
+        catch (Exception e){
+            System.out.println("Não foi possivel identificar o artigo: " + codigo_artigo);
+        }
     }
 
     public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto){
