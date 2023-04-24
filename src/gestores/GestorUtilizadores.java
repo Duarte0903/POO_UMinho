@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.function.Predicate;
 
 
 public class GestorUtilizadores implements Serializable{
@@ -50,8 +51,13 @@ public class GestorUtilizadores implements Serializable{
     }
 
     public Utilizador getUtilizadorMaiorLucro(LocalDate d1, LocalDate d2) {
+        Predicate<Artigo> datePredicate = a -> {
+            LocalDate saleDate = a.getData();
+            return (d1 == null || saleDate.isAfter(d1)) && (d2 == null || saleDate.isBefore(d2));
+        };
+
         return this.catalogo_utilizadores.stream()
-                .max(Comparator.comparingDouble(u -> u.lucroUtilizador(d1, d2)))
+                .max(Comparator.comparingDouble(u -> u.lucroUtilizador(datePredicate)))
                 .orElse(null);
     }
 

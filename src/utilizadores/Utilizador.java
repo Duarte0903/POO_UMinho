@@ -2,14 +2,11 @@ package utilizadores;
 
 import artigos.Artigo;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.*;
 import java.util.ArrayList;
 import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Collections;
 
 
 public class Utilizador implements Serializable{
@@ -134,13 +131,8 @@ public class Utilizador implements Serializable{
         this.artigos_adquiridos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
-    public double lucroUtilizador(LocalDate d1, LocalDate d2) {
+    public double lucroUtilizador(Predicate<Artigo> datePredicate) {
         double user_profit = 0;
-
-        Predicate<Artigo> datePredicate = a -> {
-            LocalDate saleDate = a.getData();
-            return (d1 == null || saleDate.isAfter(d1)) && (d2 == null || saleDate.isBefore(d2));
-        };
 
         for (Artigo a : this.artigos_vendidos) {
             if (datePredicate.test(a)) {
