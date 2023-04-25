@@ -8,6 +8,7 @@ import gestores.Gestor;
 import calendario.Calendario;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 import java.util.Map;
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -30,6 +31,9 @@ public class Coletor{
     private static final int CHANGE_DATA = 12;
     private static final int CHANGE_PRECOS_TRANSPORTADORA = 13;
     private static final int CHANGE_PRECO_ARTIGO = 14;
+    private static final int SAY_MELHOR_VENDEDOR = 15;
+    private static final int SAY_MELHORES_VENDEDORES = 16;
+    private static final int SAY_MELHORES_COMPRADORES = 17;
 
     private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
 
@@ -50,6 +54,9 @@ public class Coletor{
         Coletor.tabela.put("Devolver Encomenda".hashCode(),Coletor.REFUND_ENCOMENDA);
         Coletor.tabela.put("Alterar Precos Transportadora".hashCode(),Coletor.CHANGE_PRECOS_TRANSPORTADORA);
         Coletor.tabela.put("Alterar Preco Artigo".hashCode(),Coletor.CHANGE_PRECO_ARTIGO);
+        Coletor.tabela.put("Melhor Vendedor".hashCode(),Coletor.SAY_MELHOR_VENDEDOR);
+        Coletor.tabela.put("Melhores Vendedores".hashCode(),Coletor.SAY_MELHORES_VENDEDORES);
+        Coletor.tabela.put("Melhores Compradores".hashCode(),Coletor.SAY_MELHORES_COMPRADORES);
     }
 
     private static int getCodigo(String identificador){
@@ -221,6 +228,28 @@ public class Coletor{
                 case Coletor.SHOW_DATA:
 
                     System.out.println(Calendario.getData().toString());
+                    break;
+
+                case Coletor.SAY_MELHOR_VENDEDOR:
+                case Coletor.SAY_MELHORES_VENDEDORES:
+                case Coletor.SAY_MELHORES_COMPRADORES:
+
+                    Predicate<Artigo> filtro = x -> true;
+
+                    if (tokens.size() == 3){
+                        filtro = x -> x.getData().isAfter(LocalDate.parse(tokens.get(1)))
+                                    && x.getData().isBefore(LocalDate.parse(tokens.get(2)));
+                    }
+
+                    if (Coletor.getCodigo(tokens.get(0)) == Coletor.SAY_MELHOR_VENDEDOR){
+                        gestor.dizMelhorVendedor(filtro);
+                    }
+
+                    else if (Coletor.getCodigo(tokens.get(0)) == Coletor.SAY_MELHORES_VENDEDORES){
+                        gestor.dizMelhoresVendedores(filtro);
+                    }
+
+                    else gestor.dizMelhoresCompradores(filtro);
                     break;
             }
         }

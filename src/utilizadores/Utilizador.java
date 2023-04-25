@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.*;
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.function.Predicate;
 
 
 public class Utilizador implements Serializable{
@@ -77,6 +78,14 @@ public class Utilizador implements Serializable{
         return this.morada;
     }
 
+    public double getPrecoArtigosVendidos(){
+        return this.calculaPreco(this.artigos_vendidos);
+    }
+
+    public double getPrecoArtigosAdquiridos(){
+        return this.calculaPreco(this.artigos_adquiridos);
+    }
+
     // Setters
 
     private void setCodigo(int codigo){
@@ -97,6 +106,14 @@ public class Utilizador implements Serializable{
 
     public void setMorada(String morada){
         this.morada = morada;
+    }
+
+    public void setArtigosVendidos(Predicate<Artigo> filtro){
+        this.artigos_vendidos.removeIf((x) -> filtro.test(x));
+    }
+
+    public void setArtigosAdquiridos(Predicate<Artigo> filtro){
+        this.artigos_adquiridos.removeIf((x) -> filtro.test(x));
     }
 
     private List<Artigo> cloneArtigos(List<Artigo> lista){
@@ -133,6 +150,10 @@ public class Utilizador implements Serializable{
         this.artigos_a_venda.forEach((x) -> {
             if (x.getCodigo().equals(codigo_artigo)) x.setPreco(preco);
         });
+    }
+
+    private double calculaPreco(List<Artigo> artigos){
+        return artigos.stream().mapToDouble((x) -> x.calculaPreco()).sum();
     }
 
     public String toString(){

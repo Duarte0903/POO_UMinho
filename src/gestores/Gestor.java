@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.function.Predicate;
 
 
 public class Gestor implements Serializable{
@@ -228,6 +229,18 @@ public class Gestor implements Serializable{
         try {this.gestor_transportadoras.alterarPrecosTransportadora(transportadora,base_enc_pequena,base_enc_media,base_enc_grande,mult_imposto);}
 
         catch (Exception e) {System.out.println("Não foi possivel identificar a transportadora: " + transportadora);}
+    }
+
+    public void dizMelhorVendedor(Predicate<Artigo> filtro){
+        this.gestor_utilizadores.dizMelhorVendedor(filtro);
+    }
+
+    public void dizMelhoresVendedores(Predicate<Artigo> filtro){
+        this.gestor_utilizadores.dizMelhoresVendedores(filtro);
+    }
+
+    public void dizMelhoresCompradores(Predicate<Artigo> filtro){
+        this.gestor_utilizadores.dizMelhoresCompradores(filtro);
     }
 
     public String toString(){

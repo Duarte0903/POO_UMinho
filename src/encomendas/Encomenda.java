@@ -93,9 +93,10 @@ public class Encomenda implements Serializable{
 
     public double calculaPreco(){
 
-        return this.artigos.stream()
-                        .mapToDouble((x) -> x.calculaPreco())
-                        .sum();
+        return this.artigos
+                    .stream()
+                    .mapToDouble((x) -> x.calculaPreco())
+                    .sum();
     }
 
     private void updateEmbalagem(){

@@ -2,8 +2,10 @@ package gestores;
 
 import artigos.Artigo;
 import utilizadores.Utilizador;
+import estatisticas.Estatisticas;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 import java.io.Serializable;
 
 
@@ -43,7 +45,6 @@ public class GestorUtilizadores implements Serializable{
 
     public void removeUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
         this.catalogo_utilizadores.get(utilizador).removeArtigoAdquirido(artigo);
-
     }
 
     public void alterarPrecoArtigo(int utilizador, String codigo_artigo, double preco){
@@ -52,6 +53,33 @@ public class GestorUtilizadores implements Serializable{
 
     public int getSize(){
         return this.catalogo_utilizadores.size();
+    }
+
+    public void dizMelhoresVendedores(Predicate<Artigo> filtro){
+        List<Utilizador> ranking = Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
+        ranking.forEach((x) -> System.out.println("Nome: " + x.getNome()
+                                                + "\tCodigo " + x.getCodigo()
+                                                + "\tDinherio Ganho: " + x.getPrecoArtigosVendidos()));
+    }
+
+    public void dizMelhoresCompradores(Predicate<Artigo> filtro){
+        List<Utilizador> ranking = Estatisticas.getMelhoresCompradores(this.catalogo_utilizadores,filtro);
+        ranking.forEach((x) -> System.out.println("Nome: " + x.getNome()
+                                                + "\tCodigo " + x.getCodigo()
+                                                + "\tDinheiro Gasto: " + x.getPrecoArtigosAdquiridos()));
+    }
+
+    public void dizMelhorVendedor(Predicate<Artigo> filtro){
+        
+        List<Utilizador> ranking = Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
+
+        if (ranking.size() > 0){
+            System.out.println("Nome: " + ranking.get(0).getNome()
+                                + "\tCodigo: " + ranking.get(0).getCodigo()
+                                + "\tDinheiro Ganho: " + ranking.get(0).getPrecoArtigosVendidos());
+        }
+
+        else System.out.println("Não foi possivel identificar o melhor vendedor");
     }
 
     public String toString(){
