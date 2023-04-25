@@ -34,6 +34,7 @@ public class Coletor{
     private static final int SAY_MELHOR_VENDEDOR = 15;
     private static final int SAY_MELHORES_VENDEDORES = 16;
     private static final int SAY_MELHORES_COMPRADORES = 17;
+    private static final int SAY_MELHORES_TRANSPORTADORAS = 18;
 
     private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
 
@@ -57,6 +58,7 @@ public class Coletor{
         Coletor.tabela.put("Melhor Vendedor".hashCode(),Coletor.SAY_MELHOR_VENDEDOR);
         Coletor.tabela.put("Melhores Vendedores".hashCode(),Coletor.SAY_MELHORES_VENDEDORES);
         Coletor.tabela.put("Melhores Compradores".hashCode(),Coletor.SAY_MELHORES_COMPRADORES);
+        Coletor.tabela.put("Melhores Transportadoras".hashCode(),Coletor.SAY_MELHORES_TRANSPORTADORAS);
     }
 
     private static int getCodigo(String identificador){
@@ -228,6 +230,11 @@ public class Coletor{
                 case Coletor.SHOW_DATA:
 
                     System.out.println(Calendario.getData().toString());
+                    break;
+
+                case Coletor.SAY_MELHORES_TRANSPORTADORAS:
+
+                    gestor.dizMelhoresTransportadoras();
                     break;
 
                 case Coletor.SAY_MELHOR_VENDEDOR:

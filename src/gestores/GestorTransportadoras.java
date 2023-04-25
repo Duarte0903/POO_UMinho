@@ -2,6 +2,7 @@ package gestores;
 
 import artigos.Artigo;
 import transportadoras.Transportadora;
+import estatisticas.Estatisticas;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
@@ -49,6 +50,12 @@ public class GestorTransportadoras implements Serializable{
             .stream()
             .filter((x) -> x.getValue().containsEncomenda(codigo_encomenda))
             .forEach((x) -> x.getValue().updatePrecoEncomenda(codigo_encomenda));
+    }
+
+    public void dizMelhoresTransportadoras(){
+        Estatisticas.getMelhoresTransportadoras(this.catalogo_transportadoras)
+                    .forEach((x) -> System.out.println("Nome: " + x.getNome()
+                                                    + "\t\tDinheiro Ganho: " + x.getFaturacao()));
     }
 
     public String toString(){

@@ -243,6 +243,10 @@ public class Gestor implements Serializable{
         this.gestor_utilizadores.dizMelhoresCompradores(filtro);
     }
 
+    public void dizMelhoresTransportadoras(){
+        this.gestor_transportadoras.dizMelhoresTransportadoras();
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();

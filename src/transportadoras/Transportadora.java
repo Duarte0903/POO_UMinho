@@ -83,6 +83,14 @@ public class Transportadora implements Serializable{
         return this.premium;
     }
 
+    public double getFaturacao(){
+        return this.encomendas_expedidas
+                    .entrySet()
+                    .stream()
+                    .mapToDouble((x) -> x.getValue().getKey())
+                    .sum();
+    }
+
     // Setter
 
     public void setNome(String nome){
