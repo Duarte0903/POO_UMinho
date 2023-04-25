@@ -15,7 +15,7 @@ public class Estatisticas{
         List<Utilizador> result = utilizadores.stream().map((x) -> x.clone()).collect(Collectors.toList());
 
         result.forEach((x) -> x.setArtigosVendidos(filtro.negate()));
-        return result.stream().sorted(new OrdenaMelhorVendedor().reversed()).collect(Collectors.toList());
+        return result.stream().sorted(new OrdenaVendedor().reversed()).collect(Collectors.toList());
     }
 
     public static List<Utilizador> getMelhoresCompradores(List<Utilizador> utilizadores, Predicate<Artigo> filtro){
@@ -23,6 +23,6 @@ public class Estatisticas{
         List<Utilizador> result = utilizadores.stream().map((x) -> x.clone()).collect(Collectors.toList());
 
         result.forEach((x) -> x.setArtigosAdquiridos(filtro.negate()));
-        return result.stream().sorted(new OrdenaMelhorComprador().reversed()).collect(Collectors.toList());
+        return result.stream().sorted(new OrdenaComprador().reversed()).collect(Collectors.toList());
     }
 }
