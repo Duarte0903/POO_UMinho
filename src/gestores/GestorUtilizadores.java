@@ -69,19 +69,6 @@ public class GestorUtilizadores implements Serializable{
                                                 + "\tDinheiro Gasto: " + x.getPrecoArtigosAdquiridos()));
     }
 
-    public void dizMelhorVendedor(Predicate<Artigo> filtro){
-        
-        List<Utilizador> ranking = Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
-
-        if (ranking.size() > 0){
-            System.out.println("Nome: " + ranking.get(0).getNome()
-                                + "\tCodigo: " + ranking.get(0).getCodigo()
-                                + "\tDinheiro Ganho: " + ranking.get(0).getPrecoArtigosVendidos());
-        }
-
-        else System.out.println("Não foi possivel identificar o melhor vendedor");
-    }
-
     public String toString(){
 
         return this.catalogo_utilizadores

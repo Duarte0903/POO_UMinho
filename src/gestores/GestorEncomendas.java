@@ -3,6 +3,7 @@ package gestores;
 import artigos.Artigo;
 import encomendas.Encomenda;
 import calendario.Calendario;
+import estatisticas.Estatisticas;
 import java.util.Set;
 import java.util.Map;
 import java.util.List;
@@ -66,15 +67,12 @@ public class GestorEncomendas implements Serializable{
     }
 
     public double getLucroVintage(double comissao){
+        return Estatisticas.getLucroVintage(this.catalogo_encomendas,comissao);
+    }
 
-        return this.catalogo_encomendas
-                    .entrySet()
-                    .stream()
-                    .map((x) -> x.getValue())
-                    .filter((x) -> x.getEstado().equals(Encomenda.FINALIZADA)
-                                || x.getEstado().equals(Encomenda.EXPEDIDA))
-                    .mapToDouble((x) -> x.calculaPreco())
-                    .sum() * comissao;
+    public void getEncomendasEmitidasVendedor(int utilizador){
+        Estatisticas.getEncomendasEmitidasVendedor(utilizador,this.catalogo_encomendas)
+                    .forEach((x) -> System.out.println(x.toString()));
     }
 
     public List<Integer> getAllEncomendasProntas(){

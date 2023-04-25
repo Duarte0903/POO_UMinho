@@ -240,10 +240,6 @@ public class Gestor implements Serializable{
         catch (Exception e) {System.out.println("Não foi possivel identificar a transportadora: " + transportadora);}
     }
 
-    public void dizMelhorVendedor(Predicate<Artigo> filtro){
-        this.gestor_utilizadores.dizMelhorVendedor(filtro);
-    }
-
     public void dizMelhoresVendedores(Predicate<Artigo> filtro){
         this.gestor_utilizadores.dizMelhoresVendedores(filtro);
     }
@@ -254,6 +250,10 @@ public class Gestor implements Serializable{
 
     public void dizMelhoresTransportadoras(){
         this.gestor_transportadoras.dizMelhoresTransportadoras();
+    }
+
+    public void getEncomendasEmitidasVendedor(int utilizador){
+        this.gestor_encomendas.getEncomendasEmitidasVendedor(utilizador);
     }
 
     public double getLucroVintage(){

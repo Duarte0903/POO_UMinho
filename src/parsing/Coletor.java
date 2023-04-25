@@ -31,12 +31,13 @@ public class Coletor{
     private static final int CHANGE_DATA = 12;
     private static final int CHANGE_PRECOS_TRANSPORTADORA = 13;
     private static final int CHANGE_PRECO_ARTIGO = 14;
-    private static final int SAY_MELHOR_VENDEDOR = 15;
-    private static final int SAY_MELHORES_VENDEDORES = 16;
-    private static final int SAY_MELHORES_COMPRADORES = 17;
-    private static final int SAY_MELHORES_TRANSPORTADORAS = 18;
-    private static final int SAY_VINTAGE_LUCRO = 20;
-    private static final int CHANGE_VINTAGE_COMISSAO = 21;
+    private static final int SAY_MELHORES_VENDEDORES = 15;
+    private static final int SAY_MELHORES_COMPRADORES = 16;
+    private static final int SAY_MELHORES_TRANSPORTADORAS = 17;
+    private static final int SAY_ENCOMENDAS_EMITIDAS_VENDEDOR = 18;
+    private static final int SAY_VINTAGE_LUCRO = 19;
+    private static final int CHANGE_VINTAGE_COMISSAO = 20;
+    private static final int SHOW_COMISSAO = 21;
 
     private static Map<String,Integer> tabela = new HashMap<String,Integer>();
 
@@ -57,12 +58,13 @@ public class Coletor{
         Coletor.tabela.put("Devolver Encomenda",Coletor.REFUND_ENCOMENDA);
         Coletor.tabela.put("Alterar Precos Transportadora",Coletor.CHANGE_PRECOS_TRANSPORTADORA);
         Coletor.tabela.put("Alterar Preco Artigo",Coletor.CHANGE_PRECO_ARTIGO);
-        Coletor.tabela.put("Melhor Vendedor",Coletor.SAY_MELHOR_VENDEDOR);
         Coletor.tabela.put("Melhores Vendedores",Coletor.SAY_MELHORES_VENDEDORES);
         Coletor.tabela.put("Melhores Compradores",Coletor.SAY_MELHORES_COMPRADORES);
         Coletor.tabela.put("Melhores Transportadoras",Coletor.SAY_MELHORES_TRANSPORTADORAS);
+        Coletor.tabela.put("Encomendas Emitidas Vendedor", Coletor.SAY_ENCOMENDAS_EMITIDAS_VENDEDOR);
         Coletor.tabela.put("Vintage Lucro",Coletor.SAY_VINTAGE_LUCRO);
         Coletor.tabela.put("Alterar Comissao",Coletor.CHANGE_VINTAGE_COMISSAO);
+        Coletor.tabela.put("Ver Comissao",Coletor.SHOW_COMISSAO);
     }
 
     private static int getCodigo(String identificador){
@@ -241,6 +243,11 @@ public class Coletor{
                     System.out.println(Calendario.getData().toString());
                     break;
 
+                case SHOW_COMISSAO:
+
+                    System.out.println(Gestor.getComissao());
+                    break;
+
                 case Coletor.SAY_MELHORES_TRANSPORTADORAS:
 
                     gestor.dizMelhoresTransportadoras();
@@ -251,7 +258,11 @@ public class Coletor{
                     System.out.println("Vintage lucro: " + gestor.getLucroVintage());
                     break;
 
-                case Coletor.SAY_MELHOR_VENDEDOR:
+                case Coletor.SAY_ENCOMENDAS_EMITIDAS_VENDEDOR:
+
+                    gestor.getEncomendasEmitidasVendedor(Integer.valueOf(tokens.get(1)));
+                    break;
+
                 case Coletor.SAY_MELHORES_VENDEDORES:
                 case Coletor.SAY_MELHORES_COMPRADORES:
 
@@ -262,11 +273,7 @@ public class Coletor{
                                     && x.getData().isBefore(LocalDate.parse(tokens.get(2)));
                     }
 
-                    if (Coletor.getCodigo(tokens.get(0)) == Coletor.SAY_MELHOR_VENDEDOR){
-                        gestor.dizMelhorVendedor(filtro);
-                    }
-
-                    else if (Coletor.getCodigo(tokens.get(0)) == Coletor.SAY_MELHORES_VENDEDORES){
+                    if (Coletor.getCodigo(tokens.get(0)) == Coletor.SAY_MELHORES_VENDEDORES){
                         gestor.dizMelhoresVendedores(filtro);
                     }
 

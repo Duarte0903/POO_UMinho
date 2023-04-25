@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.stream.*;
 import java.util.Iterator;
+import java.util.function.Predicate;
 import java.io.Serializable;
 
 
@@ -82,11 +83,21 @@ public class Encomenda implements Serializable{
         return this.comprador;
     }
 
+    public int size(){
+        return this.artigos.size();
+    }
+
     public List<Artigo> getArtigos(){
         return this.artigos
                     .stream()
                     .map((x) -> x.clone())
                     .collect(Collectors.toList());
+    }
+
+    // Setter
+
+    public void setArtigos(Predicate<Artigo> filtro){
+        this.artigos.removeIf((x) -> filtro.test(x));
     }
 
     // Metodos
