@@ -38,35 +38,35 @@ public class Coletor{
     private static final int SAY_VINTAGE_LUCRO = 20;
     private static final int CHANGE_VINTAGE_COMISSAO = 21;
 
-    private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
+    private static Map<String,Integer> tabela = new HashMap<String,Integer>();
 
     public static void fillTabela(){
 
-        Coletor.tabela.put("Ver Catalogos".hashCode(),Coletor.SHOW_DADOS);
-        Coletor.tabela.put("Inserir Utilizador".hashCode(),Coletor.INSERT_UTILIZADOR);
-        Coletor.tabela.put("Inserir Transportadora".hashCode(),Coletor.INSERT_TRANPORTADORA);
-        Coletor.tabela.put("Inserir Artigo Mala".hashCode(),Coletor.INSERT_ARTIGO_MALA);
-        Coletor.tabela.put("Inserir Artigo Tshirt".hashCode(),Coletor.INSERT_ARTIGO_TSHIRT);
-        Coletor.tabela.put("Inserir Artigo Sapatilha".hashCode(),Coletor.INSERT_ARTIGO_SAPATILHA);
-        Coletor.tabela.put("Criar Encomenda".hashCode(),Coletor.CREAT_ENCOMENDA);
-        Coletor.tabela.put("Inserir Artigo Encomenda".hashCode(),Coletor.INSERT_ARTIGO_ENCOMENDA);
-        Coletor.tabela.put("Remover Artigo Encomenda".hashCode(),Coletor.REMOVE_ARTIGO_ENCOMENDA);
-        Coletor.tabela.put("Finalizar Encomenda".hashCode(),Coletor.CHECK_OUT_ENCOMENDA);
-        Coletor.tabela.put("Ver Data".hashCode(),Coletor.SHOW_DATA);
-        Coletor.tabela.put("Alterar Data".hashCode(),Coletor.CHANGE_DATA);
-        Coletor.tabela.put("Devolver Encomenda".hashCode(),Coletor.REFUND_ENCOMENDA);
-        Coletor.tabela.put("Alterar Precos Transportadora".hashCode(),Coletor.CHANGE_PRECOS_TRANSPORTADORA);
-        Coletor.tabela.put("Alterar Preco Artigo".hashCode(),Coletor.CHANGE_PRECO_ARTIGO);
-        Coletor.tabela.put("Melhor Vendedor".hashCode(),Coletor.SAY_MELHOR_VENDEDOR);
-        Coletor.tabela.put("Melhores Vendedores".hashCode(),Coletor.SAY_MELHORES_VENDEDORES);
-        Coletor.tabela.put("Melhores Compradores".hashCode(),Coletor.SAY_MELHORES_COMPRADORES);
-        Coletor.tabela.put("Melhores Transportadoras".hashCode(),Coletor.SAY_MELHORES_TRANSPORTADORAS);
-        Coletor.tabela.put("Vintage Lucro".hashCode(),Coletor.SAY_VINTAGE_LUCRO);
-        Coletor.tabela.put("Alterar Comissao".hashCode(),Coletor.CHANGE_VINTAGE_COMISSAO);
+        Coletor.tabela.put("Ver Catalogos",Coletor.SHOW_DADOS);
+        Coletor.tabela.put("Inserir Utilizador",Coletor.INSERT_UTILIZADOR);
+        Coletor.tabela.put("Inserir Transportadora",Coletor.INSERT_TRANPORTADORA);
+        Coletor.tabela.put("Inserir Artigo Mala",Coletor.INSERT_ARTIGO_MALA);
+        Coletor.tabela.put("Inserir Artigo Tshirt",Coletor.INSERT_ARTIGO_TSHIRT);
+        Coletor.tabela.put("Inserir Artigo Sapatilha",Coletor.INSERT_ARTIGO_SAPATILHA);
+        Coletor.tabela.put("Criar Encomenda",Coletor.CREAT_ENCOMENDA);
+        Coletor.tabela.put("Inserir Artigo Encomenda",Coletor.INSERT_ARTIGO_ENCOMENDA);
+        Coletor.tabela.put("Remover Artigo Encomenda",Coletor.REMOVE_ARTIGO_ENCOMENDA);
+        Coletor.tabela.put("Finalizar Encomenda",Coletor.CHECK_OUT_ENCOMENDA);
+        Coletor.tabela.put("Ver Data",Coletor.SHOW_DATA);
+        Coletor.tabela.put("Alterar Data",Coletor.CHANGE_DATA);
+        Coletor.tabela.put("Devolver Encomenda",Coletor.REFUND_ENCOMENDA);
+        Coletor.tabela.put("Alterar Precos Transportadora",Coletor.CHANGE_PRECOS_TRANSPORTADORA);
+        Coletor.tabela.put("Alterar Preco Artigo",Coletor.CHANGE_PRECO_ARTIGO);
+        Coletor.tabela.put("Melhor Vendedor",Coletor.SAY_MELHOR_VENDEDOR);
+        Coletor.tabela.put("Melhores Vendedores",Coletor.SAY_MELHORES_VENDEDORES);
+        Coletor.tabela.put("Melhores Compradores",Coletor.SAY_MELHORES_COMPRADORES);
+        Coletor.tabela.put("Melhores Transportadoras",Coletor.SAY_MELHORES_TRANSPORTADORAS);
+        Coletor.tabela.put("Vintage Lucro",Coletor.SAY_VINTAGE_LUCRO);
+        Coletor.tabela.put("Alterar Comissao",Coletor.CHANGE_VINTAGE_COMISSAO);
     }
 
     private static int getCodigo(String identificador){
-        return Coletor.tabela.get(identificador.hashCode());
+        return Coletor.tabela.get(identificador);
     }
 
     public static void collectDadosLine(String path, Gestor gestor){
