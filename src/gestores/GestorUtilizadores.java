@@ -59,7 +59,7 @@ public class GestorUtilizadores implements Serializable{
         List<Utilizador> ranking = Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
         ranking.forEach((x) -> System.out.println("Nome: " + x.getNome()
                                                 + "\tCodigo " + x.getCodigo()
-                                                + "\tDinherio Ganho: " + x.getPrecoArtigosVendidos()));
+                                                + "\tDinherio Ganho: " + (1-Gestor.getComissao())*x.getPrecoArtigosVendidos()));
     }
 
     public void dizMelhoresCompradores(Predicate<Artigo> filtro){

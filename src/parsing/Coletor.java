@@ -35,6 +35,8 @@ public class Coletor{
     private static final int SAY_MELHORES_VENDEDORES = 16;
     private static final int SAY_MELHORES_COMPRADORES = 17;
     private static final int SAY_MELHORES_TRANSPORTADORAS = 18;
+    private static final int SAY_VINTAGE_LUCRO = 20;
+    private static final int CHANGE_VINTAGE_COMISSAO = 21;
 
     private static Map<Integer,Integer> tabela = new HashMap<Integer,Integer>();
 
@@ -59,6 +61,8 @@ public class Coletor{
         Coletor.tabela.put("Melhores Vendedores".hashCode(),Coletor.SAY_MELHORES_VENDEDORES);
         Coletor.tabela.put("Melhores Compradores".hashCode(),Coletor.SAY_MELHORES_COMPRADORES);
         Coletor.tabela.put("Melhores Transportadoras".hashCode(),Coletor.SAY_MELHORES_TRANSPORTADORAS);
+        Coletor.tabela.put("Vintage Lucro".hashCode(),Coletor.SAY_VINTAGE_LUCRO);
+        Coletor.tabela.put("Alterar Comissao".hashCode(),Coletor.CHANGE_VINTAGE_COMISSAO);
     }
 
     private static int getCodigo(String identificador){
@@ -227,6 +231,11 @@ public class Coletor{
                     gestor.updateData(LocalDate.parse(tokens.get(1)));
                     break;
 
+                case Coletor.CHANGE_VINTAGE_COMISSAO:
+
+                    Gestor.setComissao(Double.valueOf(tokens.get(1)));
+                    break;
+
                 case Coletor.SHOW_DATA:
 
                     System.out.println(Calendario.getData().toString());
@@ -235,6 +244,11 @@ public class Coletor{
                 case Coletor.SAY_MELHORES_TRANSPORTADORAS:
 
                     gestor.dizMelhoresTransportadoras();
+                    break;
+
+                case Coletor.SAY_VINTAGE_LUCRO:
+
+                    System.out.println("Vintage lucro: " + gestor.getLucroVintage());
                     break;
 
                 case Coletor.SAY_MELHOR_VENDEDOR:

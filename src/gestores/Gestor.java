@@ -14,7 +14,8 @@ import java.util.function.Predicate;
 
 public class Gestor implements Serializable{
 
-    private static final long serialVersionUID = 12L;    
+    private static final long serialVersionUID = 12L;  
+    private static double vintageComissao = 0.1;  
 
     public GestorArtigos gestor_artigos;
     public GestorEncomendas gestor_encomendas;
@@ -26,6 +27,14 @@ public class Gestor implements Serializable{
         this.gestor_encomendas = new GestorEncomendas();
         this.gestor_utilizadores = new GestorUtilizadores();
         this.gestor_transportadoras = new GestorTransportadoras();
+    }
+
+    public static double getComissao(){
+        return Gestor.vintageComissao;
+    }
+
+    public static void setComissao(double comissao){
+        Gestor.vintageComissao = comissao;
     }
 
     public void insertUtilizador(Utilizador utilizador){
@@ -245,6 +254,10 @@ public class Gestor implements Serializable{
 
     public void dizMelhoresTransportadoras(){
         this.gestor_transportadoras.dizMelhoresTransportadoras();
+    }
+
+    public double getLucroVintage(){
+        return this.gestor_encomendas.getLucroVintage(Gestor.vintageComissao);
     }
 
     public String toString(){

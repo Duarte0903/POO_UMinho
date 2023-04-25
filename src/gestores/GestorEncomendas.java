@@ -65,6 +65,18 @@ public class GestorEncomendas implements Serializable{
         return this.catalogo_encomendas.get(codigo_encomenda).getDataCriacao();
     }
 
+    public double getLucroVintage(double comissao){
+
+        return this.catalogo_encomendas
+                    .entrySet()
+                    .stream()
+                    .map((x) -> x.getValue())
+                    .filter((x) -> x.getEstado().equals(Encomenda.FINALIZADA)
+                                || x.getEstado().equals(Encomenda.EXPEDIDA))
+                    .mapToDouble((x) -> x.calculaPreco())
+                    .sum() * comissao;
+    }
+
     public List<Integer> getAllEncomendasProntas(){
 
         return this.catalogo_encomendas
