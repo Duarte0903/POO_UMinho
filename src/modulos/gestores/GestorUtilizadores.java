@@ -23,7 +23,10 @@ public class GestorUtilizadores implements Serializable{
         this.catalogo_utilizadores.add(utilizador.clone());
     }
 
-    public void addUtilizadorArtigoAVenda(Artigo artigo){
+    public void addUtilizadorArtigoAVenda(Artigo artigo) throws Exception{
+        if (artigo.getVendedor() < 0 || artigo.getVendedor() >= this.catalogo_utilizadores.size()){
+            throw new Exception("Utilizador inexistente");
+        }
         this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoAVenda(artigo);
     }
 

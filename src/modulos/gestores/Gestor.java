@@ -5,6 +5,7 @@ import modulos.artigos.Artigo;
 import modulos.Encomenda;
 import modulos.Utilizador;
 import modulos.Transportadora;
+import modulos.Tratador;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -42,34 +43,24 @@ public class Gestor implements Serializable{
     }
 
     public void insertTransportadora(Transportadora transportadora){
-        this.gestor_transportadoras.addTransportadora(transportadora);
+        try {this.gestor_transportadoras.addTransportadora(transportadora);}
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void insertArtigo(Artigo artigo){
 
-        if (artigo.getVendedor() >= 0 && artigo.getVendedor() < gestor_utilizadores.getSize()){
+        try{
+            Transportadora transportadora = this.gestor_transportadoras.getTransportadora(artigo.getTransportadora());
 
-            if (gestor_transportadoras.lookUp(artigo.getTransportadora())
-                && !gestor_artigos.lookUp(artigo)){
-
-                if (this.gestor_transportadoras.getPremiumTransportadora(artigo.getTransportadora())
-                    != artigo.getPremium()){
-
-                    System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo() 
-                                        + " , Transportadora incompativel");
-                }
-
-                else{
-
-                    this.gestor_artigos.addArtigo(artigo);
-                    this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
-                }
+            if (transportadora.getPremium() != artigo.getPremium()){
+                throw new Exception("Artigo e Transportadora de tipos diferentes");
             }
 
-            else System.out.println("Transportadora ou Artigo: inválido");         
+            this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
+            this.gestor_artigos.addArtigo(artigo);
         }
 
-        else {System.out.println("Não foi possivel inserir o artigo " + artigo.getCodigo());}
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void insertEncomenda(Encomenda encomenda){

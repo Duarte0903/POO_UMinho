@@ -18,7 +18,10 @@ public class GestorArtigos implements Serializable{
         this.catalogo_artigos = new HashMap<Integer,Artigo>();
     }
 
-    public void addArtigo(Artigo artigo){
+    public void addArtigo(Artigo artigo) throws Exception{
+        if (this.catalogo_artigos.containsKey(artigo.hashCode())){
+            throw new Exception("Artigo já inserido");
+        }
         this.catalogo_artigos.put(artigo.hashCode(),artigo.clone());
     }
 
