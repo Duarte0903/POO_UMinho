@@ -65,12 +65,15 @@ public class Gestor implements Serializable{
 
     public void insertEncomenda(Encomenda encomenda){
 
-        if (encomenda.getComprador() >= 0 && encomenda.getComprador() < gestor_utilizadores.getSize()){
-
+        try{
+            if (encomenda.getComprador() < 0 || encomenda.getComprador() >= gestor_utilizadores.getSize()){
+                throw new Exception("Comprador não identificado");
+            }
+            
             this.gestor_encomendas.addEncomenda(encomenda);
         }
 
-        else System.out.println("Não foi possivel criar a encomenda do comprador: " + encomenda.getComprador());
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void insertArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
