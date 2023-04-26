@@ -1,6 +1,6 @@
-package comparadores;
+package modulos.comparadores;
 
-import transportadoras.Transportadora;
+import modulos.Transportadora;
 import java.util.Comparator;
 
 public class OrdenaTransportadora implements Comparator<Transportadora>{

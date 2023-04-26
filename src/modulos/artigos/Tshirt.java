@@ -1,4 +1,4 @@
-package artigos;
+package modulos.artigos;
 
 
 public class Tshirt extends Artigo{

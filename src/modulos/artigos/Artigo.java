@@ -1,6 +1,6 @@
-package artigos;
+package modulos.artigos;
 
-import calendario.Calendario;
+import modulos.Calendario;
 import java.time.LocalDate;
 import java.io.Serializable;
 

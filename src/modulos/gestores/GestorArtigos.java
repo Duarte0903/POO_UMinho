@@ -1,6 +1,6 @@
-package gestores;
+package modulos.gestores;
 
-import artigos.Artigo;
+import modulos.artigos.Artigo;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;

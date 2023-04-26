@@ -1,8 +1,8 @@
-package gestores;
+package modulos.gestores;
 
-import artigos.Artigo;
-import utilizadores.Utilizador;
-import estatisticas.Estatisticas;
+import modulos.artigos.Artigo;
+import modulos.Utilizador;
+import modulos.Estatisticas;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.Predicate;

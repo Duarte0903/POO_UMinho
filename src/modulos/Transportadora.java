@@ -1,6 +1,6 @@
-package transportadoras;
+package modulos;
 
-import artigos.Artigo;
+import modulos.artigos.Artigo;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;

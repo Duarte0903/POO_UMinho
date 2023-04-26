@@ -1,8 +1,8 @@
-package gestores;
+package modulos.gestores;
 
-import artigos.Artigo;
-import transportadoras.Transportadora;
-import estatisticas.Estatisticas;
+import modulos.artigos.Artigo;
+import modulos.Transportadora;
+import modulos.Estatisticas;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;

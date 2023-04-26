@@ -1,16 +1,12 @@
-package parsing;
+package controlador;
 
-import artigos.*;
-import encomendas.Encomenda;
-import utilizadores.Utilizador;
-import transportadoras.Transportadora;
-import gestores.Gestor;
-import calendario.Calendario;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.function.Predicate;
+import modulos.*;
+import modulos.artigos.*;
+import modulos.gestores.Gestor;
+import leitor.Leitor;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.function.Predicate;
 import java.time.LocalDate;
 
 
@@ -71,17 +67,11 @@ public class Coletor{
         return Coletor.tabela.get(identificador);
     }
 
-    public static void collectDadosLine(String path, Gestor gestor){
-
-        ArrayList<String> tokens;
-        Parser parser = new Parser();
-                
-        parser.splitLine(path);
-        tokens = parser.getTokens();
+    public static void collectDadosLine(String[] tokens, Gestor gestor){
 
         try{
 
-            switch (Coletor.getCodigo(tokens.get(0))){
+            switch (Coletor.getCodigo(tokens[0])){
 
                 case Coletor.SHOW_DADOS:
 
@@ -92,10 +82,10 @@ public class Coletor{
 
                     gestor.insertUtilizador(
                         new Utilizador(
-                            tokens.get(1),
-                            tokens.get(2),
-                            Integer.valueOf(tokens.get(3)),
-                            tokens.get(4)));
+                            tokens[1],
+                            tokens[2],
+                            Integer.valueOf(tokens[3]),
+                            tokens[4]));
 
                     break;
 
@@ -103,12 +93,12 @@ public class Coletor{
 
                     gestor.insertTransportadora(
                         new Transportadora(
-                            tokens.get(1),
-                            Double.valueOf(tokens.get(2)),
-                            Double.valueOf(tokens.get(3)),
-                            Double.valueOf(tokens.get(4)),
-                            Double.valueOf(tokens.get(5)),
-                            Boolean.parseBoolean(tokens.get(6))));
+                            tokens[1],
+                            Double.valueOf(tokens[2]),
+                            Double.valueOf(tokens[3]),
+                            Double.valueOf(tokens[4]),
+                            Double.valueOf(tokens[5]),
+                            Boolean.parseBoolean(tokens[6])));
 
                     break;
 
@@ -116,20 +106,20 @@ public class Coletor{
 
                     gestor.insertArtigo(
                         new Mala(
-                            Integer.valueOf(tokens.get(1)),
-                            tokens.get(2),
-                            tokens.get(3),
-                            tokens.get(4),
-                            tokens.get(5),
-                            Double.valueOf(tokens.get(6)),
-                            Double.valueOf(tokens.get(7)),
-                            tokens.get(8),
-                            Integer.valueOf(tokens.get(9)),
-                            Integer.valueOf(tokens.get(10)),
-                            Boolean.parseBoolean(tokens.get(11)),
-                            Integer.valueOf(tokens.get(12)),
-                            tokens.get(13),
-                            LocalDate.parse(tokens.get(14))));
+                            Integer.valueOf(tokens[1]),
+                            tokens[2],
+                            tokens[3],
+                            tokens[4],
+                            tokens[5],
+                            Double.valueOf(tokens[6]),
+                            Double.valueOf(tokens[7]),
+                            tokens[8],
+                            Integer.valueOf(tokens[9]),
+                            Integer.valueOf(tokens[10]),
+                            Boolean.parseBoolean(tokens[11]),
+                            Integer.valueOf(tokens[12]),
+                            tokens[13],
+                            LocalDate.parse(tokens[14])));
 
                     break;
 
@@ -137,19 +127,19 @@ public class Coletor{
 
                     gestor.insertArtigo(
                         new Tshirt(
-                            Integer.valueOf(tokens.get(1)),
-                            tokens.get(2),
-                            tokens.get(3),
-                            tokens.get(4),
-                            tokens.get(5),
-                            Double.valueOf(tokens.get(6)),
-                            Double.valueOf(tokens.get(7)),
-                            tokens.get(8),
-                            Integer.valueOf(tokens.get(9)),
-                            Integer.valueOf(tokens.get(10)),
-                            Boolean.parseBoolean(tokens.get(11)),
-                            tokens.get(12),
-                            tokens.get(13)));
+                            Integer.valueOf(tokens[1]),
+                            tokens[2],
+                            tokens[3],
+                            tokens[4],
+                            tokens[5],
+                            Double.valueOf(tokens[6]),
+                            Double.valueOf(tokens[7]),
+                            tokens[8],
+                            Integer.valueOf(tokens[9]),
+                            Integer.valueOf(tokens[10]),
+                            Boolean.parseBoolean(tokens[11]),
+                            tokens[12],
+                            tokens[13]));
 
                     break;
 
@@ -157,21 +147,21 @@ public class Coletor{
 
                     gestor.insertArtigo(
                         new Sapatilha(
-                            Integer.valueOf(tokens.get(1)),
-                            tokens.get(2),
-                            tokens.get(3),
-                            tokens.get(4),
-                            tokens.get(5),
-                            Double.valueOf(tokens.get(6)),
-                            Double.valueOf(tokens.get(7)),
-                            tokens.get(8),
-                            Integer.valueOf(tokens.get(9)),
-                            Integer.valueOf(tokens.get(10)),
-                            Boolean.parseBoolean(tokens.get(11)),
-                            tokens.get(12),
-                            Integer.valueOf(tokens.get(13)),
-                            Boolean.parseBoolean(tokens.get(14)),
-                            LocalDate.parse(tokens.get(15))));
+                            Integer.valueOf(tokens[1]),
+                            tokens[2],
+                            tokens[3],
+                            tokens[4],
+                            tokens[5],
+                            Double.valueOf(tokens[6]),
+                            Double.valueOf(tokens[7]),
+                            tokens[8],
+                            Integer.valueOf(tokens[9]),
+                            Integer.valueOf(tokens[10]),
+                            Boolean.parseBoolean(tokens[11]),
+                            tokens[12],
+                            Integer.valueOf(tokens[13]),
+                            Boolean.parseBoolean(tokens[14]),
+                            LocalDate.parse(tokens[15])));
 
                     break;
 
@@ -179,63 +169,63 @@ public class Coletor{
                     
                     gestor.insertEncomenda(
                         new Encomenda(
-                            Integer.valueOf(tokens.get(1))));
+                            Integer.valueOf(tokens[1])));
             
                     break;
 
                 case Coletor.INSERT_ARTIGO_ENCOMENDA:
 
                     gestor.insertArtigoEncomenda(
-                        Integer.valueOf(tokens.get(1)),
-                        tokens.get(2));
+                        Integer.valueOf(tokens[1]),
+                        tokens[2]);
 
                     break;
 
                 case Coletor.REMOVE_ARTIGO_ENCOMENDA:
 
                     gestor.removeArtigoEncomenda(
-                        Integer.valueOf(tokens.get(1)),
-                        tokens.get(2));
+                        Integer.valueOf(tokens[1]),
+                        tokens[2]);
 
                     break;
 
                 case Coletor.CHECK_OUT_ENCOMENDA:
 
-                    gestor.finalizarEncomenda(Integer.valueOf(tokens.get(1)));
+                    gestor.finalizarEncomenda(Integer.valueOf(tokens[1]));
                     break;
 
                 case Coletor.REFUND_ENCOMENDA:
 
-                    gestor.devolverEncomenda(Integer.valueOf(tokens.get(1)));
+                    gestor.devolverEncomenda(Integer.valueOf(tokens[1]));
                     break;
 
                 case Coletor.CHANGE_PRECO_ARTIGO:
 
                     gestor.alterarPrecoArtigo(
-                        tokens.get(1),
-                        Double.valueOf(tokens.get(2)));
+                        tokens[1],
+                        Double.valueOf(tokens[2]));
                     
                     break;
 
                 case Coletor.CHANGE_PRECOS_TRANSPORTADORA:
 
                     gestor.alterarPrecosTransportadora(
-                        tokens.get(1),
-                        Double.valueOf(tokens.get(2)),
-                        Double.valueOf(tokens.get(3)),
-                        Double.valueOf(tokens.get(4)),
-                        Double.valueOf(tokens.get(5)));
+                        tokens[1],
+                        Double.valueOf(tokens[2]),
+                        Double.valueOf(tokens[3]),
+                        Double.valueOf(tokens[4]),
+                        Double.valueOf(tokens[5]));
 
                     break;
 
                 case Coletor.CHANGE_DATA:
 
-                    gestor.updateData(LocalDate.parse(tokens.get(1)));
+                    gestor.updateData(LocalDate.parse(tokens[1]));
                     break;
 
                 case Coletor.CHANGE_VINTAGE_COMISSAO:
 
-                    Gestor.setComissao(Double.valueOf(tokens.get(1)));
+                    Gestor.setComissao(Double.valueOf(tokens[1]));
                     break;
 
                 case Coletor.SHOW_DATA:
@@ -260,7 +250,7 @@ public class Coletor{
 
                 case Coletor.SAY_ENCOMENDAS_EMITIDAS_VENDEDOR:
 
-                    gestor.getEncomendasEmitidasVendedor(Integer.valueOf(tokens.get(1)));
+                    gestor.getEncomendasEmitidasVendedor(Integer.valueOf(tokens[1]));
                     break;
 
                 case Coletor.SAY_MELHORES_VENDEDORES:
@@ -268,12 +258,12 @@ public class Coletor{
 
                     Predicate<Artigo> filtro = x -> true;
 
-                    if (tokens.size() == 3){
-                        filtro = x -> x.getData().isAfter(LocalDate.parse(tokens.get(1)))
-                                    && x.getData().isBefore(LocalDate.parse(tokens.get(2)));
+                    if (tokens.length == 3){
+                        filtro = x -> x.getData().isAfter(LocalDate.parse(tokens[1]))
+                                    && x.getData().isBefore(LocalDate.parse(tokens[2]));
                     }
 
-                    if (Coletor.getCodigo(tokens.get(0)) == Coletor.SAY_MELHORES_VENDEDORES){
+                    if (Coletor.getCodigo(tokens[0]) == Coletor.SAY_MELHORES_VENDEDORES){
                         gestor.dizMelhoresVendedores(filtro);
                     }
 
@@ -283,7 +273,7 @@ public class Coletor{
         }
 
         catch (Exception e){
-            System.out.println("Não foi possivel efetuar o registo: " + tokens.get(0));
+            System.out.println("Não foi possivel efetuar o registo: " + tokens[0]);
         }
     }
 }

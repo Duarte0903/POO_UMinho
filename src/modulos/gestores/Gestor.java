@@ -1,10 +1,10 @@
-package gestores;
+package modulos.gestores;
 
-import artigos.Artigo;
-import encomendas.Encomenda;
-import calendario.Calendario;
-import utilizadores.Utilizador;
-import transportadoras.Transportadora;
+import modulos.Calendario;
+import modulos.artigos.Artigo;
+import modulos.Encomenda;
+import modulos.Utilizador;
+import modulos.Transportadora;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
-package encomendas;
+package modulos;
 
-import artigos.Artigo;
-import calendario.Calendario;
+import modulos.artigos.Artigo;
+import modulos.Calendario;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;

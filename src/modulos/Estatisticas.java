@@ -1,10 +1,10 @@
-package estatisticas;
+package modulos;
 
-import comparadores.*;
-import artigos.Artigo;
-import utilizadores.Utilizador;
-import encomendas.Encomenda;
-import transportadoras.Transportadora;
+import modulos.comparadores.*;
+import modulos.artigos.Artigo;
+import modulos.Utilizador;
+import modulos.Encomenda;
+import modulos.Transportadora;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package comparadores;
+package modulos.comparadores;
 
-import utilizadores.Utilizador;
+import modulos.Utilizador;
 import java.util.Comparator;
 
 public class OrdenaComprador implements Comparator<Utilizador>{

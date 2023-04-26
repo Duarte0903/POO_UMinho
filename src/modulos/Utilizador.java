@@ -1,9 +1,9 @@
-package utilizadores;
+package modulos;
 
-import artigos.Artigo;
+import modulos.artigos.Artigo;
 import java.util.List;
-import java.util.stream.*;
 import java.util.ArrayList;
+import java.util.stream.*;
 import java.io.Serializable;
 import java.util.function.Predicate;
 
