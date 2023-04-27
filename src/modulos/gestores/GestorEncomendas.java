@@ -24,15 +24,27 @@ public class GestorEncomendas implements Serializable{
         this.catalogo_encomendas = new HashMap<Integer,Encomenda>();
     }
 
+    public static int getAutoIncrement(){
+        return Encomenda.getAutoIncrement();
+    }
+
+    public static void setAutoIncrement(int x){
+        Encomenda.setAutoIncrement(x);
+    }
+
     public void addEncomenda(Encomenda encomenda){
         this.catalogo_encomendas.put(encomenda.hashCode(),encomenda.clone());
     }
 
-    public void addArtigoEncomenda(int codigo_encomenda, Artigo artigo){
+    public void addArtigoEncomenda(int codigo_encomenda, Artigo artigo) throws Exception{
+        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)){
+            throw new Exception("Encomenda inexistente");
+        }
         this.catalogo_encomendas.get(codigo_encomenda).addArtigo(artigo);
     }
 
-    public Artigo removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
+    public Artigo removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo) throws Exception{
+        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)) throw new Exception("Encomenda invalida");
         return this.catalogo_encomendas.get(codigo_encomenda).removeArtigo(codigo_artigo);
     }
 
@@ -54,7 +66,10 @@ public class GestorEncomendas implements Serializable{
         return this.catalogo_encomendas.get(codigo_encomenda).getArtigos();
     }
 
-    public String getEstadoEncomenda(int codigo_encomenda){
+    public String getEstadoEncomenda(int codigo_encomenda) throws Exception{
+        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)){
+            throw new Exception("Encomenda inexistente");
+        }
         return this.catalogo_encomendas.get(codigo_encomenda).getEstado();
     }
 

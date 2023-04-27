@@ -25,12 +25,11 @@ public class GestorArtigos implements Serializable{
         this.catalogo_artigos.put(artigo.hashCode(),artigo.clone());
     }
 
-    public Artigo removeArtigo(String codigo_artigo){
-
-        Artigo result = this.catalogo_artigos.get(codigo_artigo.hashCode()).clone();
-        this.catalogo_artigos.remove(codigo_artigo.hashCode());
-
-        return result;
+    public Artigo removeArtigo(String codigo_artigo) throws Exception{
+        if (!this.catalogo_artigos.containsKey(codigo_artigo.hashCode())){
+            throw new Exception("Artigo inexistente");
+        }
+        return this.catalogo_artigos.remove(codigo_artigo.hashCode()).clone();
     }
 
     public Artigo getArtigo(String codigo_artigo){

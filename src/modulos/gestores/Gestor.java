@@ -37,6 +37,14 @@ public class Gestor implements Serializable{
     public static void setComissao(double comissao){
         Gestor.vintageComissao = comissao;
     }
+    
+    public static int getAutoIncrementEncomenda(){
+        return GestorEncomendas.getAutoIncrement();
+    }
+
+    public static void setAutoIncrementEncomeda(int x){
+        GestorEncomendas.setAutoIncrement(x);
+    }
 
     public void insertUtilizador(Utilizador utilizador){
         this.gestor_utilizadores.addUtilizador(utilizador);
@@ -79,102 +87,76 @@ public class Gestor implements Serializable{
     public void insertArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
 
         try{
-
-            if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-
-                Artigo result = this.gestor_artigos.removeArtigo(codigo_artigo);
-                this.gestor_utilizadores.removeUtilizadorArtigoAVenda(result);
-                this.gestor_encomendas.addArtigoEncomenda(codigo_encomenda,result);
+            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
+                throw new Exception("Encomenda não pendente");
             }
 
-            else System.out.println("Não foi possivel inserir o artigo " + codigo_artigo + ", a encomenda está no estado: "
-                                    + this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda));
+            Artigo result = this.gestor_artigos.removeArtigo(codigo_artigo);
+            this.gestor_utilizadores.removeUtilizadorArtigoAVenda(result);
+            this.gestor_encomendas.addArtigoEncomenda(codigo_encomenda,result);
         }
 
-        catch (Exception e){
-            System.out.println("Não foi possivel inserir o artigo " + codigo_artigo
-                                + " à encomenda " + codigo_encomenda);
-        }
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
 
         try{
-
-            if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-
-                Artigo result = this.gestor_encomendas.removeArtigoEncomenda(codigo_encomenda,codigo_artigo);
-                this.insertArtigo(result);
+            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
+                throw new Exception("Encomenda não pendente");
             }
 
-            else System.out.println("Não foi possivel remover o artigo " + codigo_artigo + ", a encomenda está no estado: "
-                                    + this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda));
+            this.insertArtigo(this.gestor_encomendas.removeArtigoEncomenda(codigo_encomenda,codigo_artigo));
         }
 
-        catch (Exception e){
-            System.out.println("Não foi possivel remove o artigo " + codigo_artigo
-                                + " da encomenda " + codigo_encomenda);
-        }
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void finalizarEncomenda(int codigo_encomenda){
 
-        try {
-            
-            if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-                
-                this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
-                List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
-
-                artigos_encomenda.forEach(
-                    (x) -> this.gestor_utilizadores.addUtilizadorArtigoVendido(x));
-
-                artigos_encomenda.forEach(
-                    (x) -> this.gestor_utilizadores.addUtilizadorArtigoAdquirido(
-                        this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda),x));
-
+        try{
+            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
+                throw new Exception("Encomenda não pendente"); 
             }
-
-            else System.out.println("Não foi possivel finalizar a encomenda, estado atual: "
-                                    + this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda));
+            
+            this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
+            this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
+                this.gestor_utilizadores.addUtilizadorArtigoVendido(x);
+                this.gestor_utilizadores.addUtilizadorArtigoAdquirido(
+                    this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda),x);
+            });
         }
 
-        catch (Exception e) {System.out.println("Não foi possivel finalizar a encomenda: " + codigo_encomenda);}
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void expedirEncomenda(int codigo_encomenda){
 
-        try{
-
-            this.gestor_encomendas.expedirEncomenda(codigo_encomenda);
-            List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
-
-            artigos_encomenda.forEach((x) -> {
-                
-                x.setData(x.getData().plusDays(2));
-                this.gestor_transportadoras.addArtigoTransportadora(
-                                                x.getTransportadora(),
-                                                codigo_encomenda,
-                                                x);
-            });
-        }
-
-        catch (Exception e) {System.out.println("Não foi possivel expedir a encomenda: " + codigo_encomenda);}
+        this.gestor_encomendas.expedirEncomenda(codigo_encomenda);
+        this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
+            x.setData(x.getData().plusDays(2));
+            this.gestor_transportadoras.addArtigoTransportadora(
+                x.getTransportadora(),
+                codigo_encomenda,
+                x);
+        });
     }
 
     public void updateData(LocalDate data){
 
-        if (Calendario.getIntervaloDias(Calendario.getData(),data) >= 0){
+        try{
+            if (Calendario.getIntervaloDias(Calendario.getData(),data) < 0){
+                throw new Exception("Não é possivel retroceder");
+            }
 
             Calendario.setData(data);
-            List<Integer> encomendas_prontas = this.gestor_encomendas.getAllEncomendasProntas();
-            encomendas_prontas.forEach((x) -> this.expedirEncomenda(x));
-            encomendas_prontas.forEach((x) -> this.gestor_transportadoras.updatePrecoEncomenda(x));
+            this.gestor_encomendas.getAllEncomendasProntas().forEach((x) -> {
+                this.expedirEncomenda(x);
+                this.gestor_transportadoras.updatePrecoEncomenda(x);
+            });
         }
 
-        else{
-            System.out.println("Não é possível retroceder no tempo");
-        }
+        catch(Exception e) {Tratador.trataException(e);}
     }
 
     public void devolverEncomenda(int codigo_encomenda){
@@ -230,7 +212,6 @@ public class Gestor implements Serializable{
 
     public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto){
         try {this.gestor_transportadoras.alterarPrecosTransportadora(transportadora,base_enc_pequena,base_enc_media,base_enc_grande,mult_imposto);}
-
         catch (Exception e) {System.out.println("Não foi possivel identificar a transportadora: " + transportadora);}
     }
 

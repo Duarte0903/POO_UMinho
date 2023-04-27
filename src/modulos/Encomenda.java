@@ -87,6 +87,10 @@ public class Encomenda implements Serializable{
         return this.artigos.size();
     }
 
+    public static int getAutoIncrement(){
+        return Encomenda.AUTO_INCREMENT;
+    }
+
     public List<Artigo> getArtigos(){
         return this.artigos
                     .stream()
@@ -98,6 +102,10 @@ public class Encomenda implements Serializable{
 
     public void setArtigos(Predicate<Artigo> filtro){
         this.artigos.removeIf((x) -> filtro.test(x));
+    }
+
+    public static void setAutoIncrement(int x){
+        Encomenda.AUTO_INCREMENT = x;
     }
 
     // Metodos
@@ -125,7 +133,7 @@ public class Encomenda implements Serializable{
         this.updateEmbalagem();
     }
 
-    public Artigo removeArtigo(String codigo){
+    public Artigo removeArtigo(String codigo) throws Exception{
 
         Iterator<Artigo> iterator = this.artigos.iterator();
         Artigo result = null;
@@ -140,6 +148,8 @@ public class Encomenda implements Serializable{
                 iterator.remove();
             }
         }
+
+        if (result == null) throw new Exception("Artigo inexistente");
 
         this.updateEmbalagem();
 
