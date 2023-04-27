@@ -233,24 +233,24 @@ public class Coletor{
                     System.out.println(Calendario.getData().toString());
                     break;
 
-                case SHOW_COMISSAO:
+                case Coletor.SHOW_COMISSAO:
 
                     System.out.println(Gestor.getComissao());
                     break;
 
-                case Coletor.SAY_MELHORES_TRANSPORTADORAS:
-
-                    gestor.dizMelhoresTransportadoras();
-                    break;
-
                 case Coletor.SAY_VINTAGE_LUCRO:
 
-                    System.out.println("Vintage lucro: " + gestor.getLucroVintage());
+                    gestor.getLucroVintage();
                     break;
 
                 case Coletor.SAY_ENCOMENDAS_EMITIDAS_VENDEDOR:
 
                     gestor.getEncomendasEmitidasVendedor(Integer.valueOf(tokens[1]));
+                    break;
+
+                case Coletor.SAY_MELHORES_TRANSPORTADORAS:
+
+                    gestor.getMelhoresTransportadoras();
                     break;
 
                 case Coletor.SAY_MELHORES_VENDEDORES:
@@ -264,10 +264,10 @@ public class Coletor{
                     }
 
                     if (Coletor.getCodigo(tokens[0]) == Coletor.SAY_MELHORES_VENDEDORES){
-                        gestor.dizMelhoresVendedores(filtro);
+                        gestor.getMelhoresVendedores(filtro);
                     }
 
-                    else gestor.dizMelhoresCompradores(filtro);
+                    else gestor.getMelhoresCompradores(filtro);
                     break;
             }
         }

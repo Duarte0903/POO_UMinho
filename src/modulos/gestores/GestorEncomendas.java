@@ -83,13 +83,12 @@ public class GestorEncomendas implements Serializable{
         return this.catalogo_encomendas.get(codigo_encomenda).getDataCriacao();
     }
 
-    public double getLucroVintage(double comissao){
-        return Estatisticas.getLucroVintage(this.catalogo_encomendas,comissao);
+    public double getLucroVintage(){
+        return Estatisticas.getLucroVintage(this.catalogo_encomendas);
     }
 
-    public void getEncomendasEmitidasVendedor(int utilizador){
-        Estatisticas.getEncomendasEmitidasVendedor(utilizador,this.catalogo_encomendas)
-                    .forEach((x) -> System.out.println(x.toString()));
+    public List<Encomenda> getEncomendasEmitidasVendedor(int utilizador){
+        return Estatisticas.getEncomendasEmitidasVendedor(utilizador,this.catalogo_encomendas);
     }
 
     public List<Integer> getAllEncomendasProntas(){

@@ -5,6 +5,7 @@ import modulos.Transportadora;
 import modulos.Estatisticas;
 import java.util.Set;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.util.stream.*;
 import java.io.Serializable;
@@ -59,10 +60,8 @@ public class GestorTransportadoras implements Serializable{
             .forEach((x) -> x.getValue().updatePrecoEncomenda(codigo_encomenda));
     }
 
-    public void dizMelhoresTransportadoras(){
-        Estatisticas.getMelhoresTransportadoras(this.catalogo_transportadoras)
-                    .forEach((x) -> System.out.println("Nome: " + x.getNome()
-                                                    + "\t\tDinheiro Ganho: " + x.getFaturacao()));
+    public List<Transportadora> getMelhoresTransportadoras(){
+        return Estatisticas.getMelhoresTransportadoras(this.catalogo_transportadoras);
     }
 
     public String toString(){

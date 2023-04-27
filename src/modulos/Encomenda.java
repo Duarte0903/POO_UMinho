@@ -111,7 +111,6 @@ public class Encomenda implements Serializable{
     // Metodos
 
     public double calculaPreco(){
-
         return this.artigos
                     .stream()
                     .mapToDouble((x) -> x.calculaPreco())

@@ -18,6 +18,7 @@ public class Utilizador implements Serializable{
     private String nome;
     private int nif;
     private String morada;
+    private double dinheiro;
 
     private List<Artigo> artigos_a_venda;
     private List<Artigo> artigos_vendidos;
@@ -31,6 +32,7 @@ public class Utilizador implements Serializable{
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
+        this.dinheiro = 0;
         this.artigos_a_venda = new ArrayList<Artigo>();
         this.artigos_vendidos = new ArrayList<Artigo>();
         this.artigos_adquiridos = new ArrayList<Artigo>();
@@ -49,6 +51,7 @@ public class Utilizador implements Serializable{
             this.morada);
 
         utilizador.setCodigo(this.codigo);
+        utilizador.setDinheiro(this.dinheiro);
         utilizador.artigos_a_venda = this.cloneArtigos(this.artigos_a_venda);
         utilizador.artigos_vendidos = this.cloneArtigos(this.artigos_vendidos);
         utilizador.artigos_adquiridos = this.cloneArtigos(this.artigos_adquiridos);
@@ -78,6 +81,10 @@ public class Utilizador implements Serializable{
         return this.morada;
     }
 
+    public double getDinheiro(){
+        return this.dinheiro;
+    }
+
     public double getPrecoArtigosVendidos(){
         return this.calculaPreco(this.artigos_vendidos);
     }
@@ -86,6 +93,14 @@ public class Utilizador implements Serializable{
         return this.calculaPreco(this.artigos_adquiridos);
     }
 
+    public double getDinheiroArtigosVendidos(Predicate<Artigo> filtro){
+        return this.artigos_vendidos.stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.calculaPreco()).sum();
+    }
+
+    public double getDinheiroArtigosAdquiridos(Predicate<Artigo> filtro){
+        return this.artigos_adquiridos.stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.calculaPreco()).sum();
+    }
+    
     public static int getAutoIncrement(){
         return Utilizador.AUTO_INCREMENT;
     }
@@ -112,12 +127,8 @@ public class Utilizador implements Serializable{
         this.morada = morada;
     }
 
-    public void setArtigosVendidos(Predicate<Artigo> filtro){
-        this.artigos_vendidos.removeIf((x) -> filtro.test(x));
-    }
-
-    public void setArtigosAdquiridos(Predicate<Artigo> filtro){
-        this.artigos_adquiridos.removeIf((x) -> filtro.test(x));
+    public void setDinheiro(double dinheiro){
+        this.dinheiro = dinheiro;
     }
 
     private List<Artigo> cloneArtigos(List<Artigo> lista){

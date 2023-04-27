@@ -1,5 +1,6 @@
 package modulos.gestores;
 
+import escritor.Escritor;
 import modulos.Calendario;
 import modulos.artigos.Artigo;
 import modulos.Encomenda;
@@ -207,24 +208,24 @@ public class Gestor implements Serializable{
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void dizMelhoresVendedores(Predicate<Artigo> filtro){
-        this.gestor_utilizadores.dizMelhoresVendedores(filtro);
+    public void getMelhoresVendedores(Predicate<Artigo> filtro){
+        Escritor.printMelhoresVendedores(this.gestor_utilizadores.getMelhoresVendedores(filtro));
     }
 
-    public void dizMelhoresCompradores(Predicate<Artigo> filtro){
-        this.gestor_utilizadores.dizMelhoresCompradores(filtro);
+    public void getMelhoresCompradores(Predicate<Artigo> filtro){
+        Escritor.printMelhoresCopmradores(this.gestor_utilizadores.getMelhoresCompradores(filtro));
     }
 
-    public void dizMelhoresTransportadoras(){
-        this.gestor_transportadoras.dizMelhoresTransportadoras();
+    public void getMelhoresTransportadoras(){
+        Escritor.printMelhoresTransportadoras(this.gestor_transportadoras.getMelhoresTransportadoras());
     }
 
     public void getEncomendasEmitidasVendedor(int utilizador){
-        this.gestor_encomendas.getEncomendasEmitidasVendedor(utilizador);
+        Escritor.printEncomendasEmitidasVendedor(this.gestor_encomendas.getEncomendasEmitidasVendedor(utilizador));
     }
 
-    public double getLucroVintage(){
-        return this.gestor_encomendas.getLucroVintage(Gestor.vintageComissao);
+    public void getLucroVintage(){
+        Escritor.escreve(this.gestor_encomendas.getLucroVintage());
     }
 
     public String toString(){

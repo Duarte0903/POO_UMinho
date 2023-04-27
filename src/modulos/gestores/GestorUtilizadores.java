@@ -3,6 +3,7 @@ package modulos.gestores;
 import modulos.artigos.Artigo;
 import modulos.Utilizador;
 import modulos.Estatisticas;
+import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -66,18 +67,12 @@ public class GestorUtilizadores implements Serializable{
         return this.catalogo_utilizadores.size();
     }
 
-    public void dizMelhoresVendedores(Predicate<Artigo> filtro){
-        List<Utilizador> ranking = Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
-        ranking.forEach((x) -> System.out.println("Nome: " + x.getNome()
-                                                + "\tCodigo " + x.getCodigo()
-                                                + "\tDinherio Ganho: " + (1-Gestor.getComissao())*x.getPrecoArtigosVendidos()));
+    public List<Utilizador> getMelhoresVendedores(Predicate<Artigo> filtro){
+        return  Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
     }
 
-    public void dizMelhoresCompradores(Predicate<Artigo> filtro){
-        List<Utilizador> ranking = Estatisticas.getMelhoresCompradores(this.catalogo_utilizadores,filtro);
-        ranking.forEach((x) -> System.out.println("Nome: " + x.getNome()
-                                                + "\tCodigo " + x.getCodigo()
-                                                + "\tDinheiro Gasto: " + x.getPrecoArtigosAdquiridos()));
+    public List<Utilizador> getMelhoresCompradores(Predicate<Artigo> filtro){
+        return Estatisticas.getMelhoresCompradores(this.catalogo_utilizadores,filtro);
     }
 
     public String toString(){
