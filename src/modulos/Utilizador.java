@@ -86,6 +86,10 @@ public class Utilizador implements Serializable{
         return this.calculaPreco(this.artigos_adquiridos);
     }
 
+    public static int getAutoIncrement(){
+        return Utilizador.AUTO_INCREMENT;
+    }
+
     // Setters
 
     private void setCodigo(int codigo){
@@ -118,6 +122,10 @@ public class Utilizador implements Serializable{
 
     private List<Artigo> cloneArtigos(List<Artigo> lista){
         return lista.stream().map((x) -> x.clone()).collect(Collectors.toList());
+    }
+
+    public static void setAutoIncrement(int x){
+        Utilizador.AUTO_INCREMENT = x;
     }
 
     // Metodos

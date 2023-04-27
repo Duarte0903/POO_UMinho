@@ -18,6 +18,12 @@ public class GestorArtigos implements Serializable{
         this.catalogo_artigos = new HashMap<Integer,Artigo>();
     }
 
+    private void lookUpArtigo(int codigo_artigo) throws Exception{
+        if (!this.catalogo_artigos.containsKey(codigo_artigo)){
+            throw new Exception("Artigo inexistente");
+        }
+    }
+
     public void addArtigo(Artigo artigo) throws Exception{
         if (this.catalogo_artigos.containsKey(artigo.hashCode())){
             throw new Exception("Artigo já inserido");
@@ -26,13 +32,12 @@ public class GestorArtigos implements Serializable{
     }
 
     public Artigo removeArtigo(String codigo_artigo) throws Exception{
-        if (!this.catalogo_artigos.containsKey(codigo_artigo.hashCode())){
-            throw new Exception("Artigo inexistente");
-        }
+        this.lookUpArtigo(codigo_artigo.hashCode());
         return this.catalogo_artigos.remove(codigo_artigo.hashCode()).clone();
     }
 
-    public Artigo getArtigo(String codigo_artigo){
+    public Artigo getArtigo(String codigo_artigo) throws Exception{
+        this.lookUpArtigo(codigo_artigo.hashCode());
         return this.catalogo_artigos.get(codigo_artigo.hashCode()).clone();
     }
 
@@ -50,6 +55,6 @@ public class GestorArtigos implements Serializable{
                     .entrySet()
                     .stream()
                     .map((x) -> x.getValue().toString())
-                    .reduce("Catalogo Artigos:", (a,b) -> a + "\n" + b);
+                    .reduce("Catalogo Artigos:", (a,b) -> a + b);
     }
 }

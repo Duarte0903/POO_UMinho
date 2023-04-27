@@ -32,19 +32,23 @@ public class GestorEncomendas implements Serializable{
         Encomenda.setAutoIncrement(x);
     }
 
+    private void lookUpEncomenda(int codigo_encomenda) throws Exception{
+        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)){
+            throw new Exception("Encomenda inexistente");
+        }
+    }
+
     public void addEncomenda(Encomenda encomenda){
         this.catalogo_encomendas.put(encomenda.hashCode(),encomenda.clone());
     }
 
     public void addArtigoEncomenda(int codigo_encomenda, Artigo artigo) throws Exception{
-        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)){
-            throw new Exception("Encomenda inexistente");
-        }
+        this.lookUpEncomenda(codigo_encomenda);
         this.catalogo_encomendas.get(codigo_encomenda).addArtigo(artigo);
     }
 
     public Artigo removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo) throws Exception{
-        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)) throw new Exception("Encomenda invalida");
+        this.lookUpEncomenda(codigo_encomenda);
         return this.catalogo_encomendas.get(codigo_encomenda).removeArtigo(codigo_artigo);
     }
 
@@ -67,9 +71,7 @@ public class GestorEncomendas implements Serializable{
     }
 
     public String getEstadoEncomenda(int codigo_encomenda) throws Exception{
-        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)){
-            throw new Exception("Encomenda inexistente");
-        }
+        this.lookUpEncomenda(codigo_encomenda);
         return this.catalogo_encomendas.get(codigo_encomenda).getEstado();
     }
 

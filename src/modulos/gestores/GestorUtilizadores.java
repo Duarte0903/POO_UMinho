@@ -19,6 +19,14 @@ public class GestorUtilizadores implements Serializable{
         this.catalogo_utilizadores = new ArrayList<Utilizador>();
     }
 
+    public static int getAutoIncrement(){
+        return Utilizador.getAutoIncrement();
+    }
+
+    public static void setAutoIncrement(int x){
+        Utilizador.setAutoIncrement(x);
+    }
+
     public void addUtilizador(Utilizador utilizador){
         this.catalogo_utilizadores.add(utilizador.clone());
     }

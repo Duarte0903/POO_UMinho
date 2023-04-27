@@ -53,6 +53,7 @@ public class Leitor{
                     
                     Calendario.setData((LocalDate) object_input.readObject());
                     Gestor.setComissao((double) object_input.readObject());
+                    Gestor.setAutoIncrementUtilizador((int) object_input.readObject());
                     Gestor.setAutoIncrementEncomeda((int) object_input.readObject());
                     gestor = (Gestor) object_input.readObject();
                     
@@ -90,6 +91,7 @@ public class Leitor{
 
             object_output.writeObject(Calendario.getData());
             object_output.writeObject(Gestor.getComissao());
+            object_output.writeObject(Gestor.getAutoIncrementUtilizador());
             object_output.writeObject(Gestor.getAutoIncrementEncomenda());
             object_output.writeObject(gestor);
 

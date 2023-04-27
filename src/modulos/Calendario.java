@@ -25,7 +25,11 @@ public class Calendario{
     }
 
     public static boolean isBetween(LocalDate data1, LocalDate data2, LocalDate data3){
-
         return (data2.isAfter(data1) && data2.isBefore(data3));
+    }
+
+    public static boolean checkPrazoDevolucao(LocalDate data){
+        return Calendario.isBetween(data.plusDays(1),Calendario.data,data.plusDays(4));
+
     }
 }

@@ -38,8 +38,16 @@ public class Gestor implements Serializable{
         Gestor.vintageComissao = comissao;
     }
     
+    public static int getAutoIncrementUtilizador(){
+        return GestorUtilizadores.getAutoIncrement();
+    }
+    
     public static int getAutoIncrementEncomenda(){
         return GestorEncomendas.getAutoIncrement();
+    }
+
+    public static void setAutoIncrementUtilizador(int x){
+        GestorUtilizadores.setAutoIncrement(x);
     }
 
     public static void setAutoIncrementEncomeda(int x){
@@ -58,9 +66,7 @@ public class Gestor implements Serializable{
     public void insertArtigo(Artigo artigo){
 
         try{
-            Transportadora transportadora = this.gestor_transportadoras.getTransportadora(artigo.getTransportadora());
-
-            if (transportadora.getPremium() != artigo.getPremium()){
+            if (this.gestor_transportadoras.getTransportadora(artigo.getTransportadora()).getPremium() != artigo.getPremium()){
                 throw new Exception("Artigo e Transportadora de tipos diferentes");
             }
 
@@ -162,57 +168,43 @@ public class Gestor implements Serializable{
     public void devolverEncomenda(int codigo_encomenda){
 
         try{
-
-            if (this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.EXPEDIDA)){
-
-                long dias = Calendario.getIntervaloDias(this.gestor_encomendas.getDataEncomenda(codigo_encomenda),Calendario.getData());
-
-                if (dias > 1 && dias < 4){
-
-                    int comprador = this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda);
-                    List<Artigo> artigos_encomenda = this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda);
-
-                    this.gestor_encomendas.removeEncomenda(codigo_encomenda);
-
-                    artigos_encomenda.forEach((x) -> this.gestor_utilizadores.removeUtilizadorArtigoVendido(x));
-                    artigos_encomenda.forEach((x) -> this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(comprador,x));
-                    artigos_encomenda.forEach((x) -> {
-                        x.setData(Calendario.getData());
-                        this.insertArtigo(x);
-                    });
-                }
-
-                else{
-                    System.out.println("Não foi possivel devolver a encomenda, já passaram " + (dias-2) + " dias");
-                }
+            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.EXPEDIDA)){
+                throw new Exception("Encomenda não expedida");
             }
 
-            else{
-                System.out.println("Não foi possivel devolver a encomenda, estado atual: "
-                                    + this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda));
+            if (!Calendario.checkPrazoDevolucao(this.gestor_encomendas.getDataEncomenda(codigo_encomenda))){
+                throw new Exception("Devolução fora de prazo");
             }
+
+            int comprador = this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda);
+
+            this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
+                this.gestor_utilizadores.removeUtilizadorArtigoVendido(x);
+                this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(comprador,x);
+                x.setData(Calendario.getData());
+                this.insertArtigo(x);
+            });
+
+            this.gestor_encomendas.removeEncomenda(codigo_encomenda);
         }
 
-        catch (Exception e) {System.out.println("Não foi possivel devolver a encomenda: " + codigo_encomenda);}
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void alterarPrecoArtigo(String codigo_artigo, double preco){
 
         try{
             Artigo artigo = this.gestor_artigos.getArtigo(codigo_artigo);
-
             this.gestor_artigos.alterarPrecoArtigo(artigo.getCodigo(),preco);
             this.gestor_utilizadores.alterarPrecoArtigo(artigo.getVendedor(),artigo.getCodigo(),preco);
         }
 
-        catch (Exception e){
-            System.out.println("Não foi possivel identificar o artigo: " + codigo_artigo);
-        }
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto){
         try {this.gestor_transportadoras.alterarPrecosTransportadora(transportadora,base_enc_pequena,base_enc_media,base_enc_grande,mult_imposto);}
-        catch (Exception e) {System.out.println("Não foi possivel identificar a transportadora: " + transportadora);}
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void dizMelhoresVendedores(Predicate<Artigo> filtro){
@@ -246,6 +238,7 @@ public class Gestor implements Serializable{
         buffer.append(this.gestor_artigos.toString());
         buffer.append("\n------------------------------------\n");
         buffer.append(this.gestor_encomendas.toString());
+        
         return buffer.toString();
     }
 }

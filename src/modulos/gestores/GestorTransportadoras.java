@@ -20,6 +20,12 @@ public class GestorTransportadoras implements Serializable{
         this.catalogo_transportadoras = new HashMap<Integer,Transportadora>();
     }
 
+    private void lookUpTransportadora(int codigo) throws Exception{
+        if (!this.catalogo_transportadoras.containsKey(codigo)){
+            throw new Exception("Transportadora inexistente");
+        }
+    }
+
     public void addTransportadora(Transportadora transportadora) throws Exception{
         if (this.catalogo_transportadoras.containsKey(transportadora.hashCode())){
             throw new Exception("Transportadora já inserida");
@@ -32,13 +38,12 @@ public class GestorTransportadoras implements Serializable{
     }
 
     public Transportadora getTransportadora(String transportadora) throws Exception{
-        if (!this.catalogo_transportadoras.containsKey(transportadora.hashCode())){
-            throw new Exception("Transportadora inexistente");
-        }
+        this.lookUpTransportadora(transportadora.hashCode());
         return this.catalogo_transportadoras.get(transportadora.hashCode()).clone();
     }
 
-    public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto){
+    public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto) throws Exception{
+        this.lookUpTransportadora(transportadora.hashCode());
         this.catalogo_transportadoras.get(transportadora.hashCode()).setBaseEncPequena(base_enc_pequena);
         this.catalogo_transportadoras.get(transportadora.hashCode()).setBaseEncMedia(base_enc_media);
         this.catalogo_transportadoras.get(transportadora.hashCode()).setBaseEncGrande(base_enc_grande);
