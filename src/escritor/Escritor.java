@@ -26,7 +26,7 @@ public class Escritor{
             System.out.println("Nome: " + x.getNome() +
                                 "\tCodigo: " + x.getCodigo() +
                                 "\tDinheiro Gasto: " + x.getDinheiro());
-        }); 
+        });
     }
 
     public static void printMelhoresTransportadoras(List<Transportadora> ranking){

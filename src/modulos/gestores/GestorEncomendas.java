@@ -100,7 +100,7 @@ public class GestorEncomendas implements Serializable{
                                 && Calendario.getIntervaloDias(x.getValue().getDataCriacao(),Calendario.getData()) > 1)
                     .map((x) -> x.getKey())
                     .collect(Collectors.toList());
-    } 
+    }
 
     // toString
 

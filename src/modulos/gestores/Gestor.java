@@ -16,8 +16,8 @@ import java.util.function.Predicate;
 
 public class Gestor implements Serializable{
 
-    private static final long serialVersionUID = 12L;  
-    private static double vintageComissao = 0.1;  
+    private static final long serialVersionUID = 12L;
+    private static double vintageComissao = 0.1;
 
     public GestorArtigos gestor_artigos;
     public GestorEncomendas gestor_encomendas;
@@ -38,11 +38,11 @@ public class Gestor implements Serializable{
     public static void setComissao(double comissao){
         Gestor.vintageComissao = comissao;
     }
-    
+
     public static int getAutoIncrementUtilizador(){
         return GestorUtilizadores.getAutoIncrement();
     }
-    
+
     public static int getAutoIncrementEncomenda(){
         return GestorEncomendas.getAutoIncrement();
     }
@@ -84,7 +84,7 @@ public class Gestor implements Serializable{
             if (encomenda.getComprador() < 0 || encomenda.getComprador() >= gestor_utilizadores.getSize()){
                 throw new Exception("Comprador não identificado");
             }
-            
+
             this.gestor_encomendas.addEncomenda(encomenda);
         }
 
@@ -123,9 +123,9 @@ public class Gestor implements Serializable{
 
         try{
             if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-                throw new Exception("Encomenda não pendente"); 
+                throw new Exception("Encomenda não pendente");
             }
-            
+
             this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
                 this.gestor_utilizadores.addUtilizadorArtigoVendido(x);
@@ -239,7 +239,7 @@ public class Gestor implements Serializable{
         buffer.append(this.gestor_artigos.toString());
         buffer.append("\n------------------------------------\n");
         buffer.append(this.gestor_encomendas.toString());
-        
+
         return buffer.toString();
     }
 }

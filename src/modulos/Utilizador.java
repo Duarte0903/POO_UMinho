@@ -41,7 +41,7 @@ public class Utilizador implements Serializable{
     // Clone
 
     public Utilizador clone(){
-        
+
         Utilizador.AUTO_INCREMENT--;
 
         Utilizador utilizador = new Utilizador(
@@ -92,7 +92,7 @@ public class Utilizador implements Serializable{
     public double getDinheiroArtigosAdquiridos(Predicate<Artigo> filtro){
         return this.artigos_adquiridos.stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.calculaPreco()).sum();
     }
-    
+
     public static int getAutoIncrement(){
         return Utilizador.AUTO_INCREMENT;
     }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Encomenda implements Serializable{
 
     private static final long serialVersionUID = 6L;
-    private static int AUTO_INCREMENT = 0; 
+    private static int AUTO_INCREMENT = 0;
 
     public static final String PENDENTE = "pendente";
     public static final String FINALIZADA = "finalizada";

@@ -7,9 +7,7 @@ import modulos.Utilizador;
 import modulos.Encomenda;
 import modulos.Transportadora;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.stream.*;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -28,9 +26,9 @@ public class Estatisticas{
     }
 
     public static List<Encomenda> getEncomendasEmitidasVendedor(int utilizador, Map<Integer,Encomenda> encomendas){
-        
+
         List<Encomenda> result = encomendas.entrySet().stream().map((x) -> x.getValue().clone()).collect(Collectors.toList());
-        
+
         result.forEach((x) -> x.setArtigos((y) -> y.getVendedor() != utilizador));
         return result.stream().filter((x) -> x.size() > 0 && x.getEstado().equals(Encomenda.EXPEDIDA)).collect(Collectors.toList());
     }

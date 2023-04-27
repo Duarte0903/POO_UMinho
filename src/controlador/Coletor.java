@@ -166,11 +166,11 @@ public class Coletor{
                     break;
 
                 case Coletor.CREAT_ENCOMENDA:
-                    
+
                     gestor.insertEncomenda(
                         new Encomenda(
                             Integer.valueOf(tokens[1])));
-            
+
                     break;
 
                 case Coletor.INSERT_ARTIGO_ENCOMENDA:
@@ -204,7 +204,7 @@ public class Coletor{
                     gestor.alterarPrecoArtigo(
                         tokens[1],
                         Double.valueOf(tokens[2]));
-                    
+
                     break;
 
                 case Coletor.CHANGE_PRECOS_TRANSPORTADORA:

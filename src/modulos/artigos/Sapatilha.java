@@ -63,14 +63,14 @@ public class Sapatilha extends Artigo{
         double preco = super.getPreco();
 
         if (super.getPremium()){
-            
+
             preco += Calendario.getIntervaloAnos(this.colecao,Calendario.getData());
         }
 
         else if (super.getEstado().equals(Artigo.USADO)){
 
             if (super.getNDonos() != 0 && super.getAvaliacao() != 0){
-            
+
                 preco -= preco/(super.getNDonos()*super.getAvaliacao());
             }
         }

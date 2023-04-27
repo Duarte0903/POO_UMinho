@@ -23,16 +23,16 @@ public class Leitor{
     public static void run(String path, Gestor gestor){
 
         Scanner input = new Scanner(System.in);
-        
+
         if (path != null){
-            
+
             if (path.contains(".txt")){
 
                 try{
                     Scanner text_input = new Scanner(new File(path));
 
                     while (text_input.hasNextLine()){
-                
+
                         Coletor.collectDadosLine(text_input.nextLine().split(";",0),gestor);
                     }
 
@@ -50,13 +50,13 @@ public class Leitor{
 
                     FileInputStream file_input = new FileInputStream(path);
                     ObjectInputStream object_input = new ObjectInputStream(file_input);
-                    
+
                     Calendario.setData((LocalDate) object_input.readObject());
                     Gestor.setComissao((double) object_input.readObject());
                     Gestor.setAutoIncrementUtilizador((int) object_input.readObject());
                     Gestor.setAutoIncrementEncomeda((int) object_input.readObject());
                     gestor = (Gestor) object_input.readObject();
-                    
+
                     file_input.close();
                     object_input.close();
 

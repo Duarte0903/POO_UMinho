@@ -47,7 +47,7 @@ public class Tshirt extends Artigo{
         double preco = super.getPreco();
 
         if (!this.padrao.equals(Tshirt.LISO)){
-            
+
             if (super.getEstado().equals(Artigo.USADO)) preco /= 2;
 
             else preco -= super.getDesconto()*preco;
