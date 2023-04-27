@@ -105,7 +105,6 @@ public class GestorEncomendas implements Serializable{
     // toString
 
     public String toString(){
-
         return this.catalogo_encomendas
                     .entrySet()
                     .stream()

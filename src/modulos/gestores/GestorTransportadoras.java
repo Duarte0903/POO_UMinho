@@ -52,7 +52,6 @@ public class GestorTransportadoras implements Serializable{
     }
 
     public void updatePrecoEncomenda(int codigo_encomenda){
-        
         this.catalogo_transportadoras
             .entrySet()
             .stream()
@@ -65,7 +64,6 @@ public class GestorTransportadoras implements Serializable{
     }
 
     public String toString(){
-
         return this.catalogo_transportadoras
                     .entrySet()
                     .stream()

@@ -76,7 +76,6 @@ public class GestorUtilizadores implements Serializable{
     }
 
     public String toString(){
-
         return this.catalogo_utilizadores
                     .stream()
                     .map((x) -> x.toString())

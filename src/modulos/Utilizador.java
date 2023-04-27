@@ -85,14 +85,6 @@ public class Utilizador implements Serializable{
         return this.dinheiro;
     }
 
-    public double getPrecoArtigosVendidos(){
-        return this.calculaPreco(this.artigos_vendidos);
-    }
-
-    public double getPrecoArtigosAdquiridos(){
-        return this.calculaPreco(this.artigos_adquiridos);
-    }
-
     public double getDinheiroArtigosVendidos(Predicate<Artigo> filtro){
         return this.artigos_vendidos.stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.calculaPreco()).sum();
     }
@@ -169,10 +161,6 @@ public class Utilizador implements Serializable{
         this.artigos_a_venda.forEach((x) -> {
             if (x.getCodigo().equals(codigo_artigo)) x.setPreco(preco);
         });
-    }
-
-    private double calculaPreco(List<Artigo> artigos){
-        return artigos.stream().mapToDouble((x) -> x.calculaPreco()).sum();
     }
 
     public String toString(){
