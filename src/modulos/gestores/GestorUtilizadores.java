@@ -34,14 +34,20 @@ public class GestorUtilizadores implements Serializable{
         return this.catalogo_utilizadores.size();
     }
 
-    private void lookupUtilizador(String email) throws Exception{
+    public void lookUpUtilizador(int codigo) throws Exception{
+        if (codigo < 0 || codigo >= this.getSize()){
+            throw new Exception("Utilizador inexistente");
+        }
+    }
+
+    public void lookupUtilizadorByEmail(String email) throws Exception{
         if (this.catalogo_utilizadores.stream().filter((x) -> x.getEmail().equals(email)).count() != 1){
             throw new Exception("Utilizador inexistente");
         }
     }
 
     private int getCodigo(String email) throws Exception{
-        this.lookupUtilizador(email);
+        this.lookupUtilizadorByEmail(email);
         return this.catalogo_utilizadores.stream().filter((x) -> x.getEmail().equals(email)).mapToInt((x) -> x.getCodigo()).sum();
     }
 
@@ -50,9 +56,6 @@ public class GestorUtilizadores implements Serializable{
     }
 
     public void addUtilizadorArtigoAVenda(Artigo artigo) throws Exception{
-        if (artigo.getVendedor() < 0 || artigo.getVendedor() >= this.getSize()){
-            throw new Exception("Utilizador inexistente");
-        }
         this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoAVenda(artigo);
     }
 

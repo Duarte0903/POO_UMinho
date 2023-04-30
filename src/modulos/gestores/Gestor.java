@@ -69,10 +69,8 @@ public class Gestor implements Serializable{
     public void insertArtigo(Artigo artigo){
 
         try{
-            if (this.gestor_transportadoras.getTransportadora(artigo.getTransportadora()).getPremium() != artigo.getPremium()){
-                throw new Exception("Artigo e Transportadora de tipos diferentes");
-            }
-
+            this.gestor_transportadoras.lookUpTransportadoraArtigo(artigo.getTransportadora(),artigo.getPremium());
+            this.gestor_utilizadores.lookUpUtilizador(artigo.getVendedor());
             this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
             this.gestor_artigos.addArtigo(artigo);
         }
@@ -83,23 +81,17 @@ public class Gestor implements Serializable{
     public void insertEncomenda(Encomenda encomenda){
 
         try{
-            if (encomenda.getComprador() < 0 || encomenda.getComprador() >= gestor_utilizadores.getSize()){
-                throw new Exception("Comprador não identificado");
-            }
-
+            this.gestor_utilizadores.lookUpUtilizador(encomenda.getComprador());
             this.gestor_encomendas.addEncomenda(encomenda);
         }
 
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void insertArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
+    public void insertArtigoEncomenda(int codigo_encomenda, String codigo_artigo, int utilizador){
 
         try{
-            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-                throw new Exception("Encomenda não pendente");
-            }
-
+            this.gestor_encomendas.lookUpEncomenda(codigo_encomenda,utilizador,Encomenda.PENDENTE);
             Artigo result = this.gestor_artigos.removeArtigo(codigo_artigo);
             this.gestor_utilizadores.removeUtilizadorArtigoAVenda(result);
             this.gestor_encomendas.addArtigoEncomenda(codigo_encomenda,result);
@@ -108,26 +100,20 @@ public class Gestor implements Serializable{
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo){
+    public void removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo, int utilizador){
 
         try{
-            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-                throw new Exception("Encomenda não pendente");
-            }
-
+            this.gestor_encomendas.lookUpEncomenda(codigo_encomenda,utilizador,Encomenda.PENDENTE);
             this.insertArtigo(this.gestor_encomendas.removeArtigoEncomenda(codigo_encomenda,codigo_artigo));
         }
 
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void finalizarEncomenda(int codigo_encomenda){
+    public void finalizarEncomenda(int codigo_encomenda, int utilizador){
 
         try{
-            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.PENDENTE)){
-                throw new Exception("Encomenda não pendente");
-            }
-
+            this.gestor_encomendas.lookUpEncomenda(codigo_encomenda,utilizador,Encomenda.PENDENTE);
             this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
                 this.gestor_utilizadores.addUtilizadorArtigoVendido(x);
@@ -168,22 +154,18 @@ public class Gestor implements Serializable{
         catch(Exception e) {Tratador.trataException(e);}
     }
 
-    public void devolverEncomenda(int codigo_encomenda){
+    public void devolverEncomenda(int codigo_encomenda, int utilizador){
 
         try{
-            if (!this.gestor_encomendas.getEstadoEncomenda(codigo_encomenda).equals(Encomenda.EXPEDIDA)){
-                throw new Exception("Encomenda não expedida");
-            }
+            this.gestor_encomendas.lookUpEncomenda(codigo_encomenda,utilizador,Encomenda.EXPEDIDA);
 
             if (!Calendario.checkPrazoDevolucao(this.gestor_encomendas.getDataEncomenda(codigo_encomenda))){
                 throw new Exception("Devolução fora de prazo");
             }
 
-            int comprador = this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda);
-
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
                 this.gestor_utilizadores.removeUtilizadorArtigoVendido(x);
-                this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(comprador,x);
+                this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(utilizador,x);
                 x.setData(Calendario.getData());
                 this.insertArtigo(x);
             });
@@ -194,10 +176,10 @@ public class Gestor implements Serializable{
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void alterarPrecoArtigo(String codigo_artigo, double preco){
+    public void alterarPrecoArtigo(String codigo_artigo, double preco, int utilizador){
 
         try{
-            Artigo artigo = this.gestor_artigos.getArtigo(codigo_artigo);
+            Artigo artigo = this.gestor_artigos.getArtigo(codigo_artigo,utilizador);
             this.gestor_artigos.alterarPrecoArtigo(artigo.getCodigo(),preco);
             this.gestor_utilizadores.alterarPrecoArtigo(artigo.getVendedor(),artigo.getCodigo(),preco);
         }

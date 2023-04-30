@@ -11,7 +11,7 @@ public class ControladorLogin{
     private static int logged = -1;
     private static String entidade_logged = "Vintage";
 
-    public static int getEntidade(){
+    public static int getLogged(){
         return ControladorLogin.logged;
     }
 

@@ -1,6 +1,7 @@
 package controlador;
 
 import modulos.gestores.Gestor;
+import modulos.Tratador;
 import escritor.Escritor;
 import java.util.Map;
 import java.util.HashMap;
@@ -92,9 +93,26 @@ public class Controlador{
                 case Controlador.INSERT_ARTIGO_TSHIRT:
                 case Controlador.INSERT_ARTIGO_SAPATILHA:
                 case Controlador.INSERT_ENCOMENDA:
+                    ControladorRegistos.insertRegistoUtilizador(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    break;
+
                 case Controlador.INSERT_UTILIZADOR:
                 case Controlador.INSERT_TRANPORTADORA:
-                    ControladorRegistos.insertRegisto(gestor,tokens,Controlador.getCodigo(tokens[0]));
+                    ControladorRegistos.insertRegistoVintage(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    break;
+
+                case Controlador.REFUND_ENCOMENDA:
+                case Controlador.CHECK_OUT_ENCOMENDA:
+                case Controlador.CHANGE_PRECO_ARTIGO:
+                case Controlador.INSERT_ARTIGO_ENCOMENDA:
+                case Controlador.REMOVE_ARTIGO_ENCOMENDA:
+                    ControladorRegistos.alterarRegistoUtilizador(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    break;
+
+                case Controlador.CHANGE_DATA:
+                case Controlador.CHANGE_VINTAGE_COMISSAO:
+                case Controlador.CHANGE_PRECOS_TRANSPORTADORA:
+                    ControladorRegistos.alterarRegistoVintage(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
                     break;
 
                 case Controlador.VINTAGE_LUCRO:
@@ -104,22 +122,14 @@ public class Controlador{
                 case Controlador.ENCOMENDAS_EMITIDAS_VENDEDOR:
                     ControladorEstatisticas.getEstatistica(gestor,tokens,Controlador.getCodigo(tokens[0]));
                     break;
-
-                case Controlador.CHANGE_DATA:
-                case Controlador.REFUND_ENCOMENDA:
-                case Controlador.CHECK_OUT_ENCOMENDA:
-                case Controlador.CHANGE_PRECO_ARTIGO:
-                case Controlador.INSERT_ARTIGO_ENCOMENDA:
-                case Controlador.REMOVE_ARTIGO_ENCOMENDA:
-                case Controlador.CHANGE_VINTAGE_COMISSAO:
-                case Controlador.CHANGE_PRECOS_TRANSPORTADORA:
-                    ControladorRegistos.alterarRegisto(gestor,tokens,Controlador.getCodigo(tokens[0]));
-                    break;
             }
         }
 
         catch (Exception e){
-            if (tokens[0].length() > 0) Escritor.escreve("Não foi possivel efetuar o registo: " + tokens[0]);
+            
+            if (tokens[0].length() > 0){
+                Tratador.trataException(new Exception("Registo inválido: " + tokens[0]));
+            }
         }
     }
 }

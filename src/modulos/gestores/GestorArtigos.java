@@ -24,6 +24,13 @@ public class GestorArtigos implements Serializable{
         }
     }
 
+    private void lookUpArtigoUtilizador(int codigo_artigo, int utilizador) throws Exception{
+        this.lookUpArtigo(codigo_artigo);
+        if (this.catalogo_artigos.get(codigo_artigo).getVendedor() != utilizador){
+            throw new Exception("Não possui o artigo");
+        }
+    }
+
     public void addArtigo(Artigo artigo) throws Exception{
         if (this.catalogo_artigos.containsKey(artigo.hashCode())){
             throw new Exception("Artigo já inserido");
@@ -36,8 +43,8 @@ public class GestorArtigos implements Serializable{
         return this.catalogo_artigos.remove(codigo_artigo.hashCode()).clone();
     }
 
-    public Artigo getArtigo(String codigo_artigo) throws Exception{
-        this.lookUpArtigo(codigo_artigo.hashCode());
+    public Artigo getArtigo(String codigo_artigo, int utilizador) throws Exception{
+        this.lookUpArtigoUtilizador(codigo_artigo.hashCode(),utilizador);
         return this.catalogo_artigos.get(codigo_artigo.hashCode()).clone();
     }
 

@@ -27,6 +27,13 @@ public class GestorTransportadoras implements Serializable{
         }
     }
 
+    public void lookUpTransportadoraArtigo(String transportadora, boolean artigo_premium) throws Exception{
+        this.lookUpTransportadora(transportadora.hashCode());
+        if (this.catalogo_transportadoras.get(transportadora.hashCode()).getPremium() != artigo_premium){
+            throw new Exception("Transportadora e artigo de diferentes tipos");
+        }
+    }
+
     public void addTransportadora(Transportadora transportadora) throws Exception{
         if (this.catalogo_transportadoras.containsKey(transportadora.hashCode())){
             throw new Exception("Transportadora já inserida");
@@ -36,11 +43,6 @@ public class GestorTransportadoras implements Serializable{
 
     public void addArtigoTransportadora(String transportadora, int codigo_encomenda, Artigo artigo){
         this.catalogo_transportadoras.get(transportadora.hashCode()).addArtigo(codigo_encomenda,artigo);
-    }
-
-    public Transportadora getTransportadora(String transportadora) throws Exception{
-        this.lookUpTransportadora(transportadora.hashCode());
-        return this.catalogo_transportadoras.get(transportadora.hashCode()).clone();
     }
 
     public void alterarPrecosTransportadora(String transportadora, Double base_enc_pequena, Double base_enc_media, Double base_enc_grande, Double mult_imposto) throws Exception{

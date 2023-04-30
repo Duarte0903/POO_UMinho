@@ -31,23 +31,21 @@ public class GestorEncomendas implements Serializable{
         Encomenda.setAutoIncrement(x);
     }
 
-    private void lookUpEncomenda(int codigo_encomenda) throws Exception{
-        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)){
-            throw new Exception("Encomenda inexistente");
-        }
+    public void lookUpEncomenda(int codigo_encomenda, int utilizador, String estado) throws Exception{
+        if (!this.catalogo_encomendas.containsKey(codigo_encomenda)) {throw new Exception("Encomenda inexistente");}
+        if (this.catalogo_encomendas.get(codigo_encomenda).getComprador() != utilizador) {throw new Exception("Não possui a encomenda");}
+        if (!this.catalogo_encomendas.get(codigo_encomenda).getEstado().equals(estado)) {throw new Exception("A encomenda não está " + estado);}
     }
 
     public void addEncomenda(Encomenda encomenda){
         this.catalogo_encomendas.put(encomenda.hashCode(),encomenda.clone());
     }
 
-    public void addArtigoEncomenda(int codigo_encomenda, Artigo artigo) throws Exception{
-        this.lookUpEncomenda(codigo_encomenda);
+    public void addArtigoEncomenda(int codigo_encomenda, Artigo artigo){
         this.catalogo_encomendas.get(codigo_encomenda).addArtigo(artigo);
     }
 
     public Artigo removeArtigoEncomenda(int codigo_encomenda, String codigo_artigo) throws Exception{
-        this.lookUpEncomenda(codigo_encomenda);
         return this.catalogo_encomendas.get(codigo_encomenda).removeArtigo(codigo_artigo);
     }
 
@@ -63,15 +61,8 @@ public class GestorEncomendas implements Serializable{
         this.catalogo_encomendas.remove(codigo_encomenda);
     }
 
-    // Getters
-
     public List<Artigo> getArtigosEncomenda(int codigo_encomenda){
         return this.catalogo_encomendas.get(codigo_encomenda).getArtigos();
-    }
-
-    public String getEstadoEncomenda(int codigo_encomenda) throws Exception{
-        this.lookUpEncomenda(codigo_encomenda);
-        return this.catalogo_encomendas.get(codigo_encomenda).getEstado();
     }
 
     public int getCompradorEncomenda(int codigo_encomenda){
@@ -100,8 +91,6 @@ public class GestorEncomendas implements Serializable{
                     .map((x) -> x.getKey())
                     .collect(Collectors.toList());
     }
-
-    // toString
 
     public String toString(){
         return this.catalogo_encomendas
