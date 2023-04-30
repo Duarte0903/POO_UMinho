@@ -8,9 +8,12 @@ import modulos.Utilizador;
 import modulos.Transportadora;
 import modulos.Tratador;
 import java.util.List;
+import java.util.Map;
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.function.Predicate;
+import java.util.AbstractMap.SimpleEntry;
 
 
 public class Gestor implements Serializable{
@@ -225,6 +228,11 @@ public class Gestor implements Serializable{
 
     public void getLucroVintage(){
         Escritor.escreve(this.gestor_encomendas.getLucroVintage());
+    }
+
+    public Map.Entry<Integer,String> loginUtilizador(String email, String password){
+        try {return this.gestor_utilizadores.login(email,password);}
+        catch (Exception e) {Tratador.trataException(e); return null;}
     }
 
     public String toString(){

@@ -68,7 +68,7 @@ public class Leitor{
             }
         }
 
-        System.out.printf(Leitor.GREEN + "%s", ">>> ");
+        System.out.printf(Leitor.GREEN + "%s %s", Controlador.getEntidadeLogged(), ">>> ");
 
         while (input.hasNextLine()){
 
@@ -77,7 +77,7 @@ public class Leitor{
             System.out.printf("%s", Leitor.RESET);
             Controlador.collectDadosLine(line.split(";",0),gestor);
 
-            System.out.printf(Leitor.GREEN + "%s", ">>> ");
+            System.out.printf(Leitor.GREEN + "%s %s", Controlador.getEntidadeLogged(), ">>> ");
         }
 
         input.close();

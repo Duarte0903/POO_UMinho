@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.Predicate;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.io.Serializable;
 
 
@@ -28,12 +30,27 @@ public class GestorUtilizadores implements Serializable{
         Utilizador.setAutoIncrement(x);
     }
 
+    public int getSize(){
+        return this.catalogo_utilizadores.size();
+    }
+
+    private void lookupUtilizador(String email) throws Exception{
+        if (this.catalogo_utilizadores.stream().filter((x) -> x.getEmail().equals(email)).count() != 1){
+            throw new Exception("Utilizador inexistente");
+        }
+    }
+
+    private int getCodigo(String email) throws Exception{
+        this.lookupUtilizador(email);
+        return this.catalogo_utilizadores.stream().filter((x) -> x.getEmail().equals(email)).mapToInt((x) -> x.getCodigo()).sum();
+    }
+
     public void addUtilizador(Utilizador utilizador){
         this.catalogo_utilizadores.add(utilizador.clone());
     }
 
     public void addUtilizadorArtigoAVenda(Artigo artigo) throws Exception{
-        if (artigo.getVendedor() < 0 || artigo.getVendedor() >= this.catalogo_utilizadores.size()){
+        if (artigo.getVendedor() < 0 || artigo.getVendedor() >= this.getSize()){
             throw new Exception("Utilizador inexistente");
         }
         this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoAVenda(artigo);
@@ -63,16 +80,22 @@ public class GestorUtilizadores implements Serializable{
         this.catalogo_utilizadores.get(utilizador).alterarPreco(codigo_artigo,preco);
     }
 
-    public int getSize(){
-        return this.catalogo_utilizadores.size();
-    }
-
     public List<Utilizador> getMelhoresVendedores(Predicate<Artigo> filtro){
-        return  Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
+        return Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
     }
 
     public List<Utilizador> getMelhoresCompradores(Predicate<Artigo> filtro){
         return Estatisticas.getMelhoresCompradores(this.catalogo_utilizadores,filtro);
+    }
+
+    public Map.Entry<Integer,String> login(String email, String password) throws Exception{
+        if (!this.catalogo_utilizadores.get(this.getCodigo(email)).getPassword().equals(password)){
+            throw new Exception("Password inválida");
+        }
+
+        return new AbstractMap.SimpleEntry<Integer,String>(
+            this.getCodigo(email),
+            this.catalogo_utilizadores.get(this.getCodigo(email)).getNome());
     }
 
     public String toString(){

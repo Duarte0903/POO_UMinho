@@ -30,6 +30,8 @@ public class Controlador{
     public static final int VINTAGE_LUCRO = 19;
     public static final int CHANGE_VINTAGE_COMISSAO = 20;
     public static final int SHOW_COMISSAO = 21;
+    public static final int LOGIN = 22;
+    public static final int LOGOUT = 23;
 
     private static Map<String,Integer> tabela = new HashMap<String,Integer>();
 
@@ -57,10 +59,16 @@ public class Controlador{
         Controlador.tabela.put("Vintage Lucro",Controlador.VINTAGE_LUCRO);
         Controlador.tabela.put("Alterar Comissao",Controlador.CHANGE_VINTAGE_COMISSAO);
         Controlador.tabela.put("Ver Comissao",Controlador.SHOW_COMISSAO);
+        Controlador.tabela.put("Login",Controlador.LOGIN);
+        Controlador.tabela.put("Logout",Controlador.LOGOUT);
     }
 
     private static int getCodigo(String identificador){
         return Controlador.tabela.get(identificador);
+    }
+
+    public static String getEntidadeLogged(){
+        return ControladorLogin.getEntidadeLogged();
     }
 
     public static void collectDadosLine(String[] tokens, Gestor gestor){
@@ -68,6 +76,11 @@ public class Controlador{
         try{
 
             switch (Controlador.getCodigo(tokens[0])){
+
+                case Controlador.LOGIN:
+                case Controlador.LOGOUT:
+                    ControladorLogin.setContas(gestor,tokens,Controlador.getCodigo(tokens[0]));
+                    break;
 
                 case Controlador.SHOW_DADOS:
                 case Controlador.SHOW_DATA:
@@ -105,6 +118,8 @@ public class Controlador{
             }
         }
 
-        catch (Exception e) {Escritor.escreve("Não foi possivel efetuar o registo: " + tokens[0]);}
+        catch (Exception e){
+            if (tokens[0].length() > 0) Escritor.escreve("Não foi possivel efetuar o registo: " + tokens[0]);
+        }
     }
 }
