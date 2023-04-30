@@ -8,7 +8,6 @@ import modulos.Utilizador;
 import modulos.Transportadora;
 import modulos.Tratador;
 import java.util.List;
-import java.util.ArrayList;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.function.Predicate;

@@ -15,6 +15,7 @@ public class Utilizador implements Serializable{
 
     private int codigo;
     private String email;
+    private String password;
     private String nome;
     private int nif;
     private String morada;
@@ -26,9 +27,10 @@ public class Utilizador implements Serializable{
 
     // Construtor
 
-    public Utilizador(String email, String nome, int nif, String morada){
+    public Utilizador(String email, String password, String nome, int nif, String morada){
         this.codigo = Utilizador.AUTO_INCREMENT++;
         this.email = email;
+        this.password = password;
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
@@ -46,6 +48,7 @@ public class Utilizador implements Serializable{
 
         Utilizador utilizador = new Utilizador(
             this.email,
+            this.password,
             this.nome,
             this.nif,
             this.morada);
@@ -67,6 +70,10 @@ public class Utilizador implements Serializable{
 
     public String getEmail(){
         return this.email;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     public String getNome(){

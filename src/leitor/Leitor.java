@@ -1,6 +1,6 @@
 package leitor;
 
-import controlador.Coletor;
+import controlador.Controlador;
 import modulos.gestores.Gestor;
 import modulos.Calendario;
 import java.time.LocalDate;
@@ -22,6 +22,7 @@ public class Leitor{
 
     public static void run(String path, Gestor gestor){
 
+        Controlador.fillTabela();
         Scanner input = new Scanner(System.in);
 
         if (path != null){
@@ -33,7 +34,7 @@ public class Leitor{
 
                     while (text_input.hasNextLine()){
 
-                        Coletor.collectDadosLine(text_input.nextLine().split(";",0),gestor);
+                        Controlador.collectDadosLine(text_input.nextLine().split(";",0),gestor);
                     }
 
                     text_input.close();
@@ -74,7 +75,7 @@ public class Leitor{
             String line = input.nextLine();
 
             System.out.printf("%s", Leitor.RESET);
-            Coletor.collectDadosLine(line.split(";",0),gestor);
+            Controlador.collectDadosLine(line.split(";",0),gestor);
 
             System.out.printf(Leitor.GREEN + "%s", ">>> ");
         }
