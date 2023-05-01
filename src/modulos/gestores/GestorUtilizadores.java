@@ -3,6 +3,7 @@ package modulos.gestores;
 import modulos.artigos.Artigo;
 import modulos.Utilizador;
 import modulos.Estatisticas;
+import modulos.Fatura;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -83,12 +84,16 @@ public class GestorUtilizadores implements Serializable{
         this.catalogo_utilizadores.get(utilizador).alterarPreco(codigo_artigo,preco);
     }
 
-    public List<Utilizador> getMelhoresVendedores(Predicate<Artigo> filtro){
-        return Estatisticas.getMelhoresVendedores(this.catalogo_utilizadores,filtro);
+    public void addArtigoFatura(Artigo artigo, int utilizador, int codigo, double comissao){
+        this.catalogo_utilizadores.get(utilizador).addArtigoFatura(artigo,codigo,comissao);
     }
 
-    public List<Utilizador> getMelhoresCompradores(Predicate<Artigo> filtro){
-        return Estatisticas.getMelhoresCompradores(this.catalogo_utilizadores,filtro);
+    public void removeFatura(int utilizador, int codigo){
+        this.catalogo_utilizadores.get(utilizador).removeFatura(codigo);
+    }
+
+    public List<Utilizador> getMelhoresUtilizadores(Predicate<Fatura> filtro){
+        return Estatisticas.getMelhoresUtilizadores(this.catalogo_utilizadores,filtro);
     }
 
     public Map.Entry<Integer,String> login(String email, String password) throws Exception{

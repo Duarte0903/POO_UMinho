@@ -15,14 +15,9 @@ import java.util.function.Predicate;
 
 public class Estatisticas{
 
-    public static List<Utilizador> getMelhoresVendedores(List<Utilizador> utilizadores, Predicate<Artigo> filtro){
-        utilizadores.forEach((x) -> x.setDinheiro(x.getDinheiroArtigosVendidos(filtro)*(1-Gestor.getComissao())));
-        return utilizadores.stream().map((x) -> x.clone()).sorted(new OrdenaUtilizador().reversed()).collect(Collectors.toList());
-    }
-
-    public static List<Utilizador> getMelhoresCompradores(List<Utilizador> utilizadores, Predicate<Artigo> filtro){
-        utilizadores.forEach((x) -> x.setDinheiro(x.getDinheiroArtigosAdquiridos(filtro)));
-        return utilizadores.stream().map((x) -> x.clone()).sorted(new OrdenaUtilizador().reversed()).collect(Collectors.toList());
+    public static List<Utilizador> getMelhoresUtilizadores(List<Utilizador> utilizadores, Predicate<Fatura> filtro){
+        utilizadores.stream().forEach((x) -> x.calculaFaturacao(filtro));
+        return utilizadores.stream().sorted(new OrdenaUtilizador().reversed()).collect(Collectors.toList());
     }
 
     public static List<Encomenda> getEncomendasEmitidasVendedor(int utilizador, Map<Integer,Encomenda> encomendas){

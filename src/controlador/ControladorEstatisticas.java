@@ -2,6 +2,8 @@ package controlador;
 
 import modulos.gestores.Gestor;
 import modulos.artigos.Artigo;
+import modulos.Fatura;
+import modulos.Fatura.TIPO;
 import java.util.function.Predicate;
 import java.time.LocalDate;
 
@@ -27,16 +29,17 @@ public class ControladorEstatisticas{
             case Controlador.MELHORES_VENDEDORES:
             case Controlador.MELHORES_COMPRADORES:
 
-                Predicate<Artigo> filtro = x -> true;
+                Predicate<Fatura> filtro = x -> true;
 
                 if (tokens.length == 3){
-                    filtro = x -> x.getData().isAfter(LocalDate.parse(tokens[1]))
-                                && x.getData().isBefore(LocalDate.parse(tokens[2]));
+                    filtro.and(x -> x.getData().isAfter(LocalDate.parse(tokens[1]))
+                                && x.getData().isBefore(LocalDate.parse(tokens[2])));
                 }
 
-                if (flag == Controlador.MELHORES_VENDEDORES) gestor.getMelhoresVendedores(filtro);
+                if (flag == Controlador.MELHORES_VENDEDORES) filtro = filtro.and(x -> x.getTipo() == TIPO.VENDA);
+                else filtro = filtro.and(x -> x.getTipo() == TIPO.COMPRA);
 
-                else gestor.getMelhoresCompradores(filtro);
+                gestor.getMelhoresUtilizadores(filtro);
                 
                 break;
         }

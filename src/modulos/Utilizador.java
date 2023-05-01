@@ -1,7 +1,11 @@
 package modulos;
 
 import modulos.artigos.Artigo;
+import modulos.Fatura;
+import modulos.Fatura.TIPO;
+import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.stream.*;
 import java.io.Serializable;
@@ -19,11 +23,12 @@ public class Utilizador implements Serializable{
     private String nome;
     private int nif;
     private String morada;
-    private double dinheiro;
+    private double dinheiro_faturacao;
 
     private List<Artigo> artigos_a_venda;
     private List<Artigo> artigos_vendidos;
     private List<Artigo> artigos_adquiridos;
+    private Map<Integer,Fatura> faturas;
 
     // Construtor
 
@@ -34,10 +39,11 @@ public class Utilizador implements Serializable{
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
-        this.dinheiro = 0;
+        this.dinheiro_faturacao = 0;
         this.artigos_a_venda = new ArrayList<Artigo>();
         this.artigos_vendidos = new ArrayList<Artigo>();
         this.artigos_adquiridos = new ArrayList<Artigo>();
+        this.faturas = new HashMap<Integer,Fatura>();
     }
 
     // Clone
@@ -54,10 +60,11 @@ public class Utilizador implements Serializable{
             this.morada);
 
         utilizador.setCodigo(this.codigo);
-        utilizador.setDinheiro(this.dinheiro);
+        utilizador.setDinheiroFaturacao(this.dinheiro_faturacao);
         utilizador.artigos_a_venda = this.cloneArtigos(this.artigos_a_venda);
         utilizador.artigos_vendidos = this.cloneArtigos(this.artigos_vendidos);
         utilizador.artigos_adquiridos = this.cloneArtigos(this.artigos_adquiridos);
+        utilizador.faturas = this.faturas.values().stream().map(Fatura::clone).collect(Collectors.toMap((x) -> x.getCodigoEncomenda(),(x) -> x));
 
         return utilizador;
     }
@@ -88,16 +95,8 @@ public class Utilizador implements Serializable{
         return this.morada;
     }
 
-    public double getDinheiro(){
-        return this.dinheiro;
-    }
-
-    public double getDinheiroArtigosVendidos(Predicate<Artigo> filtro){
-        return this.artigos_vendidos.stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.calculaPreco()).sum();
-    }
-
-    public double getDinheiroArtigosAdquiridos(Predicate<Artigo> filtro){
-        return this.artigos_adquiridos.stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.calculaPreco()).sum();
+    public double getDinheiroFaturacao(){
+        return this.dinheiro_faturacao;
     }
 
     public static int getAutoIncrement(){
@@ -126,8 +125,8 @@ public class Utilizador implements Serializable{
         this.morada = morada;
     }
 
-    public void setDinheiro(double dinheiro){
-        this.dinheiro = dinheiro;
+    public void setDinheiroFaturacao(double dinheiro_faturacao){
+        this.dinheiro_faturacao = dinheiro_faturacao;
     }
 
     private List<Artigo> cloneArtigos(List<Artigo> lista){
@@ -170,6 +169,22 @@ public class Utilizador implements Serializable{
         });
     }
 
+    public void addArtigoFatura(Artigo artigo, int codigo, double comissao){
+        TIPO tipo = TIPO.VENDA;
+        if (Double.compare(comissao,0) == 0) tipo = TIPO.COMPRA;
+        if (!this.faturas.containsKey(codigo+tipo.hashCode())) this.faturas.put(codigo+tipo.hashCode(),new Fatura(codigo,0,tipo));
+        this.faturas.get(codigo+tipo.hashCode()).addPreco(artigo.calculaPreco()*(1-comissao));
+    }
+
+    public void removeFatura(int codigo){
+        this.faturas.remove(codigo+TIPO.COMPRA.hashCode());
+        this.faturas.remove(codigo+TIPO.VENDA.hashCode());
+    }
+
+    public void calculaFaturacao(Predicate<Fatura> filtro){
+        this.setDinheiroFaturacao(this.faturas.values().stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.getPreco()).sum());
+    }
+
     public String toString(){
 
         StringBuffer buffer = new StringBuffer();
@@ -179,6 +194,7 @@ public class Utilizador implements Serializable{
         buffer.append("\tNome: ").append(this.nome);
         buffer.append("\tNif: ").append(this.nif);
         buffer.append("\tMorada: ").append(this.morada);
+        buffer.append("\nFaturas: ").append(this.faturas.values().toString());
         buffer.append("\nArtigos à venda: ").append(this.artigos_a_venda.toString());
         buffer.append("\nArtigos vendidos: ").append(this.artigos_vendidos.toString());
         buffer.append("\nArtigos adquiridos: ").append(this.artigos_adquiridos.toString());

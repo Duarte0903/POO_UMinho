@@ -13,19 +13,11 @@ public class Escritor{
         System.out.println(object);
     }
 
-    public static void printMelhoresVendedores(List<Utilizador> ranking){
+    public static void printMelhoresUtilizadores(List<Utilizador> ranking){
         ranking.stream().forEach((x) -> {
             System.out.println("Nome: " + x.getNome() +
                                 "\tCodigo: " + x.getCodigo() +
-                                "\tDinheiro Ganho: " + x.getDinheiro());
-        });
-    }
-
-    public static void printMelhoresCopmradores(List<Utilizador> ranking){
-        ranking.stream().forEach((x) -> {
-            System.out.println("Nome: " + x.getNome() +
-                                "\tCodigo: " + x.getCodigo() +
-                                "\tDinheiro Gasto: " + x.getDinheiro());
+                                "\tDinheiro Ganho: " + x.getDinheiroFaturacao());
         });
     }
 

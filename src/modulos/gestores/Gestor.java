@@ -7,6 +7,7 @@ import modulos.Encomenda;
 import modulos.Utilizador;
 import modulos.Transportadora;
 import modulos.Tratador;
+import modulos.Fatura;
 import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
@@ -116,6 +117,8 @@ public class Gestor implements Serializable{
             this.gestor_encomendas.lookUpEncomenda(codigo_encomenda,utilizador,Encomenda.PENDENTE);
             this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
+                this.gestor_utilizadores.addArtigoFatura(x,x.getVendedor(),codigo_encomenda,Gestor.getComissao());
+                this.gestor_utilizadores.addArtigoFatura(x,utilizador,codigo_encomenda,0);
                 this.gestor_utilizadores.addUtilizadorArtigoVendido(x);
                 this.gestor_utilizadores.addUtilizadorArtigoAdquirido(
                     this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda),x);
@@ -163,7 +166,9 @@ public class Gestor implements Serializable{
                 throw new Exception("Devolução fora de prazo");
             }
 
+            this.gestor_utilizadores.removeFatura(utilizador,codigo_encomenda);
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
+                this.gestor_utilizadores.removeFatura(x.getVendedor(),codigo_encomenda);
                 this.gestor_utilizadores.removeUtilizadorArtigoVendido(x);
                 this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(utilizador,x);
                 x.setData(Calendario.getData());
@@ -192,12 +197,8 @@ public class Gestor implements Serializable{
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void getMelhoresVendedores(Predicate<Artigo> filtro){
-        Escritor.printMelhoresVendedores(this.gestor_utilizadores.getMelhoresVendedores(filtro));
-    }
-
-    public void getMelhoresCompradores(Predicate<Artigo> filtro){
-        Escritor.printMelhoresCopmradores(this.gestor_utilizadores.getMelhoresCompradores(filtro));
+    public void getMelhoresUtilizadores(Predicate<Fatura> filtro){
+        Escritor.printMelhoresUtilizadores(this.gestor_utilizadores.getMelhoresUtilizadores(filtro));
     }
 
     public void getMelhoresTransportadoras(){
