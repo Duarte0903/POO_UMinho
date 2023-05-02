@@ -2,8 +2,6 @@ package controlador;
 
 import modulos.gestores.Gestor;
 import java.util.Map;
-import java.util.AbstractMap.SimpleEntry;
-import escritor.Escritor;
 
 
 public class ControladorLogin{

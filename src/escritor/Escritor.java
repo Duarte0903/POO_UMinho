@@ -3,7 +3,6 @@ package escritor;
 import modulos.Utilizador;
 import modulos.Transportadora;
 import modulos.Encomenda;
-import java.util.Map;
 import java.util.List;
 
 

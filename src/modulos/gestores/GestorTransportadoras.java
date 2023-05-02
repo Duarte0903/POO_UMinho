@@ -3,11 +3,9 @@ package modulos.gestores;
 import modulos.artigos.Artigo;
 import modulos.Transportadora;
 import modulos.Estatisticas;
-import java.util.Set;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
-import java.util.stream.*;
 import java.io.Serializable;
 
 

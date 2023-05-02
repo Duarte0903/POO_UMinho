@@ -1,10 +1,8 @@
 package modulos.gestores;
 
 import modulos.artigos.Artigo;
-import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.stream.*;
 import java.io.Serializable;
 
 

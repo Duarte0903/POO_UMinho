@@ -2,14 +2,9 @@ package modulos;
 
 import modulos.comparadores.*;
 import modulos.gestores.Gestor;
-import modulos.artigos.Artigo;
-import modulos.Utilizador;
-import modulos.Encomenda;
-import modulos.Transportadora;
 import java.util.Map;
 import java.util.List;
 import java.util.stream.*;
-import java.util.Comparator;
 import java.util.function.Predicate;
 
 

@@ -2,7 +2,6 @@ package modulos.artigos;
 
 import modulos.Calendario;
 import java.time.LocalDate;
-import java.io.Serializable;
 
 
 public class Mala extends Artigo{

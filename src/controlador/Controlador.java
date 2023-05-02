@@ -2,7 +2,6 @@ package controlador;
 
 import modulos.gestores.Gestor;
 import modulos.Tratador;
-import escritor.Escritor;
 import java.util.Map;
 import java.util.HashMap;
 

@@ -8,13 +8,10 @@ import modulos.Utilizador;
 import modulos.Transportadora;
 import modulos.Tratador;
 import modulos.Fatura;
-import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
 import java.io.Serializable;
-import java.util.AbstractMap;
 import java.util.function.Predicate;
-import java.util.AbstractMap.SimpleEntry;
 
 
 public class Gestor implements Serializable{

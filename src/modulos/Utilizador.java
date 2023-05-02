@@ -1,7 +1,6 @@
 package modulos;
 
 import modulos.artigos.Artigo;
-import modulos.Fatura;
 import modulos.Fatura.TIPO;
 import java.util.Map;
 import java.util.List;

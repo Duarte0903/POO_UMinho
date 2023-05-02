@@ -1,7 +1,6 @@
 package controlador;
 
 import modulos.gestores.Gestor;
-import modulos.artigos.Artigo;
 import modulos.Fatura;
 import modulos.Fatura.TIPO;
 import java.util.function.Predicate;
