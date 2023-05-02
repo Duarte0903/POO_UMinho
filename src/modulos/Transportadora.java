@@ -126,7 +126,7 @@ public class Transportadora implements Serializable{
         return this.encomendas_expedidas.containsKey(codigo_encomenda);
     }
 
-    public double calculaPreco(List<Artigo> artigos){
+    private double calculaPreco(List<Artigo> artigos){
 
         double imposto = this.base_enc_pequena;
 

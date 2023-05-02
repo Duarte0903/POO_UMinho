@@ -22,10 +22,10 @@ public class Gestor implements Serializable{
     private static final long serialVersionUID = 12L;
     private static double vintageComissao = 0.1;
 
-    public GestorArtigos gestor_artigos;
-    public GestorEncomendas gestor_encomendas;
-    public GestorUtilizadores gestor_utilizadores;
-    public GestorTransportadoras gestor_transportadoras;
+    private GestorArtigos gestor_artigos;
+    private GestorEncomendas gestor_encomendas;
+    private GestorUtilizadores gestor_utilizadores;
+    private GestorTransportadoras gestor_transportadoras;
 
     public Gestor(){
         this.gestor_artigos = new GestorArtigos();
@@ -128,7 +128,7 @@ public class Gestor implements Serializable{
         catch (Exception e) {Tratador.trataException(e);}
     }
 
-    public void expedirEncomenda(int codigo_encomenda){
+    private void expedirEncomenda(int codigo_encomenda){
 
         this.gestor_encomendas.expedirEncomenda(codigo_encomenda);
         this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {

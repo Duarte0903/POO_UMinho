@@ -5,7 +5,7 @@ import modulos.Calendario;
 import escritor.Escritor;
 
 
-public class ControladorPrint{
+public class ControladorInfo{
 
     public static void getInfo(Gestor gestor, int flag){
 

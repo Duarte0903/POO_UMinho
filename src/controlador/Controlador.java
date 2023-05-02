@@ -86,7 +86,7 @@ public class Controlador{
                 case Controlador.SHOW_DADOS:
                 case Controlador.SHOW_DATA:
                 case Controlador.SHOW_COMISSAO:
-                    ControladorPrint.getInfo(gestor,Controlador.getCodigo(tokens[0]));
+                    ControladorInfo.getInfo(gestor,Controlador.getCodigo(tokens[0]));
                     break;
 
                 case Controlador.INSERT_ARTIGO_MALA:
