@@ -70,8 +70,6 @@ public class EncomendaTest{
         Encomenda.setAutoIncrement(0);
         Encomenda encomenda = new Encomenda(0);
 
-        Tshirt tshirt = new Tshirt(5,"Transportes Nogueira","Tshirt Amarela","FKTO","ZARA",26.00,0.23,"novo",0,0,false,"S","liso");
-
         assertTrue(encomenda.getDataCriacao() == null);
         assertTrue(encomenda.getEstado().equals("pendente"));
         
