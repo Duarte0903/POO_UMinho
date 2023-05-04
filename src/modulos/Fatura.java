@@ -1,37 +1,60 @@
 package modulos;
 
 import java.time.LocalDate;
+import modulos.gestores.Gestor;
+import modulos.artigos.Artigo;
 import java.io.Serializable;;
 
 
 public class Fatura implements Serializable{
 
     private static final long serialVersionUID = 13L;
-    public enum TIPO {COMPRA,VENDA};
+    public enum TIPO {COMPRA,VENDA,COMISSAO};
 
     private int codigo_encomenda;
     private double preco;
+    private double comissao;
     private LocalDate data;
     private TIPO tipo;
+
+    // Construtor
 
     public Fatura(int codigo_encomenda, double preco, TIPO tipo){
         this.codigo_encomenda = codigo_encomenda;
         this.preco = preco;
-        this.data = Calendario.getData();
         this.tipo = tipo;
+        this.data = Calendario.getData();
+        this.comissao = Gestor.getComissao();
+        if (tipo == TIPO.VENDA) this.preco *= (1-this.comissao);
+        else if (tipo == TIPO.COMISSAO) this.preco *= this.comissao;
+    }
+
+    public Fatura(int codigo_encomenda, Artigo artigo, TIPO tipo){
+        this(codigo_encomenda,artigo.calculaPreco(),tipo);
     }
 
     public Fatura(Fatura fatura){
         this.codigo_encomenda = fatura.getCodigoEncomenda();
         this.preco = fatura.getPreco();
+        this.comissao = fatura.getComissao();
+        this.data = fatura.getData();
+        this.tipo = fatura.getTipo();
     }
+
+    // Clone
 
     public Fatura clone(){
         return new Fatura(this);
     }
 
+    // Getters
+
     public double getPreco(){
         return this.preco;
+    }
+
+    public double getComissao(){
+        return this.comissao;
     }
 
     public int getCodigoEncomenda(){
@@ -46,16 +69,18 @@ public class Fatura implements Serializable{
         return this.tipo;
     }
 
-    public void setPreco(double preco){
-        this.preco = preco;
-    }
-
-    public void setCodigoEncomenda(int codigo_encomenda){
-        this.codigo_encomenda = codigo_encomenda;
-    }
+    // Metodos
 
     public void addPreco(double preco){
-        this.setPreco(this.getPreco()+preco);
+        this.preco += preco;
+    }
+
+    public Fatura duplicado(){
+        return new Fatura(
+            this.codigo_encomenda,
+            this.preco/(1-this.comissao),
+            TIPO.COMISSAO
+        );
     }
 
     public String toString(){
@@ -64,6 +89,7 @@ public class Fatura implements Serializable{
 
         buffer.append("Encomenda: ").append(this.codigo_encomenda);
         buffer.append("\tPreco: ").append(this.preco);
+        buffer.append("\tComissão: ").append(this.comissao);
         buffer.append("\tData: ").append(this.data);
         buffer.append("\tTipo: ").append(this.tipo);
 

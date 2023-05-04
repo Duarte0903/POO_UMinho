@@ -1,7 +1,6 @@
 package modulos;
 
 import modulos.artigos.Artigo;
-import modulos.Fatura.TIPO;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ public class Utilizador implements Serializable{
     private String nome;
     private int nif;
     private String morada;
-    private double dinheiro_faturacao;
 
     private List<Artigo> artigos_a_venda;
     private List<Artigo> artigos_vendidos;
@@ -38,7 +36,6 @@ public class Utilizador implements Serializable{
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
-        this.dinheiro_faturacao = 0;
         this.artigos_a_venda = new ArrayList<Artigo>();
         this.artigos_vendidos = new ArrayList<Artigo>();
         this.artigos_adquiridos = new ArrayList<Artigo>();
@@ -59,11 +56,10 @@ public class Utilizador implements Serializable{
             this.morada);
 
         utilizador.setCodigo(this.codigo);
-        utilizador.setDinheiroFaturacao(this.dinheiro_faturacao);
-        utilizador.artigos_a_venda = this.cloneArtigos(this.artigos_a_venda);
-        utilizador.artigos_vendidos = this.cloneArtigos(this.artigos_vendidos);
-        utilizador.artigos_adquiridos = this.cloneArtigos(this.artigos_adquiridos);
-        utilizador.faturas = this.faturas.values().stream().map(Fatura::clone).collect(Collectors.toMap((x) -> x.getCodigoEncomenda(),(x) -> x));
+        utilizador.artigos_a_venda = this.artigos_a_venda.stream().map((x) -> x.clone()).collect(Collectors.toList());
+        utilizador.artigos_vendidos = this.artigos_vendidos.stream().map((x) -> x.clone()).collect(Collectors.toList());
+        utilizador.artigos_adquiridos = this.artigos_adquiridos.stream().map((x) -> x.clone()).collect(Collectors.toList());
+        utilizador.faturas = this.faturas.values().stream().map((x) -> x.clone()).collect(Collectors.toMap((x) -> x.getCodigoEncomenda(),(x) -> x));
 
         return utilizador;
     }
@@ -94,10 +90,6 @@ public class Utilizador implements Serializable{
         return this.morada;
     }
 
-    public double getDinheiroFaturacao(){
-        return this.dinheiro_faturacao;
-    }
-
     public static int getAutoIncrement(){
         return Utilizador.AUTO_INCREMENT;
     }
@@ -124,14 +116,6 @@ public class Utilizador implements Serializable{
         this.morada = morada;
     }
 
-    public void setDinheiroFaturacao(double dinheiro_faturacao){
-        this.dinheiro_faturacao = dinheiro_faturacao;
-    }
-
-    private List<Artigo> cloneArtigos(List<Artigo> lista){
-        return lista.stream().map((x) -> x.clone()).collect(Collectors.toList());
-    }
-
     public static void setAutoIncrement(int x){
         Utilizador.AUTO_INCREMENT = x;
     }
@@ -146,20 +130,26 @@ public class Utilizador implements Serializable{
         this.artigos_a_venda.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
     }
 
-    public void addArtigoVendido(Artigo artigo){
+    public void addArtigoVendido(Artigo artigo, Fatura fatura){
         this.artigos_vendidos.add(artigo.clone());
+        this.addFatura(fatura.clone());
+        this.addFatura(fatura.duplicado());
     }
 
-    public void removeArtigoVendido(Artigo artigo){
+    public void removeArtigoVendido(Artigo artigo, Fatura fatura){
         this.artigos_vendidos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
+        this.faturas.remove(fatura.hashCode());
+        this.faturas.remove(fatura.duplicado().hashCode());
     }
 
-    public void addArtigoAdquirido(Artigo artigo){
+    public void addArtigoAdquirido(Artigo artigo, Fatura fatura){
         this.artigos_adquiridos.add(artigo.clone());
+        this.addFatura(fatura.clone());
     }
 
-    public void removeArtigoAdquirido(Artigo artigo){
+    public void removeArtigoAdquirido(Artigo artigo, Fatura fatura){
         this.artigos_adquiridos.removeIf((x) -> x.getCodigo().equals(artigo.getCodigo()));
+        this.faturas.remove(fatura.hashCode());
     }
 
     public void alterarPreco(String codigo_artigo, double preco){
@@ -168,20 +158,16 @@ public class Utilizador implements Serializable{
         });
     }
 
-    public void addArtigoFatura(Artigo artigo, int codigo, double comissao){
-        TIPO tipo = TIPO.VENDA;
-        if (Double.compare(comissao,0) == 0) tipo = TIPO.COMPRA;
-        if (!this.faturas.containsKey(codigo+tipo.hashCode())) this.faturas.put(codigo+tipo.hashCode(),new Fatura(codigo,0,tipo));
-        this.faturas.get(codigo+tipo.hashCode()).addPreco(artigo.calculaPreco()*(1-comissao));
+    private void addFatura(Fatura fatura){
+
+        if (this.faturas.putIfAbsent(fatura.hashCode(),fatura) != null){
+            
+            this.faturas.get(fatura.hashCode()).addPreco(fatura.getPreco());
+        }
     }
 
-    public void removeFatura(int codigo){
-        this.faturas.remove(codigo+TIPO.COMPRA.hashCode());
-        this.faturas.remove(codigo+TIPO.VENDA.hashCode());
-    }
-
-    public void calculaFaturacao(Predicate<Fatura> filtro){
-        this.setDinheiroFaturacao(this.faturas.values().stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.getPreco()).sum());
+    public double getFaturacao(Predicate<Fatura> filtro){
+        return this.faturas.values().stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.getPreco()).sum();
     }
 
     public String toString(){
@@ -193,7 +179,6 @@ public class Utilizador implements Serializable{
         buffer.append("\tNome: ").append(this.nome);
         buffer.append("\tNif: ").append(this.nif);
         buffer.append("\tMorada: ").append(this.morada);
-        buffer.append("\nFaturas: ").append(this.faturas.values().toString());
         buffer.append("\nArtigos à venda: ").append(this.artigos_a_venda.toString());
         buffer.append("\nArtigos vendidos: ").append(this.artigos_vendidos.toString());
         buffer.append("\nArtigos adquiridos: ").append(this.artigos_adquiridos.toString());

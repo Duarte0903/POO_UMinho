@@ -3,7 +3,9 @@ package escritor;
 import modulos.Utilizador;
 import modulos.Transportadora;
 import modulos.Encomenda;
+import modulos.Fatura;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 public class Escritor{
@@ -12,11 +14,11 @@ public class Escritor{
         System.out.println(object);
     }
 
-    public static void printMelhoresUtilizadores(List<Utilizador> ranking){
+    public static void printMelhoresUtilizadores(List<Utilizador> ranking, Predicate<Fatura> filtro){
         ranking.stream().forEach((x) -> {
             System.out.println("Nome: " + x.getNome() +
                                 "\tCodigo: " + x.getCodigo() +
-                                "\tDinheiro Ganho: " + x.getDinheiroFaturacao());
+                                "\tDinheiro Ganho: " + x.getFaturacao(filtro));
         });
     }
 

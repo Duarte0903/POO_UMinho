@@ -5,6 +5,7 @@ import modulos.Calendario;
 import modulos.artigos.Artigo;
 import modulos.Encomenda;
 import modulos.Utilizador;
+import modulos.Fatura.TIPO;
 import modulos.Transportadora;
 import modulos.Tratador;
 import modulos.Fatura;
@@ -114,11 +115,9 @@ public class Gestor implements Serializable{
             this.gestor_encomendas.lookUpEncomenda(codigo_encomenda,utilizador,Encomenda.PENDENTE);
             this.gestor_encomendas.finalizarEncomenda(codigo_encomenda);
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
-                this.gestor_utilizadores.addArtigoFatura(x,x.getVendedor(),codigo_encomenda,Gestor.getComissao());
-                this.gestor_utilizadores.addArtigoFatura(x,utilizador,codigo_encomenda,0);
-                this.gestor_utilizadores.addUtilizadorArtigoVendido(x);
+                this.gestor_utilizadores.addUtilizadorArtigoVendido(x,new Fatura(codigo_encomenda,x,TIPO.VENDA));
                 this.gestor_utilizadores.addUtilizadorArtigoAdquirido(
-                    this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda),x);
+                    this.gestor_encomendas.getCompradorEncomenda(codigo_encomenda),x,new Fatura(codigo_encomenda,x,TIPO.COMPRA));
             });
         }
 
@@ -145,10 +144,7 @@ public class Gestor implements Serializable{
             }
 
             Calendario.setData(data);
-            this.gestor_encomendas.getAllEncomendasProntas().forEach((x) -> {
-                this.expedirEncomenda(x);
-                this.gestor_transportadoras.updatePrecoEncomenda(x);
-            });
+            this.gestor_encomendas.getAllEncomendasProntas().forEach((x) -> this.expedirEncomenda(x));
         }
 
         catch(Exception e) {Tratador.trataException(e);}
@@ -163,11 +159,9 @@ public class Gestor implements Serializable{
                 throw new Exception("Devolução fora de prazo");
             }
 
-            this.gestor_utilizadores.removeFatura(utilizador,codigo_encomenda);
             this.gestor_encomendas.getArtigosEncomenda(codigo_encomenda).forEach((x) -> {
-                this.gestor_utilizadores.removeFatura(x.getVendedor(),codigo_encomenda);
-                this.gestor_utilizadores.removeUtilizadorArtigoVendido(x);
-                this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(utilizador,x);
+                this.gestor_utilizadores.removeUtilizadorArtigoVendido(x,new Fatura(codigo_encomenda,x,TIPO.VENDA));
+                this.gestor_utilizadores.removeUtilizadorArtigoAdquirido(utilizador,x,new Fatura(codigo_encomenda,x,TIPO.COMPRA));
                 x.setData(Calendario.getData());
                 this.insertArtigo(x);
             });
@@ -195,7 +189,7 @@ public class Gestor implements Serializable{
     }
 
     public void getMelhoresUtilizadores(Predicate<Fatura> filtro){
-        Escritor.printMelhoresUtilizadores(this.gestor_utilizadores.getMelhoresUtilizadores(filtro));
+        Escritor.printMelhoresUtilizadores(this.gestor_utilizadores.getMelhoresUtilizadores(filtro),filtro);
     }
 
     public void getMelhoresTransportadoras(){
@@ -207,7 +201,7 @@ public class Gestor implements Serializable{
     }
 
     public void getLucroVintage(){
-        Escritor.escreve(this.gestor_encomendas.getLucroVintage());
+        Escritor.escreve(this.gestor_utilizadores.getLucroVintage());
     }
 
     public Map.Entry<Integer,String> loginUtilizador(String email, String password){

@@ -6,9 +6,13 @@ import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import java.time.LocalDate;
+
+import modulos.Fatura;
 import modulos.Utilizador;
+import modulos.Fatura.TIPO;
 import modulos.artigos.Mala;
 import modulos.artigos.Tshirt;
+import modulos.gestores.Gestor;
 import modulos.artigos.Sapatilha;
 
 
@@ -51,6 +55,7 @@ public class UtilizadorTest{
     @Test
     public void testArtigoUtilizador(){
 
+        Gestor.setComissao(0.1);
         Utilizador.setAutoIncrement(0);
         Utilizador utilizador = new Utilizador("al19813@aebarcelos.pt","1234","Diogo Marques",123456789,"Rua das Flores");
 
@@ -63,45 +68,37 @@ public class UtilizadorTest{
         Sapatilha sapatilha = new Sapatilha(1,"Transportes Alegria","Sapatilha Azul","CKDW","Nike",26.88,0.23,"usado",5,10,false,"Azul",36,false,LocalDate.parse("1940-10-19"));
         Sapatilha sapatilha2 = new Sapatilha(2,"Transportes Resulima","Sapatilha Amarela","CKEW","Puma",25.00,0.23,"novo",0,0,true,"Amarela",40,false,LocalDate.parse("1960-11-21"));
 
-        utilizador.addArtigoFatura(mala,1,0.1);
-        utilizador.addArtigoFatura(mala2,1,0.1);
-
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),46.9962) == 0);
+        utilizador.addArtigoVendido(mala,new Fatura(1,mala,TIPO.VENDA));
+        utilizador.addArtigoVendido(mala2,new Fatura(1,mala2,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),46.9962) == 0);
         
-        utilizador.removeFatura(1);
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),0) == 0);
+        utilizador.removeArtigoVendido(mala,new Fatura(1,mala,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),0) == 0);
 
-        utilizador.addArtigoFatura(tshirt,0,0.2);
-        utilizador.addArtigoFatura(tshirt2,1,0.3);
-        utilizador.calculaFaturacao((x) -> false);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),0) == 0);
-
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),30.215) == 0); 
-        utilizador.removeFatura(0);
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),9.415) == 0);
+        Gestor.setComissao(0.2);
+        utilizador.addArtigoVendido(tshirt,new Fatura(0,tshirt,TIPO.VENDA));
+        Gestor.setComissao(0.3);
+        utilizador.addArtigoVendido(tshirt2,new Fatura(1,tshirt2,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.COMPRA),0) == 0);
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),30.215) == 0); 
         
-        utilizador.removeFatura(1);
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),0) == 0);
+        utilizador.removeArtigoVendido(tshirt,new Fatura(0,tshirt,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),9.415) == 0);
+        
+        utilizador.removeArtigoVendido(tshirt2,new Fatura(1,tshirt2,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),0) == 0);
 
-        utilizador.addArtigoFatura(sapatilha,0,0.5);
-        utilizador.addArtigoFatura(sapatilha2,2,0.2);
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),40.3712) == 0);
+        Gestor.setComissao(0.5);
+        utilizador.addArtigoVendido(sapatilha,new Fatura(0,sapatilha,TIPO.VENDA));
+        Gestor.setComissao(0.2);
+        utilizador.addArtigoVendido(sapatilha2,new Fatura(2,sapatilha2,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),40.3712) == 0);
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.COMPRA),0) == 0);
 
-        utilizador.calculaFaturacao((x) -> false);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),0) == 0);
+        utilizador.removeArtigoVendido(sapatilha2,new Fatura(2,sapatilha2,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> x.getTipo() == TIPO.VENDA),13.171199999999999) == 0);
 
-        utilizador.removeFatura(2);
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),13.171199999999999) == 0);
-
-        utilizador.removeFatura(0);
-        utilizador.calculaFaturacao((x) -> true);
-        assertTrue(Double.compare(utilizador.getDinheiroFaturacao(),0) == 0);
+        utilizador.removeArtigoVendido(sapatilha,new Fatura(0,sapatilha,TIPO.VENDA));
+        assertTrue(Double.compare(utilizador.getFaturacao((x) -> true),0) == 0);
     }
 }

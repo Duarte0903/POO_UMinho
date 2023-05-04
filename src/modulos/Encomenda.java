@@ -91,10 +91,7 @@ public class Encomenda implements Serializable{
     }
 
     public List<Artigo> getArtigos(){
-        return this.artigos
-                    .stream()
-                    .map((x) -> x.clone())
-                    .collect(Collectors.toList());
+        return this.artigos.stream().map((x) -> x.clone()).collect(Collectors.toList());
     }
 
     // Setter
@@ -109,13 +106,6 @@ public class Encomenda implements Serializable{
 
     // Metodos
 
-    public double calculaPreco(){
-        return this.artigos
-                    .stream()
-                    .mapToDouble((x) -> x.calculaPreco())
-                    .sum();
-    }
-
     private void updateEmbalagem(){
 
         if (this.artigos.size() > Encomenda.GRANDE_SIZE) this.embalagem = Encomenda.GRANDE;
@@ -126,7 +116,6 @@ public class Encomenda implements Serializable{
     }
 
     public void addArtigo(Artigo artigo){
-
         this.artigos.add(artigo.clone());
         this.updateEmbalagem();
     }

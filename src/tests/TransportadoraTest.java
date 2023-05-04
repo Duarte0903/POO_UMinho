@@ -70,29 +70,21 @@ public class TransportadoraTest{
 
         transportadora.addArtigo(0,tshirt);
         transportadora.addArtigo(1,tshirt2);
-        transportadora.updatePrecoEncomenda(0);
-        assertTrue(Double.compare(transportadora.getFaturacao(),3.375) == 0);
 
-        transportadora.updatePrecoEncomenda(1);
-        transportadora.updatePrecoEncomenda(1);
         assertTrue(Double.compare(transportadora.getFaturacao(),6.75) == 0);
         
         transportadora.addArtigo(2,tshirt3);
-        transportadora.updatePrecoEncomenda(2);
         assertTrue(Double.compare(transportadora.getFaturacao(),10.125) == 0);
 
         transportadora.addArtigo(0,tshirt3);
-        transportadora.updatePrecoEncomenda(0);
         assertTrue((Double.compare(transportadora.getFaturacao(),13.5) == 0));
 
         transportadora.addArtigo(0,tshirt3);
         transportadora.addArtigo(0,tshirt3);
         transportadora.addArtigo(0,tshirt3);
-        transportadora.updatePrecoEncomenda(0);
         assertTrue((Double.compare(transportadora.getFaturacao(),13.5) == 0));
 
         transportadora.addArtigo(0,tshirt3);
-        transportadora.updatePrecoEncomenda(0);
         assertTrue((Double.compare(transportadora.getFaturacao(),18.090000000000003) == 0));
     }
 }

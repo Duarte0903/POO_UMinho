@@ -22,7 +22,7 @@ public class Transportadora implements Serializable{
     private boolean premium;
     private Map<Integer,Map.Entry<Double,List<Artigo>>> encomendas_expedidas;
 
-    // Construtor;
+    // Construtores
 
     public Transportadora(String nome, double base_enc_pequena, double base_enc_media, double base_enc_grande, double mult_imposto, boolean premium){
         this.nome = nome;
@@ -44,14 +44,17 @@ public class Transportadora implements Serializable{
             this.base_enc_media,
             this.base_enc_grande,
             this.mult_imposto,
-            this.premium);
+            this.premium
+        );
 
         result.encomendas_expedidas = this.encomendas_expedidas
-                                        .entrySet()
-                                        .stream()
-                                        .collect(Collectors.toMap(
-                                            (x) -> x.getKey(),
-                                            (x) -> this.cloneEncomendaExpedida(x.getValue())));
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(
+                (x) -> x.getKey(),
+                (x) -> new AbstractMap.SimpleEntry<Double,List<Artigo>>(
+                    x.getValue().getKey(),
+                    x.getValue().getValue().stream().map((y) -> y.clone()).collect(Collectors.toList()))));
 
         return result;
     }
@@ -84,13 +87,13 @@ public class Transportadora implements Serializable{
 
     public double getFaturacao(){
         return this.encomendas_expedidas
-                    .entrySet()
+                    .values()
                     .stream()
-                    .mapToDouble((x) -> x.getValue().getKey())
+                    .mapToDouble((x) -> x.getKey())
                     .sum();
     }
 
-    // Setter
+    // Setters
 
     public void setNome(String nome){
         this.nome = nome;
@@ -112,13 +115,6 @@ public class Transportadora implements Serializable{
         this.mult_imposto = mult_imposto;
     }
 
-    private Map.Entry<Double,List<Artigo>> cloneEncomendaExpedida(Map.Entry<Double,List<Artigo>> encomenda){
-
-        return new AbstractMap.SimpleEntry<Double,List<Artigo>>(
-            encomenda.getKey(),
-            encomenda.getValue().stream().map((x) -> x.clone()).collect(Collectors.toList()));
-    }
-
     // Metodos
 
     public boolean containsEncomenda(int codigo_encomenda){
@@ -138,23 +134,19 @@ public class Transportadora implements Serializable{
 
     public void addArtigo(int codigo_encomenda, Artigo artigo){
 
-        if (!this.encomendas_expedidas.containsKey(codigo_encomenda)){
+        this.encomendas_expedidas.putIfAbsent(
+            codigo_encomenda,
+            new AbstractMap.SimpleEntry<Double,List<Artigo>>(0.0,new ArrayList<Artigo>())
+        );
 
-            this.encomendas_expedidas.put(
-                codigo_encomenda,
-                new AbstractMap.SimpleEntry<Double,List<Artigo>>(0.0, new ArrayList<Artigo>()));
-        }
-
-        this.encomendas_expedidas.get(codigo_encomenda).getValue().add(artigo.clone());
-    }
-
-    public void updatePrecoEncomenda(int codigo_encomenda){
+        this.encomendas_expedidas.get(codigo_encomenda).getValue().add(artigo);
 
         this.encomendas_expedidas.put(
             codigo_encomenda,
             new AbstractMap.SimpleEntry<Double,List<Artigo>>(
                 this.calculaPreco(this.encomendas_expedidas.get(codigo_encomenda).getValue()),
-                this.encomendas_expedidas.get(codigo_encomenda).getValue()));
+                this.encomendas_expedidas.get(codigo_encomenda).getValue())
+        );
     }
 
     public String toString(){

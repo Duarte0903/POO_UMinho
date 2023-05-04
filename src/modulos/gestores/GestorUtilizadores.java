@@ -63,36 +63,32 @@ public class GestorUtilizadores implements Serializable{
         this.catalogo_utilizadores.get(artigo.getVendedor()).removeArtigoAVenda(artigo);
     }
 
-    public void addUtilizadorArtigoVendido(Artigo artigo){
-        this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoVendido(artigo);
+    public void addUtilizadorArtigoVendido(Artigo artigo, Fatura fatura){
+        this.catalogo_utilizadores.get(artigo.getVendedor()).addArtigoVendido(artigo,fatura);
     }
 
-    public void removeUtilizadorArtigoVendido(Artigo artigo){
-        this.catalogo_utilizadores.get(artigo.getVendedor()).removeArtigoVendido(artigo);
+    public void removeUtilizadorArtigoVendido(Artigo artigo, Fatura fatura){
+        this.catalogo_utilizadores.get(artigo.getVendedor()).removeArtigoVendido(artigo,fatura);
     }
 
-    public void addUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
-        this.catalogo_utilizadores.get(utilizador).addArtigoAdquirido(artigo);
+    public void addUtilizadorArtigoAdquirido(int utilizador, Artigo artigo, Fatura fatura){
+        this.catalogo_utilizadores.get(utilizador).addArtigoAdquirido(artigo,fatura);
     }
 
-    public void removeUtilizadorArtigoAdquirido(int utilizador, Artigo artigo){
-        this.catalogo_utilizadores.get(utilizador).removeArtigoAdquirido(artigo);
+    public void removeUtilizadorArtigoAdquirido(int utilizador, Artigo artigo, Fatura fatura){
+        this.catalogo_utilizadores.get(utilizador).removeArtigoAdquirido(artigo,fatura);
     }
 
     public void alterarPrecoArtigo(int utilizador, String codigo_artigo, double preco){
         this.catalogo_utilizadores.get(utilizador).alterarPreco(codigo_artigo,preco);
     }
 
-    public void addArtigoFatura(Artigo artigo, int utilizador, int codigo, double comissao){
-        this.catalogo_utilizadores.get(utilizador).addArtigoFatura(artigo,codigo,comissao);
-    }
-
-    public void removeFatura(int utilizador, int codigo){
-        this.catalogo_utilizadores.get(utilizador).removeFatura(codigo);
-    }
-
     public List<Utilizador> getMelhoresUtilizadores(Predicate<Fatura> filtro){
         return Estatisticas.getMelhoresUtilizadores(this.catalogo_utilizadores,filtro);
+    }
+
+    public double getLucroVintage(){
+        return Estatisticas.getLucroVintage(catalogo_utilizadores);
     }
 
     public Map.Entry<Integer,String> login(String email, String password) throws Exception{

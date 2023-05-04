@@ -118,7 +118,7 @@ public abstract class Artigo implements Serializable{
         return this.premium;
     }
 
-    // Setter
+    // Setters
 
     public void setPreco(double preco){
         this.preco = preco;

@@ -51,14 +51,6 @@ public class GestorTransportadoras implements Serializable{
         this.catalogo_transportadoras.get(transportadora.hashCode()).setMultImposto(mult_imposto);
     }
 
-    public void updatePrecoEncomenda(int codigo_encomenda){
-        this.catalogo_transportadoras
-            .entrySet()
-            .stream()
-            .filter((x) -> x.getValue().containsEncomenda(codigo_encomenda))
-            .forEach((x) -> x.getValue().updatePrecoEncomenda(codigo_encomenda));
-    }
-
     public List<Transportadora> getMelhoresTransportadoras(){
         return Estatisticas.getMelhoresTransportadoras(this.catalogo_transportadoras);
     }
