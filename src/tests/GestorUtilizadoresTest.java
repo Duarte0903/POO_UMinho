@@ -11,7 +11,7 @@ import modulos.gestores.GestorUtilizadores;
 
 
 public class GestorUtilizadoresTest{
-    
+
     public GestorUtilizadoresTest(){}
 
     @BeforeEach
@@ -39,7 +39,7 @@ public class GestorUtilizadoresTest{
         Utilizador utilizador2 = new Utilizador("maximino.marques@outlook.pt","4896","Maximino Marques",123789456,"Rua Feliz");
 
         assertTrue(gestorUtilizadores.getSize() == 0);
-        
+
         assertDoesNotThrow(() -> gestorUtilizadores.addUtilizador(utilizador));
         assertTrue(gestorUtilizadores.getSize() == 1);
         assertDoesNotThrow(() -> gestorUtilizadores.addUtilizador(utilizador2));
@@ -81,5 +81,5 @@ public class GestorUtilizadoresTest{
 
         thrown = assertThrows(Exception.class, () -> gestorUtilizadores.login("maximino.marques@outlook.pt","1235"));
         assertTrue(thrown.getMessage().equals("Password inválida"));
-    }   
+    }
 }

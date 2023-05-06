@@ -70,9 +70,8 @@ public class TransportadoraTest{
 
         transportadora.addArtigo(0,tshirt);
         transportadora.addArtigo(1,tshirt2);
-
         assertTrue(Double.compare(transportadora.getFaturacao(),6.75) == 0);
-        
+
         transportadora.addArtigo(2,tshirt3);
         assertTrue(Double.compare(transportadora.getFaturacao(),10.125) == 0);
 

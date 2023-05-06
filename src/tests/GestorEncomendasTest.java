@@ -12,7 +12,7 @@ import modulos.gestores.GestorEncomendas;
 
 
 public class GestorEncomendasTest{
-    
+
     public GestorEncomendasTest(){}
 
     @BeforeEach
@@ -31,7 +31,7 @@ public class GestorEncomendasTest{
 
     @Test
     public void testCompradorGestorEncomendas(){
-     
+
         GestorEncomendas gestorEncomendas = new GestorEncomendas();
         Encomenda.setAutoIncrement(0);
 
@@ -64,10 +64,10 @@ public class GestorEncomendasTest{
 
         thrown = assertThrows(Exception.class, () -> gestorEncomendas.lookUpEncomenda(0,0,"finalizada"));
         assertTrue(thrown.getMessage().equals("A encomenda não está finalizada"));
-                
+
         assertDoesNotThrow(() -> gestorEncomendas.lookUpEncomenda(0,0,"pendente"));
         assertDoesNotThrow(() -> gestorEncomendas.removeEncomenda(0));
-        
+
         thrown = assertThrows(Exception.class,() -> gestorEncomendas.lookUpEncomenda(0,0,"pendente"));
         assertTrue(thrown.getMessage().equals("Encomenda inexistente"));
 
@@ -75,7 +75,7 @@ public class GestorEncomendasTest{
         assertDoesNotThrow(() -> gestorEncomendas.lookUpEncomenda(2,1,"pendente"));
         assertDoesNotThrow(() -> gestorEncomendas.addEncomenda(new Encomenda(0)));
         assertDoesNotThrow(() -> gestorEncomendas.lookUpEncomenda(3,0,"pendente"));
-        
+
         assertTrue(gestorEncomendas.getDataEncomenda(1) == null);
         gestorEncomendas.finalizarEncomenda(1);
         assertTrue(gestorEncomendas.getDataEncomenda(1).isEqual(LocalDate.parse("1970-01-01")));

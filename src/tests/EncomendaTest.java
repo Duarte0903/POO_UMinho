@@ -48,7 +48,7 @@ public class EncomendaTest{
         assertTrue(encomenda.size() == 0);
 
         encomenda.addArtigo(tshirt);
-        assertTrue(encomenda.size() == 1); 
+        assertTrue(encomenda.size() == 1);
         assertTrue(encomenda.getEmbalagem().equals("pequena"));
 
         encomenda.addArtigo(tshirt2);
@@ -72,9 +72,8 @@ public class EncomendaTest{
 
         assertTrue(encomenda.getDataCriacao() == null);
         assertTrue(encomenda.getEstado().equals("pendente"));
-        
-        encomenda.finalizarEncomenda();
 
+        encomenda.finalizarEncomenda();
         assertTrue(encomenda.getEstado().equals("finalizada"));
         assertTrue(encomenda.getDataCriacao().isEqual(LocalDate.parse("1970-01-01")));
 

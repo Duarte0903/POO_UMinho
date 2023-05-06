@@ -37,7 +37,7 @@ public class GestorArtigosTest{
 
         Tshirt tshirt = new Tshirt(5,"Transportes Nogueira","Tshirt Amarela","FKTO","ZARA",26.00,0.23,"novo",0,0,false,"S","liso");
         Tshirt tshirt2 = new Tshirt(2,"Transportes Resulima","Tshirt fixe","FQTO","LV",26.90,0.23,"usado",0,0,true,"XL","riscas");
-    
+
         assertDoesNotThrow(() ->gestorArtigos.addArtigo(tshirt));
         assertDoesNotThrow(() -> gestorArtigos.addArtigo(tshirt2));
 

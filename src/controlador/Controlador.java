@@ -141,8 +141,7 @@ public class Controlador{
         }
 
         catch (Exception e){
-            
-            if (tokens[0].length() > 0){
+            if (tokens.length != 0 && tokens[0].length() > 0){
                 Tratador.trataException(new Exception("Registo inválido: " + tokens[0]));
             }
         }

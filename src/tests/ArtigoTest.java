@@ -22,11 +22,11 @@ public class ArtigoTest{
 
     @Test
     public void testConstrutorMala(){
-        
+
         Mala mala = new Mala(1,"Transportes Resulima","Mala da Gucci","ABCD","GUCCI",25.55,0.23,"novo",0,0,true,30,"couro",LocalDate.parse("1967-12-02"));
         Mala mala2 = new Mala(2,"Transportes Alegria","Mala preta","WXYZ","LV",26.88,0.23,"nova",0,0,false,40,"cortiça",LocalDate.parse("1950-04-08"));
         Mala malaclone = mala.clone();
-        
+
         assertTrue(mala != null);
         assertTrue(malaclone != null);
         assertTrue(mala != malaclone);
