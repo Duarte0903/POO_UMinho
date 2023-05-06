@@ -32,86 +32,102 @@ public class Controlador{
     public static final int SHOW_COMISSAO = 21;
     public static final int LOGIN = 22;
     public static final int LOGOUT = 23;
+    public static final int REMOVE_ARTIGO = 24;
 
-    private static Map<String,Integer> tabela = new HashMap<String,Integer>();
+    private  Map<String,Integer> tabela = new HashMap<String,Integer>();
+    private Gestor gestor;
 
-    public static void fillTabela(){
-
-        Controlador.tabela.put("Ver Catalogos",Controlador.SHOW_DADOS);
-        Controlador.tabela.put("Inserir Utilizador",Controlador.INSERT_UTILIZADOR);
-        Controlador.tabela.put("Inserir Transportadora",Controlador.INSERT_TRANPORTADORA);
-        Controlador.tabela.put("Inserir Artigo Mala",Controlador.INSERT_ARTIGO_MALA);
-        Controlador.tabela.put("Inserir Artigo Tshirt",Controlador.INSERT_ARTIGO_TSHIRT);
-        Controlador.tabela.put("Inserir Artigo Sapatilha",Controlador.INSERT_ARTIGO_SAPATILHA);
-        Controlador.tabela.put("Criar Encomenda",Controlador.INSERT_ENCOMENDA);
-        Controlador.tabela.put("Inserir Artigo Encomenda",Controlador.INSERT_ARTIGO_ENCOMENDA);
-        Controlador.tabela.put("Remover Artigo Encomenda",Controlador.REMOVE_ARTIGO_ENCOMENDA);
-        Controlador.tabela.put("Finalizar Encomenda",Controlador.CHECK_OUT_ENCOMENDA);
-        Controlador.tabela.put("Ver Data",Controlador.SHOW_DATA);
-        Controlador.tabela.put("Alterar Data",Controlador.CHANGE_DATA);
-        Controlador.tabela.put("Devolver Encomenda",Controlador.REFUND_ENCOMENDA);
-        Controlador.tabela.put("Alterar Precos Transportadora",Controlador.CHANGE_PRECOS_TRANSPORTADORA);
-        Controlador.tabela.put("Alterar Preco Artigo",Controlador.CHANGE_PRECO_ARTIGO);
-        Controlador.tabela.put("Melhores Vendedores",Controlador.MELHORES_VENDEDORES);
-        Controlador.tabela.put("Melhores Compradores",Controlador.MELHORES_COMPRADORES);
-        Controlador.tabela.put("Melhores Transportadoras",Controlador.MELHORES_TRANSPORTADORAS);
-        Controlador.tabela.put("Encomendas Emitidas Vendedor", Controlador.ENCOMENDAS_EMITIDAS_VENDEDOR);
-        Controlador.tabela.put("Vintage Lucro",Controlador.VINTAGE_LUCRO);
-        Controlador.tabela.put("Alterar Comissao",Controlador.CHANGE_VINTAGE_COMISSAO);
-        Controlador.tabela.put("Ver Comissao",Controlador.SHOW_COMISSAO);
-        Controlador.tabela.put("Login",Controlador.LOGIN);
-        Controlador.tabela.put("Logout",Controlador.LOGOUT);
+    public Controlador(Gestor gestor){
+        this.gestor = gestor;
     }
 
-    private static int getCodigo(String identificador){
-        return Controlador.tabela.get(identificador);
+    public Gestor getGestor(){
+        return this.gestor;
     }
 
-    public static String getEntidadeLogged(){
+    public void setGestor(Gestor gestor){
+        this.gestor = gestor;
+    }
+
+    public void fillTabela(){
+
+        this.tabela.put("Ver Catalogos",Controlador.SHOW_DADOS);
+        this.tabela.put("Inserir Utilizador",Controlador.INSERT_UTILIZADOR);
+        this.tabela.put("Inserir Transportadora",Controlador.INSERT_TRANPORTADORA);
+        this.tabela.put("Inserir Artigo Mala",Controlador.INSERT_ARTIGO_MALA);
+        this.tabela.put("Inserir Artigo Tshirt",Controlador.INSERT_ARTIGO_TSHIRT);
+        this.tabela.put("Inserir Artigo Sapatilha",Controlador.INSERT_ARTIGO_SAPATILHA);
+        this.tabela.put("Criar Encomenda",Controlador.INSERT_ENCOMENDA);
+        this.tabela.put("Inserir Artigo Encomenda",Controlador.INSERT_ARTIGO_ENCOMENDA);
+        this.tabela.put("Remover Artigo Encomenda",Controlador.REMOVE_ARTIGO_ENCOMENDA);
+        this.tabela.put("Finalizar Encomenda",Controlador.CHECK_OUT_ENCOMENDA);
+        this.tabela.put("Ver Data",Controlador.SHOW_DATA);
+        this.tabela.put("Alterar Data",Controlador.CHANGE_DATA);
+        this.tabela.put("Devolver Encomenda",Controlador.REFUND_ENCOMENDA);
+        this.tabela.put("Alterar Precos Transportadora",Controlador.CHANGE_PRECOS_TRANSPORTADORA);
+        this.tabela.put("Alterar Preco Artigo",Controlador.CHANGE_PRECO_ARTIGO);
+        this.tabela.put("Melhores Vendedores",Controlador.MELHORES_VENDEDORES);
+        this.tabela.put("Melhores Compradores",Controlador.MELHORES_COMPRADORES);
+        this.tabela.put("Melhores Transportadoras",Controlador.MELHORES_TRANSPORTADORAS);
+        this.tabela.put("Encomendas Emitidas Vendedor", Controlador.ENCOMENDAS_EMITIDAS_VENDEDOR);
+        this.tabela.put("Vintage Lucro",Controlador.VINTAGE_LUCRO);
+        this.tabela.put("Alterar Comissao",Controlador.CHANGE_VINTAGE_COMISSAO);
+        this.tabela.put("Ver Comissao",Controlador.SHOW_COMISSAO);
+        this.tabela.put("Login",Controlador.LOGIN);
+        this.tabela.put("Logout",Controlador.LOGOUT);
+        this.tabela.put("Remover Artigo",Controlador.REMOVE_ARTIGO);
+    }
+
+    private int getCodigo(String identificador){
+        return this.tabela.get(identificador);
+    }
+
+    public String getEntidadeLogged(){
         return ControladorLogin.getEntidadeLogged();
     }
 
-    public static void collectDadosLine(String[] tokens, Gestor gestor){
+    public void collectDadosLine(String[] tokens){
 
         try{
 
-            switch (Controlador.getCodigo(tokens[0])){
+            switch (this.getCodigo(tokens[0])){
 
                 case Controlador.LOGIN:
                 case Controlador.LOGOUT:
-                    ControladorLogin.setContas(gestor,tokens,Controlador.getCodigo(tokens[0]));
+                    ControladorLogin.setContas(gestor,tokens,this.getCodigo(tokens[0]));
                     break;
 
                 case Controlador.SHOW_DADOS:
                 case Controlador.SHOW_DATA:
                 case Controlador.SHOW_COMISSAO:
-                    ControladorInfo.getInfo(gestor,Controlador.getCodigo(tokens[0]));
+                    ControladorInfo.getInfo(gestor,this.getCodigo(tokens[0]));
                     break;
 
                 case Controlador.INSERT_ARTIGO_MALA:
                 case Controlador.INSERT_ARTIGO_TSHIRT:
                 case Controlador.INSERT_ARTIGO_SAPATILHA:
                 case Controlador.INSERT_ENCOMENDA:
-                    ControladorRegistos.insertRegistoUtilizador(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    ControladorRegistos.insertRegistoUtilizador(gestor,tokens,this.getCodigo(tokens[0]),ControladorLogin.getLogged());
                     break;
 
                 case Controlador.INSERT_UTILIZADOR:
                 case Controlador.INSERT_TRANPORTADORA:
-                    ControladorRegistos.insertRegistoVintage(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    ControladorRegistos.insertRegistoVintage(gestor,tokens,this.getCodigo(tokens[0]),ControladorLogin.getLogged());
                     break;
 
+                case Controlador.REMOVE_ARTIGO:
                 case Controlador.REFUND_ENCOMENDA:
                 case Controlador.CHECK_OUT_ENCOMENDA:
                 case Controlador.CHANGE_PRECO_ARTIGO:
                 case Controlador.INSERT_ARTIGO_ENCOMENDA:
                 case Controlador.REMOVE_ARTIGO_ENCOMENDA:
-                    ControladorRegistos.alterarRegistoUtilizador(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    ControladorRegistos.alterarRegistoUtilizador(gestor,tokens,this.getCodigo(tokens[0]),ControladorLogin.getLogged());
                     break;
 
                 case Controlador.CHANGE_DATA:
                 case Controlador.CHANGE_VINTAGE_COMISSAO:
                 case Controlador.CHANGE_PRECOS_TRANSPORTADORA:
-                    ControladorRegistos.alterarRegistoVintage(gestor,tokens,Controlador.getCodigo(tokens[0]),ControladorLogin.getLogged());
+                    ControladorRegistos.alterarRegistoVintage(gestor,tokens,this.getCodigo(tokens[0]),ControladorLogin.getLogged());
                     break;
 
                 case Controlador.VINTAGE_LUCRO:
@@ -119,7 +135,7 @@ public class Controlador{
                 case Controlador.MELHORES_COMPRADORES:
                 case Controlador.MELHORES_TRANSPORTADORAS:
                 case Controlador.ENCOMENDAS_EMITIDAS_VENDEDOR:
-                    ControladorEstatisticas.getEstatistica(gestor,tokens,Controlador.getCodigo(tokens[0]));
+                    ControladorEstatisticas.getEstatistica(gestor,tokens,this.getCodigo(tokens[0]));
                     break;
             }
         }

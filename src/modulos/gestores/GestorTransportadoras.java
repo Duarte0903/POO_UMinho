@@ -3,13 +3,16 @@ package modulos.gestores;
 import modulos.artigos.Artigo;
 import modulos.Transportadora;
 import modulos.Estatisticas;
+import modulos.EstatisticasVisivel;
+import modulos.Visivel;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.io.Serializable;
+import java.util.stream.Collectors;
 
 
-public class GestorTransportadoras implements Serializable{
+public class GestorTransportadoras implements Serializable, Visivel{
 
     private static final long serialVersionUID = 11L;
 
@@ -51,7 +54,7 @@ public class GestorTransportadoras implements Serializable{
         this.catalogo_transportadoras.get(transportadora.hashCode()).setMultImposto(mult_imposto);
     }
 
-    public List<Transportadora> getMelhoresTransportadoras(){
+    public List<EstatisticasVisivel> getMelhoresTransportadoras(){
         return Estatisticas.getMelhoresTransportadoras(this.catalogo_transportadoras);
     }
 
@@ -61,5 +64,13 @@ public class GestorTransportadoras implements Serializable{
                     .stream()
                     .map((x) -> x.getValue().toString())
                     .reduce("Catalogo Transportadoras:", (a,b) -> a + "\n" + b);
+    }
+
+    public String visualiza(){
+        return this.catalogo_transportadoras
+                    .values()
+                    .stream()
+                    .map(Visivel::visualiza)
+                    .collect(Collectors.joining("\n"));
     }
 }

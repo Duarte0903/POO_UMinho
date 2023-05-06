@@ -10,7 +10,7 @@ import java.util.stream.*;
 import java.io.Serializable;
 
 
-public class Transportadora implements Serializable{
+public class Transportadora implements Serializable, EstatisticasVisivel{
 
     private static final long serialVersionUID = 7L;
 
@@ -184,5 +184,37 @@ public class Transportadora implements Serializable{
 
     public int hashCode(){
         return this.nome.hashCode();
+    }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("\033[48;5;240mNome: ").append(this.nome);
+        buffer.append("\tImposto Pequena: ").append(this.base_enc_pequena);
+        buffer.append("\tIMposto Media: ").append(this.base_enc_media);
+        buffer.append("\tImposto Grande: ").append(this.base_enc_grande);
+        buffer.append("\tFator Imposto: ").append(this.mult_imposto);
+        buffer.append("\tPremium: ").append(this.premium);
+        buffer.append("\u001B[0m\n\033[38;5;226m\u001B[1mENCOMENDAS EXPEDIDAS\u001B[0m\n");
+        if (this.encomendas_expedidas.size() > 0){
+            buffer.append(this.encomendas_expedidas
+                .values()
+                .stream()
+                .map((x) -> x.getValue().stream().map(Visivel::visualiza) .collect(Collectors.joining("\n")))
+                .collect(Collectors.joining("\n","","\n")));
+        }
+
+        return buffer.toString();
+    }
+
+    public String visualizaEstatistica(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("Nome: ").append(this.nome);
+        buffer.append("\tDinheiro Ganho: ").append(this.getFaturacao());
+
+        return buffer.toString();
     }
 }

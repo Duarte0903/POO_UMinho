@@ -1,11 +1,11 @@
 package modulos.artigos;
-
 import modulos.Calendario;
+import modulos.Visivel;
 import java.time.LocalDate;
 import java.io.Serializable;
 
 
-public abstract class Artigo implements Serializable{
+public abstract class Artigo implements Serializable, Visivel{
 
     private static final long serialVersionUID = 1L;
 
@@ -165,5 +165,20 @@ public abstract class Artigo implements Serializable{
 
     public int hashCode(){
         return this.codigo.hashCode();
+    }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("Vendedor: ").append(this.vendedor);
+        buffer.append("\tTranspostadora: ").append(this.transportadora);
+        buffer.append("\tCodigo: ").append(this.codigo);
+        buffer.append("\tPreco: ").append(this.preco);
+        buffer.append("\tDesconto: ").append(this.desconto);
+        buffer.append("\tEstado: ").append(this.estado);
+        buffer.append("\tPremium: ").append(this.premium);
+
+        return buffer.toString();
     }
 }

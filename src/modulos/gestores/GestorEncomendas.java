@@ -4,6 +4,8 @@ import modulos.artigos.Artigo;
 import modulos.Encomenda;
 import modulos.Calendario;
 import modulos.Estatisticas;
+import modulos.EstatisticasVisivel;
+import modulos.Visivel;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 import java.io.Serializable;
 
 
-public class GestorEncomendas implements Serializable{
+public class GestorEncomendas implements Serializable, Visivel{
 
     private static final long serialVersionUID = 10L;
 
@@ -72,7 +74,7 @@ public class GestorEncomendas implements Serializable{
         return this.catalogo_encomendas.get(codigo_encomenda).getDataCriacao();
     }
 
-    public List<Encomenda> getEncomendasEmitidasVendedor(int utilizador){
+    public List<EstatisticasVisivel> getEncomendasEmitidasVendedor(int utilizador){
         return Estatisticas.getEncomendasEmitidasVendedor(utilizador,this.catalogo_encomendas);
     }
 
@@ -93,5 +95,13 @@ public class GestorEncomendas implements Serializable{
                     .stream()
                     .map((x) -> x.getValue().toString())
                     .reduce("Catalogo Encomendas:", (a,b) -> a + "\n" + b);
+    }
+
+    public String visualiza(){
+        return this.catalogo_encomendas
+                    .values()
+                    .stream()
+                    .map(Visivel::visualiza)
+                    .collect(Collectors.joining("\n"));
     }
 }

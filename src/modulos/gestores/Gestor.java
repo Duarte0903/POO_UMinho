@@ -5,6 +5,7 @@ import modulos.Calendario;
 import modulos.artigos.Artigo;
 import modulos.Encomenda;
 import modulos.Utilizador;
+import modulos.Visivel;
 import modulos.Fatura.TIPO;
 import modulos.Transportadora;
 import modulos.Tratador;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 
-public class Gestor implements Serializable{
+public class Gestor implements Serializable, Visivel{
 
     private static final long serialVersionUID = 12L;
     private static double vintageComissao = 0.1;
@@ -72,6 +73,17 @@ public class Gestor implements Serializable{
             this.gestor_utilizadores.lookUpUtilizador(artigo.getVendedor());
             this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
             this.gestor_artigos.addArtigo(artigo);
+        }
+
+        catch (Exception e) {Tratador.trataException(e);}
+    }
+
+    public void removeArtigo(String codigo_artigo, int utilizador){
+
+        try{
+            this.gestor_utilizadores.removeUtilizadorArtigoAVenda(
+                this.gestor_artigos.getArtigo(codigo_artigo,utilizador));
+            this.gestor_artigos.removeArtigo(codigo_artigo);
         }
 
         catch (Exception e) {Tratador.trataException(e);}
@@ -189,15 +201,15 @@ public class Gestor implements Serializable{
     }
 
     public void getMelhoresUtilizadores(Predicate<Fatura> filtro){
-        Escritor.printMelhoresUtilizadores(this.gestor_utilizadores.getMelhoresUtilizadores(filtro),filtro);
+        Escritor.escreveEstatisticasVisisvel(this.gestor_utilizadores.getMelhoresUtilizadores(filtro));
     }
 
     public void getMelhoresTransportadoras(){
-        Escritor.printMelhoresTransportadoras(this.gestor_transportadoras.getMelhoresTransportadoras());
+        Escritor.escreveEstatisticasVisisvel(this.gestor_transportadoras.getMelhoresTransportadoras());
     }
 
     public void getEncomendasEmitidasVendedor(int utilizador){
-        Escritor.printEncomendasEmitidasVendedor(this.gestor_encomendas.getEncomendasEmitidasVendedor(utilizador));
+        Escritor.escreveEstatisticasVisisvel(this.gestor_encomendas.getEncomendasEmitidasVendedor(utilizador));
     }
 
     public void getLucroVintage(){
@@ -220,6 +232,22 @@ public class Gestor implements Serializable{
         buffer.append(this.gestor_artigos.toString());
         buffer.append("\n------------------------------------\n");
         buffer.append(this.gestor_encomendas.toString());
+
+        return buffer.toString();
+    }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("\n\033[38;5;214m\u001B[1mUTILIZADORES\u001B[0m\n\n");
+        buffer.append(this.gestor_utilizadores.visualiza());
+        buffer.append("\n\n\033[38;5;214m\u001B[1mTRANSPORTADORAS\u001B[0m\n\n");
+        buffer.append(this.gestor_transportadoras.visualiza());
+        buffer.append("\n\033[38;5;214m\u001B[1mSTOCK DE ARTIGOS\u001B[0m\n\n");
+        buffer.append(this.gestor_artigos.visualiza());
+        buffer.append("\n\n\033[38;5;214m\u001B[1mENCOMENDAS\u001B[0m\n\n");
+        buffer.append(this.gestor_encomendas.visualiza());
 
         return buffer.toString();
     }

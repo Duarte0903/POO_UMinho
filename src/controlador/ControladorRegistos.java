@@ -133,6 +133,10 @@ public class ControladorRegistos{
             case Controlador.CHANGE_PRECO_ARTIGO:
                 gestor.alterarPrecoArtigo(tokens[1],Double.valueOf(tokens[2]),logged);
                 break;
+
+            case Controlador.REMOVE_ARTIGO:
+                gestor.removeArtigo(tokens[1],logged);
+                break;
         }
     }
 

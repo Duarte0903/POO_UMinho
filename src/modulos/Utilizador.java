@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 
-public class Utilizador implements Serializable{
+public class Utilizador implements Serializable, EstatisticasVisivel{
 
     private static final long serialVersionUID = 5L;
     private static int AUTO_INCREMENT = 0;
@@ -27,6 +27,8 @@ public class Utilizador implements Serializable{
     private List<Artigo> artigos_adquiridos;
     private Map<Integer,Fatura> faturas;
 
+    private double ultimo_calculo;
+
     // Construtor
 
     public Utilizador(String email, String password, String nome, int nif, String morada){
@@ -36,6 +38,7 @@ public class Utilizador implements Serializable{
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
+        this.ultimo_calculo = 0;
         this.artigos_a_venda = new ArrayList<Artigo>();
         this.artigos_vendidos = new ArrayList<Artigo>();
         this.artigos_adquiridos = new ArrayList<Artigo>();
@@ -159,15 +162,14 @@ public class Utilizador implements Serializable{
     }
 
     private void addFatura(Fatura fatura){
-
         if (this.faturas.putIfAbsent(fatura.hashCode(),fatura) != null){
-            
             this.faturas.get(fatura.hashCode()).addPreco(fatura.getPreco());
         }
     }
 
     public double getFaturacao(Predicate<Fatura> filtro){
-        return this.faturas.values().stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.getPreco()).sum();
+        this.ultimo_calculo = this.faturas.values().stream().filter((x) -> filtro.test(x)).mapToDouble((x) -> x.getPreco()).sum();
+        return ultimo_calculo;
     }
 
     public String toString(){
@@ -199,5 +201,33 @@ public class Utilizador implements Serializable{
 
     public int hashCode(){
         return this.codigo;
+    }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("\033[48;5;240mNome: ").append(this.nome);
+        buffer.append("\tEmail: ").append(this.email);
+        buffer.append("\tCodigo: ").append(this.codigo);
+        buffer.append("\u001B[0m\n\033[38;5;226m\u001B[1mARTIGOS À VENDA\u001B[0m");
+        if (this.artigos_a_venda.size() > 0) buffer.append(this.artigos_a_venda.stream().map(Visivel::visualiza).collect(Collectors.joining("\n","\n","")));
+        buffer.append("\n\033[38;5;226m\u001B[1mARTIGOS VENDIDOS\u001B[0m");
+        if (this.artigos_vendidos.size() > 0) buffer.append(this.artigos_vendidos.stream().map(Visivel::visualiza).collect(Collectors.joining("\n","\n","")));
+        buffer.append("\n\033[38;5;226m\u001B[1mARTIGO ADQUIRIDOS\u001B[0m");
+        if (this.artigos_adquiridos.size() > 0) buffer.append(this.artigos_adquiridos.stream().map(Visivel::visualiza).collect(Collectors.joining("\n","\n","")));
+
+        return buffer.toString();
+    }
+
+    public String visualizaEstatistica(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("Nome: ").append(this.nome);
+        buffer.append("\tCodigo: ").append(this.codigo);
+        buffer.append("\tDinheiro: ").append(this.ultimo_calculo);
+
+        return buffer.toString();
     }
 }

@@ -20,10 +20,14 @@ public class Leitor{
     private static final String RESET = "\u001B[0m";
     private static final String OBJC = "object.obj";
 
-    public static void run(String path, Gestor gestor){
+    private Controlador controlador;
 
-        Controlador.fillTabela();
-        Scanner input = new Scanner(System.in);
+    public Leitor(Controlador controlador){
+        this.controlador = controlador;
+        this.controlador.fillTabela();
+    }
+
+    public void load(String path){
 
         if (path != null){
 
@@ -34,7 +38,7 @@ public class Leitor{
 
                     while (text_input.hasNextLine()){
 
-                        Controlador.collectDadosLine(text_input.nextLine().split(";",0),gestor);
+                        this.controlador.collectDadosLine(text_input.nextLine().split(";",0));
                     }
 
                     text_input.close();
@@ -56,7 +60,7 @@ public class Leitor{
                     Gestor.setComissao((double) object_input.readObject());
                     Gestor.setAutoIncrementUtilizador((int) object_input.readObject());
                     Gestor.setAutoIncrementEncomeda((int) object_input.readObject());
-                    gestor = (Gestor) object_input.readObject();
+                    this.controlador.setGestor((Gestor) object_input.readObject());
 
                     file_input.close();
                     object_input.close();
@@ -67,23 +71,29 @@ public class Leitor{
                 catch (Exception e) {System.out.println(Leitor.RED + "Não foi possivel ler o ficheiro" + Leitor.RESET);}
             }
         }
+    }
 
-        System.out.printf(Leitor.GREEN + "%s %s", Controlador.getEntidadeLogged(), ">>> ");
+    public void run(){
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.printf(Leitor.GREEN + "%s %s", this.controlador.getEntidadeLogged(), ">>> ");
 
         while (input.hasNextLine()){
 
             String line = input.nextLine();
 
             System.out.printf("%s", Leitor.RESET);
-            Controlador.collectDadosLine(line.split(";",0),gestor);
+            this.controlador.collectDadosLine(line.split(";",0));
 
-            System.out.printf(Leitor.GREEN + "%s %s", Controlador.getEntidadeLogged(), ">>> ");
+            System.out.printf(Leitor.GREEN + "%s %s", this.controlador.getEntidadeLogged(), ">>> ");
         }
 
         input.close();
         System.out.println("Bye!");
+    }
 
-   //     System.out.println(gestor.toString());
+    public void save(){
 
         try{
 
@@ -94,7 +104,7 @@ public class Leitor{
             object_output.writeObject(Gestor.getComissao());
             object_output.writeObject(Gestor.getAutoIncrementUtilizador());
             object_output.writeObject(Gestor.getAutoIncrementEncomenda());
-            object_output.writeObject(gestor);
+            object_output.writeObject(this.controlador.getGestor());
 
             file_output.close();
             object_output.close();

@@ -66,4 +66,14 @@ public class Tshirt extends Artigo{
 
         return buffer.toString();
     }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(super.visualiza());
+        buffer.append("\tPadrao: ").append(this.padrao);
+
+        return buffer.toString();
+    }
 }

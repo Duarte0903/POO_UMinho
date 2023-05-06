@@ -12,7 +12,7 @@ public class ControladorInfo{
         switch (flag){
 
             case Controlador.SHOW_DADOS:
-                Escritor.escreve(gestor.toString());
+                Escritor.escreveVisivel(gestor);
                 break;
 
             case Controlador.SHOW_DATA:

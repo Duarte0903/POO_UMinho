@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 
 public class Estatisticas{
 
-    public static List<Utilizador> getMelhoresUtilizadores(List<Utilizador> utilizadores, Predicate<Fatura> filtro){
+    public static List<EstatisticasVisivel> getMelhoresUtilizadores(List<Utilizador> utilizadores, Predicate<Fatura> filtro){
         return utilizadores.stream().sorted(new OrdenaUtilizador(filtro).reversed()).collect(Collectors.toList());
     }
 
@@ -18,7 +18,7 @@ public class Estatisticas{
         return utilizadores.stream().mapToDouble((x) -> x.getFaturacao((y) -> y.getTipo() == TIPO.COMISSAO)).sum();
     }
 
-    public static List<Encomenda> getEncomendasEmitidasVendedor(int utilizador, Map<Integer,Encomenda> encomendas){
+    public static List<EstatisticasVisivel> getEncomendasEmitidasVendedor(int utilizador, Map<Integer,Encomenda> encomendas){
 
         List<Encomenda> result = encomendas.values().stream().map((x) -> x.clone()).collect(Collectors.toList());
 
@@ -26,12 +26,7 @@ public class Estatisticas{
         return result.stream().filter((x) -> x.size() > 0 && x.getEstado().equals(Encomenda.EXPEDIDA)).collect(Collectors.toList());
     }
 
-    public static List<Transportadora> getMelhoresTransportadoras(Map<Integer,Transportadora> transportadoras){
-        return transportadoras
-                .entrySet()
-                .stream()
-                .map((x) -> x.getValue())
-                .sorted(new OrdenaTransportadora().reversed())
-                .collect(Collectors.toList());
+    public static List<EstatisticasVisivel> getMelhoresTransportadoras(Map<Integer,Transportadora> transportadoras){
+        return transportadoras.values().stream().sorted(new OrdenaTransportadora().reversed()).collect(Collectors.toList());
     }
 }

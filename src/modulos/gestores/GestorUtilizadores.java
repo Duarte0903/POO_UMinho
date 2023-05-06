@@ -2,17 +2,20 @@ package modulos.gestores;
 
 import modulos.artigos.Artigo;
 import modulos.Utilizador;
+import modulos.Visivel;
 import modulos.Estatisticas;
+import modulos.EstatisticasVisivel;
 import modulos.Fatura;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.AbstractMap;
 import java.io.Serializable;
 
 
-public class GestorUtilizadores implements Serializable{
+public class GestorUtilizadores implements Serializable, Visivel{
 
     private static final long serialVersionUID = 9L;
 
@@ -83,7 +86,7 @@ public class GestorUtilizadores implements Serializable{
         this.catalogo_utilizadores.get(utilizador).alterarPreco(codigo_artigo,preco);
     }
 
-    public List<Utilizador> getMelhoresUtilizadores(Predicate<Fatura> filtro){
+    public List<EstatisticasVisivel> getMelhoresUtilizadores(Predicate<Fatura> filtro){
         return Estatisticas.getMelhoresUtilizadores(this.catalogo_utilizadores,filtro);
     }
 
@@ -106,5 +109,12 @@ public class GestorUtilizadores implements Serializable{
                     .stream()
                     .map((x) -> x.toString())
                     .reduce("Catalogos Utilizadores:", (a,b) -> a + "\n" + b);
+    }
+
+    public String visualiza(){
+        return this.catalogo_utilizadores
+                    .stream()
+                    .map(Visivel::visualiza)
+                    .collect(Collectors.joining("\n\n"));
     }
 }

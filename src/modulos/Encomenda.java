@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 import java.io.Serializable;
 
 
-public class Encomenda implements Serializable{
+public class Encomenda implements Serializable, EstatisticasVisivel{
 
     private static final long serialVersionUID = 6L;
     private static int AUTO_INCREMENT = 0;
@@ -169,5 +169,32 @@ public class Encomenda implements Serializable{
 
     public int hashCode(){
         return this.codigo;
+    }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("\033[48;5;240mCodigo da encomenda: ").append(this.codigo);
+        buffer.append("\tComprador: ").append(this.comprador);
+        buffer.append("\tData da criação: ").append(this.data_criacao);
+        buffer.append("\tEmbalagem: ").append(this.embalagem);
+        buffer.append("\tEstado: ").append(this.estado);
+        buffer.append("\u001B[0m\n\033[38;5;226m\u001B[1mARTIGOS\u001B[0m\n");
+        if (this.artigos.size() > 0){
+            buffer.append(this.artigos.stream().map(Visivel::visualiza).collect(Collectors.joining("\n","","\n")));
+        }
+
+        return buffer.toString();
+    }
+
+    public String visualizaEstatistica(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("Codigo da encomenda: ").append(this.codigo);
+        buffer.append("\nArtigos da encomenda:").append(this.artigos.stream().map(Visivel::visualiza).collect(Collectors.joining("\n","\n","\n")));
+
+        return buffer.toString();
     }
 }

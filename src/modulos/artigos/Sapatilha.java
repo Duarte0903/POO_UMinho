@@ -92,4 +92,15 @@ public class Sapatilha extends Artigo{
 
         return buffer.toString();
     }
+
+    public String visualiza(){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(super.visualiza());
+        buffer.append("\tTamanho: ").append(this.tamanho);
+        buffer.append("\tColecao: ").append(this.colecao);
+
+        return buffer.toString();
+    }
 }

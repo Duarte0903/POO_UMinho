@@ -1,12 +1,14 @@
 package modulos.gestores;
 
+import modulos.Visivel;
 import modulos.artigos.Artigo;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.io.Serializable;
 
 
-public class GestorArtigos implements Serializable{
+public class GestorArtigos implements Serializable, Visivel{
 
     private static final long serialVersionUID = 8L;
 
@@ -56,5 +58,13 @@ public class GestorArtigos implements Serializable{
                     .stream()
                     .map((x) -> x.getValue().toString())
                     .reduce("Catalogo Artigos:", (a,b) -> a + b);
+    }
+
+    public String visualiza(){
+        return this.catalogo_artigos
+                    .values()
+                    .stream()
+                    .map(Visivel::visualiza)
+                    .collect(Collectors.joining("\n"));
     }
 }
