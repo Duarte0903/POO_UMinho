@@ -174,7 +174,7 @@ public class Encomenda implements Serializable, EstatisticasVisivel{
         return buffer.toString();
     }
 
-    public String visualizaEstatistica(){        
+    public String visualizaEstatistica(){
         return this.visualiza();
     }
 }

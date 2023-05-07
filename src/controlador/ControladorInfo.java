@@ -23,5 +23,5 @@ public class ControladorInfo{
                 Escritor.escreve(Gestor.getComissao());
                 break;
         }
-    }       
+    }
 }

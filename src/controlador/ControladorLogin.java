@@ -23,12 +23,12 @@ public class ControladorLogin{
 
             case Controlador.LOGIN:
                 Map.Entry<Integer,String> registo = gestor.loginUtilizador(tokens[1],tokens[2]);
-                
+
                 if (registo != null && registo.getKey() != -1){
                     ControladorLogin.logged = registo.getKey();
                     ControladorLogin.entidade_logged = registo.getValue();
                 }
-                
+
                 break;
 
             case Controlador.LOGOUT:

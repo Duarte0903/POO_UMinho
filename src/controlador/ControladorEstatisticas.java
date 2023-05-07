@@ -39,7 +39,7 @@ public class ControladorEstatisticas{
                 else filtro = filtro.and(x -> x.getTipo() == TIPO.COMPRA);
 
                 gestor.getMelhoresUtilizadores(filtro);
-                
+
                 break;
         }
     }
