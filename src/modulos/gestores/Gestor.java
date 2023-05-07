@@ -38,7 +38,8 @@ public class Gestor implements Serializable, Visivel{
     }
 
     public static void setComissao(double comissao){
-        Gestor.vintageComissao = comissao;
+        if (comissao >= 1) Tratador.trataException(new Exception("Comissão inválida"));
+        else Gestor.vintageComissao = Math.abs(comissao);
     }
 
     public static int getAutoIncrementUtilizador(){
@@ -58,7 +59,8 @@ public class Gestor implements Serializable, Visivel{
     }
 
     public void insertUtilizador(Utilizador utilizador){
-        this.gestor_utilizadores.addUtilizador(utilizador);
+        try {this.gestor_utilizadores.addUtilizador(utilizador);}
+        catch (Exception e) {Tratador.trataException(e);}
     }
 
     public void insertTransportadora(Transportadora transportadora){
@@ -71,8 +73,8 @@ public class Gestor implements Serializable, Visivel{
         try{
             this.gestor_transportadoras.lookUpTransportadoraArtigo(artigo.getTransportadora(),artigo.getPremium());
             this.gestor_utilizadores.lookUpUtilizador(artigo.getVendedor());
-            this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
             this.gestor_artigos.addArtigo(artigo);
+            this.gestor_utilizadores.addUtilizadorArtigoAVenda(artigo);
         }
 
         catch (Exception e) {Tratador.trataException(e);}
@@ -219,21 +221,6 @@ public class Gestor implements Serializable, Visivel{
     public Map.Entry<Integer,String> loginUtilizador(String email, String password){
         try {return this.gestor_utilizadores.login(email,password);}
         catch (Exception e) {Tratador.trataException(e); return null;}
-    }
-
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(this.gestor_utilizadores.toString());
-        buffer.append("\n------------------------------------\n");
-        buffer.append(this.gestor_transportadoras.toString());
-        buffer.append("\n------------------------------------\n");
-        buffer.append(this.gestor_artigos.toString());
-        buffer.append("\n------------------------------------\n");
-        buffer.append(this.gestor_encomendas.toString());
-
-        return buffer.toString();
     }
 
     public String visualiza(){

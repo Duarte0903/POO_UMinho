@@ -153,20 +153,6 @@ public class Encomenda implements Serializable, EstatisticasVisivel{
         this.estado = Encomenda.EXPEDIDA;
     }
 
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append("\nCodigo da encomenda: ").append(this.codigo);
-        buffer.append("\tComprador: ").append(this.comprador);
-        buffer.append("\tData da criação: ").append(this.data_criacao);
-        buffer.append("\tEmbalagem: ").append(this.embalagem);
-        buffer.append("\tEstado: ").append(this.estado);
-        buffer.append("\nArtigos da encomenda:").append(this.artigos.toString());
-
-        return buffer.toString();
-    }
-
     public int hashCode(){
         return this.codigo;
     }
@@ -188,13 +174,7 @@ public class Encomenda implements Serializable, EstatisticasVisivel{
         return buffer.toString();
     }
 
-    public String visualizaEstatistica(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append("Codigo da encomenda: ").append(this.codigo);
-        buffer.append("\nArtigos da encomenda:").append(this.artigos.stream().map(Visivel::visualiza).collect(Collectors.joining("\n","\n","\n")));
-
-        return buffer.toString();
+    public String visualizaEstatistica(){        
+        return this.visualiza();
     }
 }

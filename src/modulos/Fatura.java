@@ -83,20 +83,25 @@ public class Fatura implements Serializable{
         );
     }
 
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append("Encomenda: ").append(this.codigo_encomenda);
-        buffer.append("\tPreco: ").append(this.preco);
-        buffer.append("\tComissão: ").append(this.comissao);
-        buffer.append("\tData: ").append(this.data);
-        buffer.append("\tTipo: ").append(this.tipo);
-
-        return buffer.toString();
-    }
-
     public int hashCode(){
-        return this.getCodigoEncomenda() + tipo.hashCode();
+
+        int result = this.codigo_encomenda;
+
+        switch (this.tipo){
+
+            case COMPRA:
+                result += 1000000;
+                break;
+
+            case COMISSAO:
+                result += 2000000;
+                break;
+
+            case VENDA:
+                result += 3000000;
+                break;
+        }
+
+        return result;
     }
 }

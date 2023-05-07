@@ -89,14 +89,6 @@ public class GestorEncomendas implements Serializable, Visivel{
                     .collect(Collectors.toList());
     }
 
-    public String toString(){
-        return this.catalogo_encomendas
-                    .entrySet()
-                    .stream()
-                    .map((x) -> x.getValue().toString())
-                    .reduce("Catalogo Encomendas:", (a,b) -> a + "\n" + b);
-    }
-
     public String visualiza(){
         return this.catalogo_encomendas
                     .values()

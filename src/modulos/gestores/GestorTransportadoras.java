@@ -58,14 +58,6 @@ public class GestorTransportadoras implements Serializable, Visivel{
         return Estatisticas.getMelhoresTransportadoras(this.catalogo_transportadoras);
     }
 
-    public String toString(){
-        return this.catalogo_transportadoras
-                    .entrySet()
-                    .stream()
-                    .map((x) -> x.getValue().toString())
-                    .reduce("Catalogo Transportadoras:", (a,b) -> a + "\n" + b);
-    }
-
     public String visualiza(){
         return this.catalogo_transportadoras
                     .values()

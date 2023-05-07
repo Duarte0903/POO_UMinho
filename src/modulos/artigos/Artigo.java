@@ -132,26 +132,6 @@ public abstract class Artigo implements Serializable, Visivel{
 
     public abstract double calculaPreco();
 
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append("\nVendedor: ").append(this.vendedor);
-        buffer.append("\tTranspostadora: ").append(this.transportadora);
-        buffer.append("\tNome: ").append(this.nome);
-        buffer.append("\tCodigo: ").append(this.codigo);
-        buffer.append("\tMarca: ").append(this.marca);
-        buffer.append("\tPreco: ").append(this.preco);
-        buffer.append("\tDesconto: ").append(this.desconto);
-        buffer.append("\tEstado: ").append(this.estado);
-        buffer.append("\tAvaliacao: ").append(this.avaliacao);
-        buffer.append("\tNDonos: ").append(this.n_donos);
-        buffer.append("\tData insercao: ").append(this.data);
-        buffer.append("\tPremium: ").append(this.premium);
-
-        return buffer.toString();
-    }
-
     public boolean equals(Object object){
 
         if (this == object) return true;

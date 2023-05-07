@@ -14,7 +14,7 @@ public class Main{
         if (args.length == 0) leitor.load(null);
 
         else leitor.load(args[0]);
-        
+
         leitor.run();
         leitor.save();
     }

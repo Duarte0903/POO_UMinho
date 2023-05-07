@@ -62,18 +62,6 @@ public class Mala extends Artigo{
         return preco;
     }
 
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(super.toString());
-        buffer.append("\tTamanho: ").append(this.tamanho);
-        buffer.append("\tMaterial: ").append(this.material);
-        buffer.append("\tColecao: ").append(this.colecao);
-
-        return buffer.toString();
-    }
-
     public String visualiza(){
 
         StringBuffer buffer = new StringBuffer();

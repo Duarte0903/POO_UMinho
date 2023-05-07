@@ -149,28 +149,6 @@ public class Transportadora implements Serializable, EstatisticasVisivel{
         );
     }
 
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append("\nNome: ").append(this.nome);
-        buffer.append("\tBase_enc_pequena: ").append(this.base_enc_pequena);
-        buffer.append("\tBase_enc_media: ").append(this.base_enc_media);
-        buffer.append("\tBase_enc_grande: ").append(this.base_enc_grande);
-        buffer.append("\tMult_imposto: ").append(this.mult_imposto);
-        buffer.append("\tPremium: ").append(this.premium);
-        buffer.append("\nEncomendas expedidas: ");
-        buffer.append(this.encomendas_expedidas
-                            .entrySet()
-                            .stream()
-                            .map((x) -> "Encomenda: " + x.getKey().toString()
-                                        + "\tPreco: " + x.getValue().getKey().toString()
-                                        + x.getValue().getValue().toString())
-                            .reduce("", (a,b) -> a + "\n" + b));
-
-        return buffer.toString();
-    }
-
     public boolean equals(Object object){
 
         if (this == object) return true;
@@ -192,9 +170,9 @@ public class Transportadora implements Serializable, EstatisticasVisivel{
 
         buffer.append("\033[48;5;240mNome: ").append(this.nome);
         buffer.append("\tImposto Pequena: ").append(this.base_enc_pequena);
-        buffer.append("\tIMposto Media: ").append(this.base_enc_media);
+        buffer.append("\tImposto Media: ").append(this.base_enc_media);
         buffer.append("\tImposto Grande: ").append(this.base_enc_grande);
-        buffer.append("\tFator Imposto: ").append(this.mult_imposto);
+        buffer.append("\tImposto: ").append(this.mult_imposto);
         buffer.append("\tPremium: ").append(this.premium);
         buffer.append("\u001B[0m\n\033[38;5;226m\u001B[1mENCOMENDAS EXPEDIDAS\u001B[0m\n");
         if (this.encomendas_expedidas.size() > 0){

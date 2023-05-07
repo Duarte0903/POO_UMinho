@@ -52,14 +52,6 @@ public class GestorArtigos implements Serializable, Visivel{
         this.catalogo_artigos.get(codigo_artigo.hashCode()).setPreco(preco);
     }
 
-    public String toString(){
-        return this.catalogo_artigos
-                    .entrySet()
-                    .stream()
-                    .map((x) -> x.getValue().toString())
-                    .reduce("Catalogo Artigos:", (a,b) -> a + b);
-    }
-
     public String visualiza(){
         return this.catalogo_artigos
                     .values()

@@ -172,22 +172,6 @@ public class Utilizador implements Serializable, EstatisticasVisivel{
         return ultimo_calculo;
     }
 
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append("\nCodigo: ").append(this.codigo);
-        buffer.append("\tEmail: ").append(this.email);
-        buffer.append("\tNome: ").append(this.nome);
-        buffer.append("\tNif: ").append(this.nif);
-        buffer.append("\tMorada: ").append(this.morada);
-        buffer.append("\nArtigos à venda: ").append(this.artigos_a_venda.toString());
-        buffer.append("\nArtigos vendidos: ").append(this.artigos_vendidos.toString());
-        buffer.append("\nArtigos adquiridos: ").append(this.artigos_adquiridos.toString());
-
-        return buffer.toString();
-    }
-
     public boolean equals(Object object){
 
         if (this == object) return true;

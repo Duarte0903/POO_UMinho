@@ -81,10 +81,9 @@ public class Leitor{
 
         while (input.hasNextLine()){
 
-            String line = input.nextLine();
-
             System.out.printf("%s", Leitor.RESET);
-            this.controlador.collectDadosLine(line.split(";",0));
+
+            this.controlador.collectDadosLine(input.nextLine().split(";",0));
 
             System.out.printf(Leitor.GREEN + "%s %s", this.controlador.getEntidadeLogged(), ">>> ");
         }

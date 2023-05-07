@@ -79,20 +79,6 @@ public class Sapatilha extends Artigo{
         return preco;
     }
 
-
-    public String toString(){
-
-        StringBuffer buffer = new StringBuffer();
-
-        buffer.append(super.toString());
-        buffer.append("\tCor: ").append(this.cor);
-        buffer.append("\tTamanho: ").append(this.tamanho);
-        buffer.append("\tAtacadores: ").append(this.atacadores);
-        buffer.append("\tColecao: ").append(this.colecao);
-
-        return buffer.toString();
-    }
-
     public String visualiza(){
 
         StringBuffer buffer = new StringBuffer();

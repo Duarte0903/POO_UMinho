@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 public class OrdenaUtilizador implements Comparator<Utilizador>{
 
-    Predicate<Fatura> filtro;
+    private Predicate<Fatura> filtro;
 
     public OrdenaUtilizador(Predicate<Fatura> filtro){
         this.filtro = filtro;

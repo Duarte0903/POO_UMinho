@@ -54,8 +54,12 @@ public class GestorUtilizadores implements Serializable, Visivel{
         return this.catalogo_utilizadores.stream().filter((x) -> x.getEmail().equals(email)).mapToInt((x) -> x.getCodigo()).sum();
     }
 
-    public void addUtilizador(Utilizador utilizador){
-        this.catalogo_utilizadores.add(utilizador.clone());
+    public void addUtilizador(Utilizador utilizador) throws Exception{
+        if (this.catalogo_utilizadores.stream().filter((x) -> x.getEmail().equals(utilizador.getEmail())).count() != 0){
+            GestorUtilizadores.setAutoIncrement(utilizador.getCodigo());
+            throw new Exception("Utilizador já inserido");
+        }
+        this.catalogo_utilizadores.add(utilizador.getCodigo(),utilizador.clone());
     }
 
     public void addUtilizadorArtigoAVenda(Artigo artigo) throws Exception{
@@ -102,13 +106,6 @@ public class GestorUtilizadores implements Serializable, Visivel{
         return new AbstractMap.SimpleEntry<Integer,String>(
             this.getCodigo(email),
             this.catalogo_utilizadores.get(this.getCodigo(email)).getNome());
-    }
-
-    public String toString(){
-        return this.catalogo_utilizadores
-                    .stream()
-                    .map((x) -> x.toString())
-                    .reduce("Catalogos Utilizadores:", (a,b) -> a + "\n" + b);
     }
 
     public String visualiza(){
