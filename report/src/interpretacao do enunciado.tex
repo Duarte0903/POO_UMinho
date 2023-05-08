@@ -1,0 +1,25 @@
+\chapter{Interpretação do Enunciado}
+
+    Ao longo do desenvolvimento deste trabalho prático foram sendo levantadas imensas dúvidas relativamente a requisitos do sistema, e tendo em conta que nem sempre as respostas obtidas pelos docentes foram convergentes, decidimos nós próprios definir esses mesmos requisitos.
+
+    \begin{itemize}
+
+        \item A comissão que a \textit{Vintage} aplica só tem impacto para o vendedor, enquanto que o comprador paga o preço dos artigos na sua totalidade.
+
+        \item Os preços de transporte não são assegurados pelos utilizadores, visto que as transportadoras têm uma parceria com a \textit{Vintage,} e como tal o dinheiro angariado com as comissões serve, inclusive, para pagar os custos de transporte.
+        
+        \item Quando um artigo é colocado numa encomenda, este deixa de estar disponível em \textit{stock}, no entanto não é dado como vendido, visto que a encomenda ainda está no estado \textit{pendente.}
+
+        \item No momento em que uma encomenda é finalizada, os artigos contidos nesta são dados como vendidos/adquiridos, consequentemente são passadas as respetivas faturas aos compradores/vendedores.
+
+        \item Um utilizador pode comprar os seus próprios artigos e ter várias encomendas no estado \textit{pendente/finalizada/expedida}.
+
+        \item Ao fim de $48$ horas, as encomendas finalizadas são expedidas pelas transportadoras e o utilizador dispõem de um prazo de $48$ horas para realizar a devolução.
+
+        \item Quando uma encomenda é devolvida, o registo desta é eliminado juntamente com todas as movimentações de dinheiro que esta gerou, excetuando o caso das transportadoras, que uma vez efetuado o serviço, não devem ver o dinheiro cobrado ser devolvido.
+
+        \item Depois de uma encomenda ser devolvida, os artigos que esta continha passam para o \textit{stock,} sendo a sua compra novamente possível.
+
+        \item O código de um artigo é definido pelo utilizador, pois ao serem gerados códigos aleatórios pelo sistema, torna-se praticamente impossível realizar testes unitários sobre o \textit{stock} de artigos. 
+
+    \end{itemize}

@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper]{report}
+
+%--------------------------------------
+\usepackage[T1]{fontenc} %Not needed by LuaLaTeX or XeLaTeX
+%--------------------------------------
+
+%Portuguese-specific commands
+%--------------------------------------
+%\usepackage[portuguese]{babel}
+%--------------------------------------
+
+%Hyphenation rules
+%--------------------------------------
+\usepackage{hyphenat}
+\hyphenation{mate-mática recu-perar}
+%--------------------------------------
+
+%Espaçamento e outras cenas
+%--------------------------------------
+\usepackage{setspace}
+\usepackage{anyfontsize}
+\usepackage{indentfirst}
+\usepackage{parskip}
+\usepackage{titlesec} % Chapter
+\usepackage{geometry} % Margens
+\usepackage{amsmath} % Matemática
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xpatch}
+\usepackage{etoolbox}
+\usepackage{titletoc}
+\usepackage{times}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+%--------------------------------------
+
+\geometry{
+    a4paper,
+    right = 3cm,
+    left = 2.5cm,
+    top = 2.5cm,
+    bottom = 2.5cm,
+}
+
+\renewcommand{\contentsname}{Índice}
+
+\setstretch{1.5} % espaçamento
+
+\titlespacing{\chapter}{0pt}{-30pt}{30pt}
+
+\titleformat{\chapter}{\fontfamily{ptm}\selectfont\centering\huge\titlerule[1.5pt]\vspace{-9pt}}{}{0pt}{\Huge}[{\titlerule[1.5pt]}]
+
+\titleformat{\section}{\bfseries\fontfamily{ptm}\selectfont}{}{0pt}{\large}[{\titlerule[1pt]}]
+
+\titleformat{\subsection}{\bfseries\fontfamily{ptm}\selectfont}{}{0pt}{}[{\vspace{-5pt}}]
+
+\titlecontents{section}[40pt]{\vskip3pt\bfseries}{\thecontentslabel\quad}{}{~~\normalfont\dotfill\bfseries\contentspage}[]
+
+\titlecontents{subsection}[40pt]{\vskip2pt\bfseries\hspace{50pt}}{\thecontentslabel\quad}{}{~~\normalfont\dotfill\bfseries\contentspage}[]
+
+\begin{document}
+
+\input{cover}
+
+\tableofcontents
+
+\input{src/introducao}
+
+\input{src/arquitetura}
+
+\input{src/colecoes}
+
+\input{src/hierarquia de classes}
+
+\input{src/hierarquia de interfaces}
+
+\input{src/interpretacao do enunciado}
+
+\input{src/funcionalidades}
+
+\input{src/conclusao}
+
+\end{document}
